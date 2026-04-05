@@ -28,9 +28,20 @@
     <!-- Hero image -->
     {{ $cat := index .Params.categories 0 | default "community" }}
     <div class="single-image">
-      <img src="{{ (printf "images/placeholders/%s.svg" $cat) | relURL }}"
-           alt="{{ .Title }}"
-           width="800" height="400">
+      {{ if .Params.image }}
+        <img src="{{ .Params.image | relURL }}"
+             alt="{{ .Title }}"
+             width="800" height="400">
+        {{ with .Params.image_credit }}
+        <p class="photo-credit">
+          Photo: <a href="{{ $.Params.image_credit_url }}" target="_blank" rel="noopener noreferrer">{{ . }}</a> / Unsplash
+        </p>
+        {{ end }}
+      {{ else }}
+        <img src="{{ (printf "images/placeholders/%s.svg" $cat) | relURL }}"
+             alt="{{ .Title }}"
+             width="800" height="400">
+      {{ end }}
     </div>
 
     <!-- Summary -->

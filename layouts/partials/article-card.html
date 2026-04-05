@@ -9,10 +9,17 @@
   data-region="{{ $region }}">
   <div class="card-image">
     {{ $cat := index $categories 0 | default "community" }}
-    <img src="{{ (printf "images/placeholders/%s.svg" $cat) | relURL }}"
-         alt="{{ .Title }}"
-         loading="lazy"
-         width="400" height="220">
+    {{ if .Params.image }}
+      <img src="{{ .Params.image | relURL }}"
+           alt="{{ .Title }}"
+           loading="lazy"
+           width="400" height="220">
+    {{ else }}
+      <img src="{{ (printf "images/placeholders/%s.svg" $cat) | relURL }}"
+           alt="{{ .Title }}"
+           loading="lazy"
+           width="400" height="220">
+    {{ end }}
     <span class="ai-badge" title="AI-curated content">AI curated</span>
   </div>
   <div class="card-body">

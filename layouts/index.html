@@ -8,9 +8,15 @@
   <div class="hero-inner">
     <div class="hero-image">
       {{ $cat := index .Params.categories 0 | default "community" }}
-      <img src="{{ (printf "images/placeholders/%s.svg" $cat) | relURL }}"
-           alt="{{ .Title }}"
-           width="800" height="450">
+      {{ if .Params.image }}
+        <img src="{{ .Params.image | relURL }}"
+             alt="{{ .Title }}"
+             width="800" height="450">
+      {{ else }}
+        <img src="{{ (printf "images/placeholders/%s.svg" $cat) | relURL }}"
+             alt="{{ .Title }}"
+             width="800" height="450">
+      {{ end }}
     </div>
     <div class="hero-content">
       <div class="hero-meta">

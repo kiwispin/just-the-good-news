@@ -1,6 +1,7 @@
 ---
 title: "About Just The Good News"
 description: "Our mission, methodology, and the team behind the good news."
+type: "page"
 ---
 
 ## Our Mission

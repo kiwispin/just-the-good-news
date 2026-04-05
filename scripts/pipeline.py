@@ -11,6 +11,7 @@ Verbose:        python scripts/pipeline.py --verbose
 
 import argparse
 import json
+import os
 import re
 import sys
 from datetime import datetime, timedelta, timezone
@@ -18,6 +19,7 @@ from pathlib import Path
 from typing import Optional, Set, List, Dict
 
 import feedparser
+import requests
 from slugify import slugify
 
 # ---------------------------------------------------------------------------
@@ -27,6 +29,8 @@ from slugify import slugify
 REPO_ROOT = Path(__file__).parent.parent
 CONTENT_DIR = REPO_ROOT / "content" / "posts"
 PUBLISHED_URLS_FILE = REPO_ROOT / "data" / "published_urls.json"
+IMAGES_DIR = REPO_ROOT / "static" / "images" / "articles"
+UNSPLASH_API = "https://api.unsplash.com"
 
 MIN_SCORE = 7
 MAX_ARTICLES_PER_RUN = 10
@@ -83,6 +87,84 @@ def save_published_urls(existing: Set[str], new_urls: List[str]) -> None:
     all_urls = sorted(existing | set(new_urls))
     with open(PUBLISHED_URLS_FILE, "w") as f:
         json.dump({"urls": all_urls}, f, indent=2)
+
+
+# ---------------------------------------------------------------------------
+# Unsplash image fetch
+# ---------------------------------------------------------------------------
+
+def fetch_unsplash_image(
+    query: str,
+    slug: str,
+    access_key: str,
+    verbose: bool = False,
+) -> Optional[Dict]:
+    """Search Unsplash, download a landscape photo, return metadata or None."""
+    if not access_key:
+        return None
+    try:
+        # Search for a landscape photo
+        resp = requests.get(
+            f"{UNSPLASH_API}/search/photos",
+            params={"query": query, "per_page": 3, "orientation": "landscape"},
+            headers={"Authorization": f"Client-ID {access_key}"},
+            timeout=15,
+        )
+        if resp.status_code != 200:
+            if verbose:
+                print(f"    Unsplash search HTTP {resp.status_code} for: {query[:50]}")
+            return None
+
+        results = resp.json().get("results", [])
+        if not results:
+            if verbose:
+                print(f"    Unsplash: no results for: {query[:50]}")
+            return None
+
+        photo = results[0]
+        photo_id = photo["id"]
+        download_location = photo["links"]["download_location"]
+        img_url = photo["urls"]["regular"]  # ~1080px wide
+        photographer = photo["user"]["name"]
+        photographer_url = photo["user"]["links"]["html"]
+
+        # Trigger download endpoint (required by Unsplash API guidelines)
+        requests.get(
+            download_location,
+            headers={"Authorization": f"Client-ID {access_key}"},
+            timeout=10,
+        )
+
+        # Download the image at 1200px width
+        img_resp = requests.get(
+            img_url,
+            params={"w": "1200", "q": "85", "fit": "crop", "auto": "format"},
+            timeout=30,
+        )
+        if img_resp.status_code != 200:
+            if verbose:
+                print(f"    Unsplash: image download failed HTTP {img_resp.status_code}")
+            return None
+
+        # Save to static/images/articles/
+        IMAGES_DIR.mkdir(parents=True, exist_ok=True)
+        img_path = IMAGES_DIR / f"{slug}.jpg"
+        img_path.write_bytes(img_resp.content)
+
+        if verbose:
+            print(f"    Unsplash: saved {img_path.name} ({len(img_resp.content)//1024}KB) — {photographer}")
+
+        return {
+            "path": f"images/articles/{slug}.jpg",
+            "photographer": photographer,
+            "photographer_url": photographer_url,
+            "unsplash_id": photo_id,
+        }
+
+    except Exception as e:
+        if verbose:
+            print(f"    Unsplash: error — {e}")
+        return None
 
 
 # ---------------------------------------------------------------------------

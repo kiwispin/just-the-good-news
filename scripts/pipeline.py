@@ -461,16 +461,50 @@ def run_pipeline(dry_run: bool = False, verbose: bool = False) -> None:
         try:
             processed = process_article(article, client)
 
-            # Fetch Unsplash image using the generated headline as query
+            # Fetch Unsplash image — try progressively simpler queries
             slug = slugify(processed["headline"], max_length=60, word_boundary=True)
             date_prefix = datetime.now(timezone.utc).strftime("%Y-%m-%d")
             img_slug = f"{date_prefix}-{slug}"
-            image = fetch_unsplash_image(
-                query=processed["headline"],
-                slug=img_slug,
-                access_key=unsplash_key,
-                verbose=verbose,
-            )
+
+            # Build fallback query chain: headline → key nouns → category → generic
+            cat_slug = processed["categories"][0] if processed["categories"] else "community"
+            cat_phrase = cat_slug.replace("-", " ")
+            # Extract first ~4 meaningful words from the headline as a simpler query
+            stop = {"the","a","an","of","in","on","at","to","for","and","or","but",
+                    "how","why","what","when","where","who","as","by","from","with",
+                    "its","this","that","these","those","is","are","was","were"}
+            headline_words = [w for w in processed["headline"].replace(":", " ").replace("—", " ").split()
+                              if w.lower() not in stop and len(w) > 2]
+            short_query = " ".join(headline_words[:4])
+
+            # Category-to-photo-topic mapping for final meaningful fallback
+            cat_fallbacks = {
+                "environment":      "nature landscape green",
+                "health-science":   "medical research laboratory",
+                "community":        "community people together",
+                "tech-for-good":    "technology innovation future",
+                "education":        "education learning students",
+                "arts-culture":     "art culture creative",
+                "justice-equality": "diverse community justice",
+                "economy-work":     "work collaboration success",
+            }
+            cat_photo = cat_fallbacks.get(cat_slug, "positive people nature")
+
+            image = None
+            if unsplash_key:
+                for q in [processed["headline"], short_query, cat_phrase, cat_photo]:
+                    if not q.strip():
+                        continue
+                    image = fetch_unsplash_image(
+                        query=q,
+                        slug=img_slug,
+                        access_key=unsplash_key,
+                        verbose=verbose,
+                    )
+                    if image:
+                        if verbose:
+                            print(f"    Image query: '{q}'")
+                        break
 
             filepath = create_hugo_post(article, processed, image=image, dry_run=dry_run)
 
@@ -496,6 +530,68 @@ def run_pipeline(dry_run: bool = False, verbose: bool = False) -> None:
         print(f"\n[4/4] Dry run — skipping deduplication state update")
     else:
         print(f"\n[4/4] No new articles published")
+
+    # --- Step 5: Backfill images for any existing posts still missing one ---
+    if unsplash_key and not dry_run:
+        missing = [p for p in CONTENT_DIR.glob("*.md") if "image:" not in p.read_text()]
+        if missing:
+            print(f"\n[5/5] Backfilling images for {len(missing)} post(s) without images...")
+            for post_path in missing:
+                text = post_path.read_text()
+                # Extract title for query
+                title_match = re.search(r'^title:\s*["\']?(.+?)["\']?\s*$', text, re.MULTILINE)
+                cat_match   = re.search(r'^categories:\s*\["?([^"\],]+)', text, re.MULTILINE)
+                if not title_match:
+                    continue
+                title    = title_match.group(1)
+                cat_slug = cat_match.group(1).strip() if cat_match else "community"
+                cat_phrase = cat_slug.replace("-", " ")
+                stop = {"the","a","an","of","in","on","at","to","for","and","or","but",
+                        "how","why","what","when","where","who","as","by","from","with",
+                        "its","this","that","these","those","is","are","was","were"}
+                words = [w for w in title.replace(":", " ").replace("—", " ").split()
+                         if w.lower() not in stop and len(w) > 2]
+                short = " ".join(words[:4])
+                cat_fallbacks = {
+                    "environment":      "nature landscape green",
+                    "health-science":   "medical research laboratory",
+                    "community":        "community people together",
+                    "tech-for-good":    "technology innovation future",
+                    "education":        "education learning students",
+                    "arts-culture":     "art culture creative",
+                    "justice-equality": "diverse community justice",
+                    "economy-work":     "work collaboration success",
+                }
+                cat_photo = cat_fallbacks.get(cat_slug, "positive people nature")
+                img_slug  = post_path.stem
+
+                img_meta = None
+                for q in [title, short, cat_phrase, cat_photo]:
+                    if not q.strip():
+                        continue
+                    img_meta = fetch_unsplash_image(q, img_slug, unsplash_key, verbose=verbose)
+                    if img_meta:
+                        break
+
+                if not img_meta:
+                    print(f"  ✗ No image found for: {post_path.name}")
+                    continue
+
+                # Splice image fields into the front matter
+                parts = text.split("---", 2)
+                if len(parts) < 3:
+                    continue
+                fm = parts[1]
+                img_block = (
+                    f'image: "images/articles/{img_slug}.jpg"\n'
+                    f'image_credit: "{img_meta["photographer"]}"\n'
+                    f'image_credit_url: "{img_meta["photographer_url"]}"\n'
+                )
+                fm = fm.rstrip() + "\n" + img_block
+                post_path.write_text("---" + fm + "---" + parts[2])
+                print(f"  ✓ {post_path.name} — {img_meta['photographer']}")
+        else:
+            print(f"\n[5/5] All posts have images — nothing to backfill.")
 
     print(f"\nDone. Published {len(published_links)} new article(s).")
 

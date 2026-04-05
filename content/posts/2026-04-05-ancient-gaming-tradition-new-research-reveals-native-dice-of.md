@@ -7,6 +7,9 @@ region: "us"
 source: "Good News Network"
 source_url: "https://www.goodnewsnetwork.org/native-americans-were-making-dice-and-gaming-thousands-of-years-before-anyone-else/"
 summary: "Groundbreaking archaeological evidence shows that Native American hunter-gatherers on the western Great Plains created the earliest known dice in human history, demonstrating sophisticated recreational practices and cultural innovation. This discovery reshapes our understanding of Native American heritage and highlights the depth of their contributions to human civilization."
+image: "images/articles/2026-04-05-ancient-gaming-tradition-new-research-reveals-native-dice-of.jpg"
+image_credit: "Nic Rosenau"
+image_credit_url: "https://unsplash.com/@nicreates"
 ---
 
 Groundbreaking archaeological evidence shows that Native American hunter-gatherers on the western Great Plains created the earliest known dice in human history, demonstrating sophisticated recreational practices and cultural innovation. This discovery reshapes our understanding of Native American heritage and highlights the depth of their contributions to human civilization.

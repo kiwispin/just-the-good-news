@@ -7,6 +7,9 @@ region: "uk"
 source: "Good News Network"
 source_url: "https://www.goodnewsnetwork.org/events060403/"
 summary: "Today marks the 92nd birthday of Dame Jane Goodall, the renowned British primatologist whose groundbreaking 1960 observations of chimpanzees using tools revolutionized our understanding of animal intelligence. Her discovery that animals could modify objects for specific purposes challenged scientific thinking and opened new avenues for studying wildlife behavior and conservation."
+image: "images/articles/2026-04-05-jane-goodall-s-birthday-celebrating-a-pioneer-who-changed-we.jpg"
+image_credit: "Umanoide"
+image_credit_url: "https://unsplash.com/@umanoide"
 ---
 
 Today marks the 92nd birthday of Dame Jane Goodall, the renowned British primatologist whose groundbreaking 1960 observations of chimpanzees using tools revolutionized our understanding of animal intelligence. Her discovery that animals could modify objects for specific purposes challenged scientific thinking and opened new avenues for studying wildlife behavior and conservation.

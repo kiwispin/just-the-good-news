@@ -7,6 +7,9 @@ region: "global"
 source: "Good News Network"
 source_url: "https://www.goodnewsnetwork.org/grain-bank-accounts-free-indian-farmers-from-middleman-through-online-marketplace/"
 summary: "Ergos, a new agri-tech application launched in Bihar, is empowering farmers to store crops, track market prices, and sell directly through an online marketplace—eliminating costly middlemen and giving them control over when and how they sell. By connecting farmers to a network of grain banks, the platform is transforming agricultural economics and improving livelihoods across rural India."
+image: "images/articles/2026-04-05-indian-farmers-gain-financial-independence-with-digital.jpg"
+image_credit: "Dibakar Roy"
+image_credit_url: "https://unsplash.com/@dibakar16roy"
 ---
 
 Ergos, a new agri-tech application launched in Bihar, is empowering farmers to store crops, track market prices, and sell directly through an online marketplace—eliminating costly middlemen and giving them control over when and how they sell. By connecting farmers to a network of grain banks, the platform is transforming agricultural economics and improving livelihoods across rural India.

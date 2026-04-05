@@ -416,6 +416,10 @@ def run_pipeline(dry_run: bool = False, verbose: bool = False) -> None:
         print(f"ERROR initialising Anthropic client: {e}")
         sys.exit(1)
 
+    unsplash_key = os.environ.get("UNSPLASH_ACCESS_KEY", "")
+    if not unsplash_key and verbose:
+        print("  NOTE: UNSPLASH_ACCESS_KEY not set — articles will have no images")
+
     # --- Step 1: Fetch ---
     print("\n[1/4] Fetching RSS feeds...")
     existing_urls = load_published_urls()
@@ -458,13 +462,25 @@ def run_pipeline(dry_run: bool = False, verbose: bool = False) -> None:
     for article in passing[:MAX_ARTICLES_PER_RUN]:
         try:
             processed = process_article(article, client)
-            filepath = create_hugo_post(article, processed, dry_run=dry_run)
+
+            # Fetch Unsplash image using the generated headline as query
+            slug = slugify(processed["headline"], max_length=60, word_boundary=True)
+            date_prefix = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+            img_slug = f"{date_prefix}-{slug}"
+            image = fetch_unsplash_image(
+                query=processed["headline"],
+                slug=img_slug,
+                access_key=unsplash_key,
+                verbose=verbose,
+            )
+
+            filepath = create_hugo_post(article, processed, image=image, dry_run=dry_run)
 
             if verbose:
                 print(f"  {'(dry run) ' if dry_run else ''}→ {filepath.name}")
                 print(f"    Headline:   {processed['headline']}")
                 print(f"    Categories: {processed['categories']}  Region: {processed['region']}")
-                print(f"    Summary:    {processed['summary'][:80]}...")
+                print(f"    Image:      {'✓ ' + image['photographer'] if image else '✗ none'}")
             else:
                 print(f"  {'(dry run) ' if dry_run else ''}→ {filepath.name}")
 

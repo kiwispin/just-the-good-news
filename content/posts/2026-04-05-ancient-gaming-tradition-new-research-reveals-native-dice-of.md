@@ -1,5 +1,5 @@
 ---
-title: "Native Americans Invented Dice Thousands of Years Before the World"
+title: "Ancient Gaming Tradition: New Research Reveals Native Americans Invented Dice Thousands of Years Before the World"
 date: 2026-04-05T01:42:15.269174+00:00
 draft: false
 categories: ["arts-culture", "education"]

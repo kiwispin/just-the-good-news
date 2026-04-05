@@ -1,5 +1,5 @@
 ---
-title: "Vancouver Woman Restores Beloved Teddy Bears and Cherished Family Heirlooms"
+title: "Meet Vancouver's Teddy Bear Doctor: Healing Cherished Companions and Preserving Family Memories"
 date: 2026-04-05T01:44:14.756787+00:00
 draft: false
 categories: ["community", "arts-culture"]

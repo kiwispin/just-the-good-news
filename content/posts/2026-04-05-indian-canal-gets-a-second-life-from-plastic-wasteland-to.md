@@ -1,5 +1,5 @@
 ---
-title: "Mangrove Revival Transforms Polluted Indian Canal Into Thriving Ecosystem"
+title: "Indian Canal Gets a Second Life: From Plastic Wasteland to Thriving Mangrove Forest"
 date: 2026-04-05T01:44:11.281586+00:00
 draft: false
 categories: ["environment", "community"]

@@ -1,5 +1,5 @@
 ---
-title: "Eight-Year-Old's Sweet Monsters Art Wins Dutch Train Makeover"
+title: "Young Artist's Whimsical 'Sweet Monsters' Design Selected to Brighten Dutch Train Exteriors"
 date: 2026-04-05T01:44:08.528190+00:00
 draft: false
 categories: ["arts-culture", "education"]

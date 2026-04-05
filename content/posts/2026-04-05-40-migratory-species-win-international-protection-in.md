@@ -1,5 +1,5 @@
 ---
-title: "132 Nations Unite to Protect 40 Migratory Species in Historic Deal"
+title: "40 Migratory Species Win International Protection in Historic Conservation Agreement"
 date: 2026-04-05T01:44:19.616322+00:00
 draft: false
 categories: ["environment"]

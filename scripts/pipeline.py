@@ -292,12 +292,7 @@ Description: {description}
 Source: {source}
 
 Create:
-1. A fresh, punchy newspaper-style headline — STRICT maximum 80 characters.
-   - Count every character including spaces. If it hits 80, cut it shorter.
-   - Think front-page tabloid energy: short, active, vivid. No subtitles with colons.
-   - DO NOT copy the original title verbatim.
-   - BAD: "Ancient Gaming Tradition: New Research Reveals Native Americans Invented Dice"
-   - GOOD: "Native Americans Invented Dice Thousands of Years Ago"
+1. A fresh, engaging headline (DO NOT copy the original title verbatim)
 2. A 2-3 sentence summary capturing the key positive outcome
 3. One or two category tags from this exact list:
    environment, health-science, community, tech-for-good, education,

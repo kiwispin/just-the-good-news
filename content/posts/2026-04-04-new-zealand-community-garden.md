@@ -1,5 +1,5 @@
 ---
-title: "Abandoned Auckland lot blooms into thriving garden feeding 200 families"
+title: "Auckland Suburb Transforms Abandoned Lot Into Thriving Community Garden Feeding 200 Families"
 date: 2026-04-04T09:00:00+12:00
 draft: false
 categories: ["community"]

@@ -1,5 +1,5 @@
 ---
-title: "Honest Roofers Rescue Grieving Widower Scammed on Roof Repairs"
+title: "Honest Roofers Step In to Help Grieving Widower After He's Victimized by Scammers"
 date: 2026-04-05T01:44:18.235743+00:00
 draft: false
 categories: ["community", "justice-equality"]

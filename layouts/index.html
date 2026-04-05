@@ -1,6 +1,22 @@
 {{ define "main" }}
 {{ $posts := where .Site.RegularPages "Type" "posts" }}
+
+{{/* Featured: highest featured_score among posts from the last 48 hours.
+     Fall back to the most recent post if none have the field yet. */}}
+{{ $cutoff := now.Add (mul -48 (mul 60 (mul 60 1000000000))) }}
+{{ $recent := where $posts "Date" "ge" $cutoff }}
 {{ $featured := index $posts 0 }}
+{{ if $recent }}
+  {{ $best := index $recent 0 }}
+  {{ range $recent }}
+    {{ $thisScore := .Params.featured_score | default 0 }}
+    {{ $bestScore := $best.Params.featured_score | default 0 }}
+    {{ if gt $thisScore $bestScore }}
+      {{ $best = . }}
+    {{ end }}
+  {{ end }}
+  {{ $featured = $best }}
+{{ end }}
 
 <!-- Hero: featured story -->
 {{ with $featured }}

@@ -363,6 +363,9 @@ def create_hugo_post(
 
     categories_yaml = json.dumps(processed["categories"])
 
+    # Positivity score (saved so the homepage can feature the best story)
+    score = article.get("_score", 0)
+
     # Build optional image front matter lines
     image_yaml = ""
     if image:
@@ -380,7 +383,8 @@ categories: {categories_yaml}
 region: "{processed['region']}"
 source: "{_escape_yaml(article['source'])}"
 source_url: "{article['link']}"
-summary: "{_escape_yaml(processed['summary'])}"{image_yaml}
+summary: "{_escape_yaml(processed['summary'])}"
+featured_score: {score}{image_yaml}
 ---
 
 {processed['summary']}

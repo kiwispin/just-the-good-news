@@ -59,14 +59,12 @@ SOURCES = [
     {"name": "Positive News",        "feed": "https://www.positive.news/feed/"},
     {"name": "Good News Network",    "feed": "https://www.goodnewsnetwork.org/feed/"},
     {"name": "Reasons to be Cheerful","feed": "https://reasonstobecheerful.world/feed/"},
-    {"name": "The Good News Hub",    "feed": "https://www.goodnewshub.com/feed/"},
     {"name": "Good Good Good",       "feed": "https://goodgoodgood.co/feed/"},
-    {"name": "Future Crunch",        "feed": "https://futurecrunch.com/feed/"},
-    # Secondary — curated sections from mainstream outlets
-    {"name": "HuffPost Good News",   "feed": "https://www.huffpost.com/section/good-news/feed"},
-    # Niche sources
+    {"name": "Future Crunch",        "feed": "https://medium.com/feed/future-crunch"},
+    {"name": "The Optimist Daily",   "feed": "https://www.optimistdaily.com/feed/"},
+    # Science & environment
     {"name": "ScienceDaily",         "feed": "https://www.sciencedaily.com/rss/top/science.xml"},
-    {"name": "Treehugger",           "feed": "https://www.treehugger.com/feeds/latest"},
+    {"name": "Mongabay",             "feed": "https://news.mongabay.com/feed/?post_type=post&feedtype=bulletpoints&topic=happy-upbeat-environmental"},
 ]
 
 

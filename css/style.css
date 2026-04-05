@@ -669,6 +669,177 @@ img { display: block; max-width: 100%; height: auto; }
 }
 
 /* ============================================================
+   SEARCH BUTTON (header)
+   ============================================================ */
+.search-btn {
+  background: transparent;
+  border: 1.5px solid var(--border);
+  border-radius: 99px;
+  color: var(--muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+  margin-left: 0.5rem;
+}
+
+.search-btn:hover {
+  border-color: var(--teal);
+  color: var(--teal);
+}
+
+/* ============================================================
+   SEARCH OVERLAY
+   ============================================================ */
+#search-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: rgba(31, 41, 55, 0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 6vh 1rem 1rem;
+}
+
+#search-overlay[hidden] { display: none; }
+
+.search-box {
+  background: var(--bg);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(31, 41, 55, 0.25);
+  width: 100%;
+  max-width: 640px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.search-input-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 1.5px solid var(--border);
+  flex-shrink: 0;
+}
+
+.search-icon-inline {
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+#search-input {
+  flex: 1;
+  font-family: var(--font-head);
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: var(--text);
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0.25rem 0;
+  /* remove browser search decorations */
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+#search-input::placeholder { color: var(--muted); }
+#search-input::-webkit-search-cancel-button { display: none; }
+
+.search-close-btn {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  transition: color 0.15s, background 0.15s;
+}
+
+.search-close-btn:hover { color: var(--text); background: var(--border); }
+
+#search-results {
+  overflow-y: auto;
+  flex: 1;
+}
+
+.search-result {
+  display: block;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  transition: background 0.12s;
+}
+
+.search-result:last-child { border-bottom: none; }
+.search-result:hover { background: #F0FDFA; text-decoration: none; }
+
+.search-result-title {
+  font-family: var(--font-head);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.3rem;
+  line-height: 1.35;
+}
+
+.search-result:hover .search-result-title { color: var(--teal); }
+
+.search-result-excerpt {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* Pagefind highlights search terms */
+.search-result-excerpt mark {
+  background: rgba(245, 158, 11, 0.25);
+  color: var(--text);
+  border-radius: 2px;
+  padding: 0 2px;
+}
+
+.search-hint {
+  font-family: var(--font-head);
+  font-size: 0.78rem;
+  color: var(--muted);
+  text-align: center;
+  padding: 1rem 1.25rem;
+  flex-shrink: 0;
+}
+
+.search-hint kbd {
+  font-family: var(--font-head);
+  font-size: 0.72rem;
+  background: var(--border);
+  border-radius: 4px;
+  padding: 1px 5px;
+  border: 1px solid #D1D5DB;
+}
+
+.search-status {
+  font-family: var(--font-head);
+  font-size: 0.9rem;
+  color: var(--muted);
+  text-align: center;
+  padding: 2rem 1.25rem;
+}
+
+/* ============================================================
    PLACEHOLDER SVG IMAGES — generated inline via CSS background
    (actual SVG files created separately)
    ============================================================ */

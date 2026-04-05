@@ -5,6 +5,8 @@ on:
     - cron: '0 8 * * *'   # 8:00 UTC = 8pm NZST (UTC+12)
     - cron: '0 20 * * *'  # 20:00 UTC = 8am NZST
   workflow_dispatch:        # Manual trigger button in GitHub UI
+  push:
+    branches: [main]        # Redeploy on every push (catches template/CSS fixes)
 
 jobs:
   update:
@@ -29,43 +31,26 @@ jobs:
         run: pip install -r scripts/requirements.txt
 
       - name: Run content pipeline
+        if: github.event_name != 'push'   # Skip AI pipeline on code pushes (saves cost)
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: python scripts/pipeline.py --verbose
 
-      - name: Check for new articles
-        id: check-changes
-        run: |
-          git diff --quiet content/ data/ && echo "has_changes=false" >> $GITHUB_OUTPUT || echo "has_changes=true" >> $GITHUB_OUTPUT
-
-      - name: Commit new articles
-        if: steps.check-changes.outputs.has_changes == 'true'
-        run: |
-          git config user.name  "Just The Good News Bot"
-          git config user.email "bot@justthegoodnews.org"
-          git add content/posts/ data/published_urls.json
-          ARTICLE_COUNT=$(git diff --cached --name-only content/posts/ | wc -l | tr -d ' ')
-          git commit -m "chore: add ${ARTICLE_COUNT} new good news article(s) [skip ci]"
-          git push
+      - name: Pull any new commits from pipeline
+        if: github.event_name != 'push'
+        run: git pull --rebase origin main || true
 
       - name: Setup Hugo
-        if: steps.check-changes.outputs.has_changes == 'true'
         uses: peaceiris/actions-hugo@v3
         with:
           hugo-version: 'latest'
           extended: true
 
       - name: Build Hugo site
-        if: steps.check-changes.outputs.has_changes == 'true'
         run: hugo --minify
 
       - name: Deploy to GitHub Pages
-        if: steps.check-changes.outputs.has_changes == 'true'
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
-
-      - name: Log — no new articles
-        if: steps.check-changes.outputs.has_changes == 'false'
-        run: echo "No new articles this run. All candidates were filtered or already published."

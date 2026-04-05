@@ -34,6 +34,7 @@ jobs:
         if: github.event_name != 'push'   # Skip AI pipeline on code pushes (saves cost)
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
         run: python scripts/pipeline.py --verbose
 
       - name: Pull any new commits from pipeline

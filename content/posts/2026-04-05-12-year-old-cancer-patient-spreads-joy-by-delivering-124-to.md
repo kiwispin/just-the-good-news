@@ -1,5 +1,5 @@
 ---
-title: "12-Year-Old Cancer Patient Spreads Joy by Delivering 124 Easter Baskets to Hospitalized Children"
+title: "12-Year-Old Cancer Patient Delivers 124 Easter Baskets to Hospitalized Children"
 date: 2026-04-05T01:42:19.471286+00:00
 draft: false
 categories: ["health-science", "community"]

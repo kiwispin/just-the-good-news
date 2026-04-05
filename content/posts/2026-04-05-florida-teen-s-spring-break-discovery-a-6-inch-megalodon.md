@@ -1,5 +1,5 @@
 ---
-title: "Florida Teen's Spring Break Discovery: A 6-Inch Megalodon Tooth From Ancient Seas"
+title: "Teen Diver Unearths Massive 6-Inch Megalodon Tooth in Florida"
 date: 2026-04-05T01:42:21.246680+00:00
 draft: false
 categories: ["education"]

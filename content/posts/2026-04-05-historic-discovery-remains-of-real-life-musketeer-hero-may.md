@@ -1,5 +1,5 @@
 ---
-title: "Historic Discovery: Remains of Real-Life Musketeer Hero May Be Found in Dutch Church"
+title: "Researchers discover remains of real-life musketeer hero in Dutch church"
 date: 2026-04-05T01:44:07.013352+00:00
 draft: false
 categories: ["arts-culture"]

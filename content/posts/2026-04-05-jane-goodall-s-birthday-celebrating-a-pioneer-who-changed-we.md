@@ -1,5 +1,5 @@
 ---
-title: "Jane Goodall's Birthday: Celebrating a Pioneer Who Changed How We Understand Animals"
+title: "Jane Goodall Turns 92, Still Changing How We See Animals"
 date: 2026-04-05T01:42:22.700207+00:00
 draft: false
 categories: ["education", "environment"]

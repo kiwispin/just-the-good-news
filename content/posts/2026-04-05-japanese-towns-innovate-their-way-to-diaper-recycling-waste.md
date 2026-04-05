@@ -1,5 +1,5 @@
 ---
-title: "Japanese Towns Innovate Their Way to Diaper Recycling, Turning Waste into Resources"
+title: "Japanese Towns Pioneer Diaper Recycling, Turning Waste Into New Resources"
 date: 2026-04-05T01:42:18.142734+00:00
 draft: false
 categories: ["environment", "tech-for-good"]

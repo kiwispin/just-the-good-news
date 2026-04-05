@@ -1,5 +1,5 @@
 ---
-title: "Half a Million Dollars in Motion: A Global Kindness Initiative Takes Flight"
+title: "Global Kindness Project Is Distributing $500,000 to Spark Change Worldwide"
 date: 2026-04-05T01:42:11.321956+00:00
 draft: false
 categories: ["community", "economy-work"]

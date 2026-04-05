@@ -7,6 +7,9 @@ region: "global"
 source: "Good News Network"
 source_url: "https://www.goodnewsnetwork.org/rescue-bunny-reigns-furry-champ-jenga/"
 summary: "Morty, a rescue rabbit, has found his forever home and now spends his days playing Jenga with his devoted owner. What was once an uncertain future for this furry friend has blossomed into a life filled with playful competition and companionship."
+image: "images/articles/2026-04-05-from-rescue-to-champion-meet-morty-the-jenga-playing-rabbit.jpg"
+image_credit: "Pablo Martinez"
+image_credit_url: "https://unsplash.com/@pablomp"
 ---
 
 Morty, a rescue rabbit, has found his forever home and now spends his days playing Jenga with his devoted owner. What was once an uncertain future for this furry friend has blossomed into a life filled with playful competition and companionship.

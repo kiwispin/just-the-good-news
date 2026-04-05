@@ -7,6 +7,9 @@ region: "us"
 source: "Good News Network"
 source_url: "https://www.goodnewsnetwork.org/autistic-bowler-achieves-dream-with-first-perfect-300-game/"
 summary: "Matt Sipes, an autistic bowler, recently achieved his dream of bowling a perfect 300 game after joining the Professional Bowlers Association. The milestone represents years of dedication and focus, marking a significant personal achievement in his professional bowling career."
+image: "images/articles/2026-04-05-matt-sipes-bowls-perfect-game-after-joining-professional.jpg"
+image_credit: "Ella Christenson"
+image_credit_url: "https://unsplash.com/@ellabella124"
 ---
 
 Matt Sipes, an autistic bowler, recently achieved his dream of bowling a perfect 300 game after joining the Professional Bowlers Association. The milestone represents years of dedication and focus, marking a significant personal achievement in his professional bowling career.

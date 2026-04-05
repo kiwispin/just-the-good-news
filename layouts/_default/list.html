@@ -1,0 +1,31 @@
+{{ define "main" }}
+<div class="page-header">
+  <div class="page-header-inner">
+    <h1 class="page-title">{{ .Title }}</h1>
+    {{ with .Description }}<p class="page-description">{{ . }}</p>{{ end }}
+  </div>
+</div>
+
+{{ partial "category-filter.html" . }}
+
+<section class="articles-section">
+  <div class="articles-inner">
+    {{ if .Pages }}
+      <div class="article-grid" id="article-grid">
+        {{ range .Pages }}
+          {{ partial "article-card.html" . }}
+        {{ end }}
+      </div>
+      <div class="no-results" id="no-results" style="display:none">
+        <p>No stories found for this filter. Try another category!</p>
+      </div>
+    {{ else }}
+      <div class="empty-state">
+        <p>No stories here yet. Check back soon!</p>
+      </div>
+    {{ end }}
+  </div>
+</section>
+
+{{ template "_internal/pagination.html" . }}
+{{ end }}

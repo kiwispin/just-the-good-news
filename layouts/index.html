@@ -1,0 +1,60 @@
+{{ define "main" }}
+{{ $posts := where .Site.RegularPages "Type" "posts" }}
+{{ $featured := index $posts 0 }}
+
+<!-- Hero: featured story -->
+{{ with $featured }}
+<section class="hero-section">
+  <div class="hero-inner">
+    <div class="hero-image">
+      {{ $cat := index .Params.categories 0 | default "community" }}
+      <img src="/images/placeholders/{{ $cat }}.svg"
+           alt="{{ .Title }}"
+           width="800" height="450">
+    </div>
+    <div class="hero-content">
+      <div class="hero-meta">
+        {{ range .Params.categories }}
+          <span class="category-pill category-{{ . }}">{{ . | humanize }}</span>
+        {{ end }}
+        <span class="hero-badge">Featured Story</span>
+      </div>
+      <h1 class="hero-title">
+        <a href="{{ .Permalink }}">{{ .Title }}</a>
+      </h1>
+      <p class="hero-summary">{{ .Params.summary | default .Summary }}</p>
+      <div class="hero-footer">
+        <span class="hero-source">{{ .Params.source }}</span>
+        <span class="hero-date">{{ .Date.Format "2 January 2006" }}</span>
+        {{ with .Params.source_url }}
+          <a href="{{ . }}" class="btn-primary" target="_blank" rel="noopener noreferrer">Read the story →</a>
+        {{ end }}
+      </div>
+    </div>
+  </div>
+</section>
+{{ end }}
+
+<!-- Category filter bar -->
+{{ partial "category-filter.html" . }}
+
+<!-- Article grid -->
+<section class="articles-section">
+  <div class="articles-inner">
+    {{ if gt (len $posts) 1 }}
+      <div class="article-grid" id="article-grid">
+        {{ range after 1 $posts }}
+          {{ partial "article-card.html" . }}
+        {{ end }}
+      </div>
+      <div class="no-results" id="no-results" style="display:none">
+        <p>No stories found for this filter. Try another category!</p>
+      </div>
+    {{ else }}
+      <div class="empty-state">
+        <p>Good news is on its way! Check back soon.</p>
+      </div>
+    {{ end }}
+  </div>
+</section>
+{{ end }}

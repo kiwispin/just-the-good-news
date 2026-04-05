@@ -1,0 +1,21 @@
+baseURL = "https://justthegoodnews.github.io/"
+languageCode = "en-nz"
+title = "Just The Good News"
+
+[params]
+  description = "Your daily dose of what's going right in the world"
+  tagline = "Your daily dose of what's going right"
+  author = "Just The Good News"
+
+[taxonomies]
+  category = "categories"
+  region = "regions"
+
+[outputs]
+  home = ["HTML", "RSS"]
+
+[markup.goldmark.renderer]
+  unsafe = true
+
+[pagination]
+  pagerSize = 12

@@ -1,0 +1,66 @@
+{{ define "main" }}
+<article class="single-article">
+  <div class="single-inner">
+
+    <!-- Back link -->
+    <a href="/" class="back-link">← Back to all stories</a>
+
+    <!-- Article header -->
+    <header class="single-header">
+      <div class="single-meta-top">
+        {{ range .Params.categories }}
+          <span class="category-pill category-{{ . }}">{{ . | humanize }}</span>
+        {{ end }}
+        {{ with .Params.region }}
+          <span class="region-tag">{{ . | upper }}</span>
+        {{ end }}
+        <span class="ai-badge">AI curated</span>
+      </div>
+      <h1 class="single-title">{{ .Title }}</h1>
+      <div class="single-meta-bottom">
+        <span class="single-source">{{ .Params.source }}</span>
+        <time class="single-date" datetime="{{ .Date.Format "2006-01-02" }}">
+          {{ .Date.Format "2 January 2006" }}
+        </time>
+      </div>
+    </header>
+
+    <!-- Hero image -->
+    {{ $cat := index .Params.categories 0 | default "community" }}
+    <div class="single-image">
+      <img src="/images/placeholders/{{ $cat }}.svg"
+           alt="{{ .Title }}"
+           width="800" height="400">
+    </div>
+
+    <!-- Summary -->
+    <div class="single-summary">
+      <p>{{ .Params.summary | default .Summary }}</p>
+    </div>
+
+    <!-- Read original CTA -->
+    {{ with .Params.source_url }}
+    <div class="single-cta">
+      <a href="{{ . }}" class="btn-primary btn-large" target="_blank" rel="noopener noreferrer">
+        Read the full story at {{ $.Params.source }} →
+      </a>
+    </div>
+    {{ end }}
+
+    <!-- Content (if any) -->
+    {{ with .Content }}
+    <div class="single-content">
+      {{ . }}
+    </div>
+    {{ end }}
+
+    <!-- Report link -->
+    <div class="single-report">
+      <a href="mailto:hello@justthegoodnews.org?subject=Report: {{ .Title | urlquery }}" class="report-link">
+        Report an issue with this story
+      </a>
+    </div>
+
+  </div>
+</article>
+{{ end }}

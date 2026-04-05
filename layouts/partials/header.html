@@ -1,0 +1,17 @@
+<header class="site-header">
+  <div class="header-inner">
+    <a href="/" class="site-logo" aria-label="Just The Good News home">
+      <span class="logo-icon">☀</span>
+      <span class="logo-text">Just The Good News</span>
+    </a>
+    <nav class="site-nav" aria-label="Main navigation">
+      <a href="/" class="nav-link">Home</a>
+      <a href="/about/" class="nav-link">About</a>
+      <a href="/index.xml" class="nav-link nav-rss" aria-label="RSS Feed">RSS</a>
+    </nav>
+    <div class="feel-good-counter" aria-label="Total good news stories">
+      <span class="counter-number">{{ len (where .Site.RegularPages "Type" "posts") }}</span>
+      <span class="counter-label">good news stories</span>
+    </div>
+  </div>
+</header>

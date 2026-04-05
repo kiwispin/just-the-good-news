@@ -1,0 +1,43 @@
+{{ $categories := .Params.categories }}
+{{ $region := .Params.region | default "global" }}
+{{ $source := .Params.source }}
+{{ $sourceUrl := .Params.source_url }}
+{{ $summary := .Params.summary | default .Summary }}
+
+<article class="article-card"
+  data-categories="{{ range $categories }}{{ . }} {{ end }}"
+  data-region="{{ $region }}">
+  <div class="card-image">
+    {{ $cat := index $categories 0 | default "community" }}
+    <img src="/images/placeholders/{{ $cat }}.svg"
+         alt="{{ .Title }}"
+         loading="lazy"
+         width="400" height="220">
+    <span class="ai-badge" title="AI-curated content">AI curated</span>
+  </div>
+  <div class="card-body">
+    <div class="card-meta-top">
+      {{ range $categories }}
+        <span class="category-pill category-{{ . }}">{{ . | humanize }}</span>
+      {{ end }}
+      <span class="region-tag">{{ $region | upper }}</span>
+    </div>
+    <h2 class="card-title">
+      <a href="{{ .Permalink }}" class="card-title-link">{{ .Title }}</a>
+    </h2>
+    <p class="card-summary">{{ $summary }}</p>
+    <div class="card-footer">
+      <div class="card-source">
+        <span class="source-name">{{ $source }}</span>
+        <time class="source-date" datetime="{{ .Date.Format "2006-01-02" }}">
+          {{ .Date.Format "2 Jan 2006" }}
+        </time>
+      </div>
+      {{ with $sourceUrl }}
+        <a href="{{ . }}" class="read-original" target="_blank" rel="noopener noreferrer">
+          Read original →
+        </a>
+      {{ end }}
+    </div>
+  </div>
+</article>

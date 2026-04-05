@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "hugo-dev",
+      "runtimeExecutable": "/Users/crayner/.local/bin/hugo",
+      "runtimeArgs": ["server", "--disableFastRender"],
+      "port": 1313
+    }
+  ]
+}

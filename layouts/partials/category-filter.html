@@ -1,13 +1,28 @@
-<section class="category-filter" aria-label="Filter articles by category">
-  <div class="filter-inner">
-    <button class="filter-btn active" data-filter="all" aria-pressed="true">All</button>
-    <button class="filter-btn" data-filter="environment" aria-pressed="false">Environment &amp; Climate</button>
-    <button class="filter-btn" data-filter="health-science" aria-pressed="false">Health &amp; Science</button>
-    <button class="filter-btn" data-filter="community" aria-pressed="false">Community &amp; People</button>
-    <button class="filter-btn" data-filter="tech-for-good" aria-pressed="false">Tech for Good</button>
-    <button class="filter-btn" data-filter="education" aria-pressed="false">Education &amp; Youth</button>
-    <button class="filter-btn" data-filter="arts-culture" aria-pressed="false">Arts &amp; Culture</button>
-    <button class="filter-btn" data-filter="justice-equality" aria-pressed="false">Justice &amp; Equality</button>
-    <button class="filter-btn" data-filter="economy-work" aria-pressed="false">Economy &amp; Work</button>
+<section class="filter-bar" aria-label="Filter articles">
+  <div class="filter-row">
+    <span class="filter-label">Category</span>
+    <div class="filter-pills">
+      <button class="filter-btn cat-btn active" data-category="all" aria-pressed="true">All</button>
+      <button class="filter-btn cat-btn" data-category="environment" aria-pressed="false">Environment &amp; Climate</button>
+      <button class="filter-btn cat-btn" data-category="health-science" aria-pressed="false">Health &amp; Science</button>
+      <button class="filter-btn cat-btn" data-category="community" aria-pressed="false">Community &amp; People</button>
+      <button class="filter-btn cat-btn" data-category="tech-for-good" aria-pressed="false">Tech for Good</button>
+      <button class="filter-btn cat-btn" data-category="education" aria-pressed="false">Education &amp; Youth</button>
+      <button class="filter-btn cat-btn" data-category="arts-culture" aria-pressed="false">Arts &amp; Culture</button>
+      <button class="filter-btn cat-btn" data-category="justice-equality" aria-pressed="false">Justice &amp; Equality</button>
+      <button class="filter-btn cat-btn" data-category="economy-work" aria-pressed="false">Economy &amp; Work</button>
+    </div>
+  </div>
+  <div class="filter-row filter-row--region">
+    <span class="filter-label">Region</span>
+    <div class="filter-pills">
+      <button class="filter-btn region-btn active" data-region="all" aria-pressed="true">All Regions</button>
+      <button class="filter-btn region-btn" data-region="nz" aria-pressed="false">New Zealand</button>
+      <button class="filter-btn region-btn" data-region="au" aria-pressed="false">Australia</button>
+      <button class="filter-btn region-btn" data-region="uk" aria-pressed="false">United Kingdom</button>
+      <button class="filter-btn region-btn" data-region="us" aria-pressed="false">United States</button>
+      <button class="filter-btn region-btn" data-region="ca" aria-pressed="false">Canada</button>
+      <button class="filter-btn region-btn" data-region="global" aria-pressed="false">Global</button>
+    </div>
   </div>
 </section>

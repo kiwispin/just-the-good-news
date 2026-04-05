@@ -1,4 +1,4 @@
-// Client-side category filtering for Just The Good News
+// Client-side category + region filtering for Just The Good News
 (function () {
   'use strict';
 
@@ -6,26 +6,25 @@
   var noResults = document.getElementById('no-results');
   if (!grid) return;
 
-  var buttons = document.querySelectorAll('.filter-btn');
   var cards = grid.querySelectorAll('.article-card');
-  var activeFilter = 'all';
+  var activeCategory = 'all';
+  var activeRegion = 'all';
 
-  function applyFilter(filter) {
-    activeFilter = filter;
+  function applyFilters() {
     var visible = 0;
 
     cards.forEach(function (card) {
-      if (filter === 'all') {
+      var catMatch = activeCategory === 'all' ||
+        (card.getAttribute('data-categories') || '').trim().split(/\s+/).indexOf(activeCategory) !== -1;
+
+      var regionMatch = activeRegion === 'all' ||
+        (card.getAttribute('data-region') || '').trim() === activeRegion;
+
+      if (catMatch && regionMatch) {
         card.classList.remove('hidden');
         visible++;
       } else {
-        var cats = (card.getAttribute('data-categories') || '').trim().split(/\s+/);
-        if (cats.indexOf(filter) !== -1) {
-          card.classList.remove('hidden');
-          visible++;
-        } else {
-          card.classList.add('hidden');
-        }
+        card.classList.add('hidden');
       }
     });
 
@@ -34,19 +33,31 @@
     }
   }
 
-  buttons.forEach(function (btn) {
+  // Category buttons
+  document.querySelectorAll('.cat-btn').forEach(function (btn) {
     btn.addEventListener('click', function () {
-      var filter = btn.getAttribute('data-filter');
-
-      // Update active state
-      buttons.forEach(function (b) {
+      activeCategory = btn.getAttribute('data-category');
+      document.querySelectorAll('.cat-btn').forEach(function (b) {
         b.classList.remove('active');
         b.setAttribute('aria-pressed', 'false');
       });
       btn.classList.add('active');
       btn.setAttribute('aria-pressed', 'true');
+      applyFilters();
+    });
+  });
 
-      applyFilter(filter);
+  // Region buttons
+  document.querySelectorAll('.region-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      activeRegion = btn.getAttribute('data-region');
+      document.querySelectorAll('.region-btn').forEach(function (b) {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
+      applyFilters();
     });
   });
 })();

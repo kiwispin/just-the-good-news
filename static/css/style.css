@@ -238,29 +238,51 @@ img { display: block; max-width: 100%; height: auto; }
 .btn-large { font-size: 1rem; padding: 0.75rem 1.75rem; }
 
 /* ============================================================
-   CATEGORY FILTER BAR
+   FILTER BAR (category + region)
    ============================================================ */
-.category-filter {
+.filter-bar {
   background: var(--bg);
   border-bottom: 1px solid var(--border);
-  padding: 0.75rem 0;
   position: sticky;
   top: 64px;
   z-index: 90;
 }
 
-.filter-inner {
+.filter-row {
   max-width: var(--max-w);
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0.55rem 1.5rem;
   display: flex;
+  align-items: center;
   gap: 0.5rem;
   overflow-x: auto;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
 }
 
-.filter-inner::-webkit-scrollbar { display: none; }
+.filter-row + .filter-row {
+  border-top: 1px solid var(--border);
+}
+
+.filter-row::-webkit-scrollbar { display: none; }
+
+.filter-label {
+  font-family: var(--font-head);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-right: 0.25rem;
+}
+
+.filter-pills {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
 
 .filter-btn {
   font-family: var(--font-head);
@@ -664,7 +686,7 @@ img { display: block; max-width: 100%; height: auto; }
   .articles-section { padding: 1.5rem 1rem; }
   .hero-section { padding: 1.5rem 1rem; }
   .single-article { padding: 1.5rem 1rem; }
-  .filter-inner { padding: 0 1rem; }
+  .filter-row { padding: 0.5rem 1rem; }
 }
 
 /* ============================================================

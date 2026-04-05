@@ -507,6 +507,23 @@ img { display: block; max-width: 100%; height: auto; }
 .single-image { border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
 .single-image img { width: 100%; aspect-ratio: 2/1; object-fit: cover; }
 
+.photo-credit {
+  font-family: var(--font-head);
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-align: right;
+  margin-top: 0.35rem;
+}
+
+.photo-credit a {
+  color: var(--muted);
+  text-decoration: underline;
+}
+
+.photo-credit a:hover {
+  color: var(--teal);
+}
+
 .single-summary {
   font-size: 1.15rem;
   line-height: 1.7;

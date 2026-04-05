@@ -9,7 +9,7 @@
   data-region="{{ $region }}">
   <div class="card-image">
     {{ $cat := index $categories 0 | default "community" }}
-    <img src="/images/placeholders/{{ $cat }}.svg"
+    <img src="{{ (printf "images/placeholders/%s.svg" $cat) | relURL }}"
          alt="{{ .Title }}"
          loading="lazy"
          width="400" height="220">

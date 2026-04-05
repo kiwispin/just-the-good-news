@@ -3,7 +3,7 @@
   <div class="single-inner">
 
     <!-- Back link -->
-    <a href="/" class="back-link">← Back to all stories</a>
+    <a href="{{ "/" | relURL }}" class="back-link">← Back to all stories</a>
 
     <!-- Article header -->
     <header class="single-header">
@@ -28,7 +28,7 @@
     <!-- Hero image -->
     {{ $cat := index .Params.categories 0 | default "community" }}
     <div class="single-image">
-      <img src="/images/placeholders/{{ $cat }}.svg"
+      <img src="{{ (printf "images/placeholders/%s.svg" $cat) | relURL }}"
            alt="{{ .Title }}"
            width="800" height="400">
     </div>

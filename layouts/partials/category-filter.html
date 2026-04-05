@@ -1,28 +1,39 @@
 <section class="filter-bar" aria-label="Filter articles">
-  <div class="filter-row">
-    <span class="filter-label">Category</span>
-    <div class="filter-pills">
-      <button class="filter-btn cat-btn active" data-category="all" aria-pressed="true">All</button>
-      <button class="filter-btn cat-btn" data-category="environment" aria-pressed="false">Environment &amp; Climate</button>
-      <button class="filter-btn cat-btn" data-category="health-science" aria-pressed="false">Health &amp; Science</button>
-      <button class="filter-btn cat-btn" data-category="community" aria-pressed="false">Community &amp; People</button>
-      <button class="filter-btn cat-btn" data-category="tech-for-good" aria-pressed="false">Tech for Good</button>
-      <button class="filter-btn cat-btn" data-category="education" aria-pressed="false">Education &amp; Youth</button>
-      <button class="filter-btn cat-btn" data-category="arts-culture" aria-pressed="false">Arts &amp; Culture</button>
-      <button class="filter-btn cat-btn" data-category="justice-equality" aria-pressed="false">Justice &amp; Equality</button>
-      <button class="filter-btn cat-btn" data-category="economy-work" aria-pressed="false">Economy &amp; Work</button>
+  <div class="filter-bar-inner">
+
+    <div class="filter-cats" role="group" aria-label="Filter by category">
+      <button class="cat-btn active" data-category="all" aria-pressed="true">All</button>
+      <button class="cat-btn" data-category="environment" aria-pressed="false">Environment</button>
+      <button class="cat-btn" data-category="health-science" aria-pressed="false">Health &amp; Science</button>
+      <button class="cat-btn" data-category="community" aria-pressed="false">Community</button>
+      <button class="cat-btn" data-category="tech-for-good" aria-pressed="false">Tech for Good</button>
+      <button class="cat-btn" data-category="education" aria-pressed="false">Education</button>
+      <button class="cat-btn" data-category="arts-culture" aria-pressed="false">Arts &amp; Culture</button>
+      <button class="cat-btn" data-category="justice-equality" aria-pressed="false">Justice</button>
+      <button class="cat-btn" data-category="economy-work" aria-pressed="false">Economy</button>
     </div>
-  </div>
-  <div class="filter-row filter-row--region">
-    <span class="filter-label">Region</span>
-    <div class="filter-pills">
-      <button class="filter-btn region-btn active" data-region="all" aria-pressed="true">All Regions</button>
-      <button class="filter-btn region-btn" data-region="nz" aria-pressed="false">New Zealand</button>
-      <button class="filter-btn region-btn" data-region="au" aria-pressed="false">Australia</button>
-      <button class="filter-btn region-btn" data-region="uk" aria-pressed="false">United Kingdom</button>
-      <button class="filter-btn region-btn" data-region="us" aria-pressed="false">United States</button>
-      <button class="filter-btn region-btn" data-region="ca" aria-pressed="false">Canada</button>
-      <button class="filter-btn region-btn" data-region="global" aria-pressed="false">Global</button>
+
+    <div class="filter-region-wrap">
+      <button class="region-toggle" id="region-toggle" aria-expanded="false" aria-haspopup="listbox">
+        <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+        </svg>
+        <span id="region-label-text">Everywhere</span>
+        <svg class="chevron" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </button>
+
+      <div class="region-dropdown" id="region-dropdown" hidden role="listbox" aria-label="Filter by region">
+        <button class="region-btn active" data-region="all" role="option" aria-selected="true">Everywhere</button>
+        <button class="region-btn" data-region="nz" role="option" aria-selected="false">New Zealand</button>
+        <button class="region-btn" data-region="au" role="option" aria-selected="false">Australia</button>
+        <button class="region-btn" data-region="uk" role="option" aria-selected="false">United Kingdom</button>
+        <button class="region-btn" data-region="us" role="option" aria-selected="false">United States</button>
+        <button class="region-btn" data-region="ca" role="option" aria-selected="false">Canada</button>
+        <button class="region-btn" data-region="global" role="option" aria-selected="false">Global</button>
+      </div>
     </div>
+
   </div>
 </section>

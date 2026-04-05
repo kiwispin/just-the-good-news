@@ -65,7 +65,6 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
-          cname: justthegoodnews.org  # Remove this line if using the default .github.io domain
 
       - name: Log — no new articles
         if: steps.check-changes.outputs.has_changes == 'false'

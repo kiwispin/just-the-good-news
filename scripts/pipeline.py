@@ -349,7 +349,12 @@ def _escape_yaml(text: str) -> str:
     return text.replace("\\", "\\\\").replace('"', '\\"')
 
 
-def create_hugo_post(article: Dict, processed: Dict, dry_run: bool = False) -> Path:
+def create_hugo_post(
+    article: Dict,
+    processed: Dict,
+    image: Optional[Dict] = None,
+    dry_run: bool = False,
+) -> Path:
     """Write a Hugo-compatible markdown file for this article."""
     now = datetime.now(timezone.utc)
     date_prefix = now.strftime("%Y-%m-%d")
@@ -360,6 +365,15 @@ def create_hugo_post(article: Dict, processed: Dict, dry_run: bool = False) -> P
 
     categories_yaml = json.dumps(processed["categories"])
 
+    # Build optional image front matter lines
+    image_yaml = ""
+    if image:
+        image_yaml = (
+            f'\nimage: "{image["path"]}"'
+            f'\nimage_credit: "{_escape_yaml(image["photographer"])}"'
+            f'\nimage_credit_url: "{image["photographer_url"]}"'
+        )
+
     content = f"""---
 title: "{_escape_yaml(processed['headline'])}"
 date: {now.isoformat()}
@@ -368,7 +382,7 @@ categories: {categories_yaml}
 region: "{processed['region']}"
 source: "{_escape_yaml(article['source'])}"
 source_url: "{article['link']}"
-summary: "{_escape_yaml(processed['summary'])}"
+summary: "{_escape_yaml(processed['summary'])}"{image_yaml}
 ---
 
 {processed['summary']}

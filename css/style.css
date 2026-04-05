@@ -26,7 +26,11 @@
   --max-w:   1200px;
 }
 
-html { font-size: 16px; scroll-behavior: smooth; }
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  overflow-x: hidden; /* prevent horizontal scroll from tight header */
+}
 
 body {
   font-family: var(--font-body);
@@ -36,6 +40,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 
 a { color: var(--teal); text-decoration: none; }
@@ -97,7 +102,10 @@ img { display: block; max-width: 100%; height: auto; }
   font-size: 0.9rem;
   color: var(--text);
   text-decoration: none;
-  padding: 0.25rem 0;
+  padding: 0.5rem 0.25rem;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
   border-bottom: 2px solid transparent;
   transition: border-color 0.15s, color 0.15s;
 }
@@ -179,7 +187,7 @@ img { display: block; max-width: 100%; height: auto; }
 
 .hero-title {
   font-family: var(--font-head);
-  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
   font-weight: 700;
   line-height: 1.25;
   color: var(--text);
@@ -291,7 +299,8 @@ img { display: block; max-width: 100%; height: auto; }
   background: transparent;
   border: 1.5px solid var(--border);
   color: var(--muted);
-  padding: 0.35rem 0.9rem;
+  padding: 0.6rem 0.9rem;
+  min-height: 44px;
   border-radius: 99px;
   cursor: pointer;
   white-space: nowrap;
@@ -679,14 +688,25 @@ img { display: block; max-width: 100%; height: auto; }
   .hero-image img { aspect-ratio: 16/7; }
 }
 
+/* Tablet — hide counter so header doesn't crowd */
+@media (max-width: 768px) {
+  .feel-good-counter { display: none; }
+}
+
 @media (max-width: 640px) {
   .logo-text { font-size: 0.95rem; }
-  .feel-good-counter { display: none; }
   .article-grid { grid-template-columns: 1fr; }
   .articles-section { padding: 1.5rem 1rem; }
   .hero-section { padding: 1.5rem 1rem; }
   .single-article { padding: 1.5rem 1rem; }
   .filter-row { padding: 0.5rem 1rem; }
+}
+
+/* Small phones — remove redundant Home link (logo already links home),
+   tighten header padding so nav fits without overflow */
+@media (max-width: 480px) {
+  .nav-home { display: none; }
+  .header-inner { padding: 0 1rem; gap: 1rem; }
 }
 
 /* ============================================================

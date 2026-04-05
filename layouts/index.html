@@ -41,6 +41,13 @@
 </section>
 {{ end }}
 
+<!-- Story count bar -->
+{{ $count := len (where .Site.RegularPages "Type" "posts") }}
+<div class="story-count-bar">
+  <span class="story-count-number">{{ $count }}</span>
+  <span class="story-count-label">good news {{ if eq $count 1 }}story{{ else }}stories{{ end }} and counting</span>
+</div>
+
 <!-- Category filter bar -->
 {{ partial "category-filter.html" . }}
 

@@ -9,10 +9,6 @@
       <a href="{{ "about/" | relURL }}" class="nav-link">About</a>
       <a href="{{ "index.xml" | relURL }}" class="nav-link nav-rss" aria-label="RSS Feed">RSS</a>
     </nav>
-    <div class="feel-good-counter" aria-label="Total good news stories">
-      <span class="counter-number">{{ len (where .Site.RegularPages "Type" "posts") }}</span>
-      <span class="counter-label">good news stories</span>
-    </div>
     <button id="search-btn" class="search-btn" aria-label="Search articles">
       <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>

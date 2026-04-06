@@ -154,6 +154,33 @@ img { display: block; max-width: 100%; height: auto; }
 }
 
 /* ============================================================
+   TODAY BANNER
+   ============================================================ */
+.today-banner {
+  background: rgba(245,158,11,0.07);
+  padding: 0.55rem 1.5rem;
+}
+
+.today-banner-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-head);
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.today-icon { font-size: 0.9rem; line-height: 1; }
+
+.today-text strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* ============================================================
    HERO SECTION
    ============================================================ */
 .hero-section {

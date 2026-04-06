@@ -465,6 +465,89 @@ featured_score: {score}{kids_yaml}{image_yaml}
 
 
 # ---------------------------------------------------------------------------
+# Today's observance  (Checkiday free API — no key required)
+# ---------------------------------------------------------------------------
+
+DATA_DIR = REPO_ROOT / "data"
+
+# Keywords that flag a sombre/awareness day — exclude these from selection
+_SOMBRE_KEYWORDS = [
+    "awareness", "prevention", "remembrance", "memorial", "genocide",
+    "holocaust", "tragedy", "survivors", "reflection on", "day of silence",
+    "day of action", "suicide", "abuse", "violence against", "missing",
+    "slavery", "victims", "ptsd", "trauma",
+]
+
+TODAY_PICK_PROMPT = """\
+Here is a list of today's national days and observances:
+
+{observances}
+
+Pick the single most fun, lighthearted, or delightful observance.
+Prefer: food days, animal days, nature days, quirky or playful days, positive achievements.
+Avoid anything that sounds like a health-awareness day, disease awareness, or sombre topic.
+
+Respond with ONLY the exact name of your chosen observance — nothing else.
+If none are suitable, respond with exactly the word: NONE"""
+
+
+def fetch_today_observance(client, dry_run: bool = False, verbose: bool = False) -> None:
+    """Fetch today's best observance from Checkiday and write data/today.json."""
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    try:
+        resp = requests.get(
+            f"https://www.checkiday.com/api/3/?d={today}",
+            timeout=10,
+            headers={"User-Agent": "JustTheGoodNews/1.0"},
+        )
+        if resp.status_code != 200:
+            print(f"  Checkiday API HTTP {resp.status_code} — skipping today banner")
+            return
+
+        holidays = resp.json().get("holidays", [])
+        names = [h["name"] for h in holidays]
+
+        # Filter out sombre / awareness days
+        def is_sombre(name: str) -> bool:
+            n = name.lower()
+            return any(kw in n for kw in _SOMBRE_KEYWORDS)
+
+        candidates = [n for n in names if not is_sombre(n)]
+
+        if not candidates:
+            print("  Today's observance: no suitable candidates after filtering")
+            return
+
+        if verbose:
+            print(f"  Checkiday: {len(names)} total → {len(candidates)} after filter: {candidates}")
+
+        # Ask Claude to pick the most delightful one
+        prompt = TODAY_PICK_PROMPT.format(observances="\n".join(f"- {c}" for c in candidates))
+        ai_resp = client.messages.create(
+            model="claude-haiku-4-5-20251001",
+            max_tokens=60,
+            messages=[{"role": "user", "content": prompt}],
+        )
+        chosen = ai_resp.content[0].text.strip().strip('"').strip("'")
+
+        if chosen == "NONE" or chosen not in candidates:
+            # Fall back to first candidate if AI response is unexpected
+            chosen = candidates[0]
+
+        print(f"  Today is: {chosen}")
+
+        if not dry_run:
+            DATA_DIR.mkdir(parents=True, exist_ok=True)
+            (DATA_DIR / "today.json").write_text(
+                json.dumps({"date": today, "observance": chosen}, ensure_ascii=False),
+                encoding="utf-8",
+            )
+
+    except Exception as e:
+        print(f"  Today's observance fetch failed: {e}")
+
+
+# ---------------------------------------------------------------------------
 # Step 5: Main pipeline
 # ---------------------------------------------------------------------------
 
@@ -486,6 +569,10 @@ def run_pipeline(dry_run: bool = False, verbose: bool = False) -> None:
     unsplash_key = os.environ.get("UNSPLASH_ACCESS_KEY", "")
     if not unsplash_key and verbose:
         print("  NOTE: UNSPLASH_ACCESS_KEY not set — articles will have no images")
+
+    # --- Today's observance ---
+    print("\n[0/4] Fetching today's observance...")
+    fetch_today_observance(client, dry_run=dry_run, verbose=verbose)
 
     # --- Step 1: Fetch ---
     print("\n[1/4] Fetching RSS feeds...")

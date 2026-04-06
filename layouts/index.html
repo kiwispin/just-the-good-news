@@ -18,6 +18,16 @@
   {{ $featured = $best }}
 {{ end }}
 
+<!-- Today's observance banner -->
+{{ with .Site.Data.today }}{{ with .observance }}
+<div class="today-banner">
+  <div class="today-banner-inner">
+    <span class="today-icon" aria-hidden="true">☀</span>
+    <span class="today-text">Today is <strong>{{ . }}</strong></span>
+  </div>
+</div>
+{{ end }}{{ end }}
+
 <!-- Hero: featured story -->
 {{ with $featured }}
 <section class="hero-section">

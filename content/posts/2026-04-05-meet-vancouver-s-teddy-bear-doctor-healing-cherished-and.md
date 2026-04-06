@@ -10,6 +10,8 @@ summary: "Ruth Hasman has spent her retirement mending hundreds of stuffed anima
 image: "images/articles/2026-04-05-meet-vancouver-s-teddy-bear-doctor-healing-cherished-and.jpg"
 image_credit: "Luke Lawreszuk"
 image_credit_url: "https://unsplash.com/@lukel"
+kids: true
+kids_summary: "Ruth Hasman is a \"Teddy Bear Doctor\" in Vancouver who fixes stuffed animals that families have loved for years—even toys that are over 100 years old! She helps families keep their favorite furry friends looking perfect and makes sure the special memories attached to them stay alive forever."
 ---
 
 Ruth Hasman has spent her retirement mending hundreds of stuffed animals, from beloved mass-produced toys to century-old heirlooms passed through five generations. With her skilled repairs, she's not just restoring plushies—she's preserving the irreplaceable memories and emotional connections families hold dear.

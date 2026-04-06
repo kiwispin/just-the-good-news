@@ -10,6 +10,8 @@ summary: "A major cleanup effort along Buckingham Canal in Tamil Nadu has transf
 image: "images/articles/2026-04-05-indian-canal-gets-a-second-life-from-plastic-wasteland-to.jpg"
 image_credit: "David Clode"
 image_credit_url: "https://unsplash.com/@davidclode"
+kids: true
+kids_summary: "Workers cleaned up a really dirty canal in India and planted 20,000 baby mangrove trees to bring it back to life! Now fish are returning, the water is getting cleaner, and a whole forest is growing where garbage used to float."
 ---
 
 A major cleanup effort along Buckingham Canal in Tamil Nadu has transformed a polluted waterway into a growing mangrove ecosystem. With 20,000 mangrove seedlings now planted along the 1.8-mile stretch, the restored canal is regaining its natural flow and will help purify water while supporting returning fish populations.

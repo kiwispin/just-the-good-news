@@ -10,6 +10,8 @@ summary: "A newly hatched cahow, one of the world's rarest seabirds, has arrived
 image: "images/articles/2026-04-05-rare-cahow-seabird-takes-flight-again-thanks-to-bermuda.jpg"
 image_credit: "Phoebe Dill"
 image_credit_url: "https://unsplash.com/@phoebe_dill"
+kids: true
+kids_summary: "Scientists in Bermuda have helped bring back a super rare seabird called a cahow from almost disappearing forever! A baby cahow just hatched on a special island, which is exciting because it means these amazing birds are making a comeback thanks to people working hard to protect them."
 ---
 
 A newly hatched cahow, one of the world's rarest seabirds, has arrived on Nonsuch Island in Bermuda, marking another hopeful milestone for dedicated conservationists. The 14-acre island has been transformed into a "living museum" where specialists continue their work to bring this endangered national icon back from the brink. The successful hatching represents the ongoing fruits of years of careful restoration and protection work.

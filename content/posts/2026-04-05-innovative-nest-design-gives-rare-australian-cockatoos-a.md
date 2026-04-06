@@ -10,6 +10,8 @@ summary: "Scientists have successfully hatched a chick of the endangered palm co
 image: "images/articles/2026-04-05-innovative-nest-design-gives-rare-australian-cockatoos-a.jpg"
 image_credit: "David Clode"
 image_credit_url: "https://unsplash.com/@davidclode"
+kids: true
+kids_summary: "Scientists created a special artificial nest that helped a rare Australian cockatoo have a healthy baby for the first time—giving this endangered bird species hope for survival! This clever invention shows how people can use creative ideas to protect amazing animals when their natural homes disappear."
 ---
 
 Scientists have successfully hatched a chick of the endangered palm cockatoo species using an artificial nesting solution, marking an important breakthrough in conservation efforts. The palm cockatoo's survival has been threatened by deforestation and the loss of their specialized natural habitat, which takes centuries to develop naturally. This achievement demonstrates how creative conservation strategies can help protect unique species when their wild homes are under pressure.

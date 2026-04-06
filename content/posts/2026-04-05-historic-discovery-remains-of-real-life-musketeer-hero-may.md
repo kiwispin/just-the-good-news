@@ -10,6 +10,8 @@ summary: "Researchers may have located the remains of Charles de Batz de Castelm
 image: "images/articles/2026-04-05-historic-discovery-remains-of-real-life-musketeer-hero-may.jpg"
 image_credit: "M Polinder"
 image_credit_url: "https://unsplash.com/@margot97"
+kids: true
+kids_summary: "Scientists think they found the real bones of a famous soldier named d'Artagnan who lived hundreds of years ago—he inspired an amazing storybook! They're using special tests to prove it's really him, which would solve a mystery that's been unsolved for centuries."
 ---
 
 Researchers may have located the remains of Charles de Batz de Castelmore, the historical figure who inspired Alexandre Dumas' beloved character d'Artagnan, beneath an altar in the Church of Peter and Paul in the Netherlands. DNA testing is now underway to confirm the identity of the remains, potentially solving a centuries-old historical mystery and connecting readers with the real person behind one of literature's most iconic heroes.

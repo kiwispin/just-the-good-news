@@ -10,6 +10,8 @@ summary: "When loggerhead turtle Syrena arrived at a rescue facility barely clin
 image: "images/articles/2026-04-05-marine-biologist-s-three-month-mission-transforms-heavily-s.jpg"
 image_credit: "Kris-Mikael Krister"
 image_credit_url: "https://unsplash.com/@kmkr"
+kids: true
+kids_summary: "A marine biologist named Tabitha spent three months helping a sea turtle named Syrena get healthy again by removing hundreds of barnacles covering her shell. Now Syrena is strong and happy, swimming free in the ocean like a brand-new turtle!"
 ---
 
 When loggerhead turtle Syrena arrived at a rescue facility barely clinging to life, covered in hundreds of barnacles, marine biologist Tabitha Siegfried committed 92 days to her recovery. Through patient, dedicated care, Syrena was restored to health and successfully returned to the ocean—a transformation so complete that she's almost unrecognizable from her arrival.

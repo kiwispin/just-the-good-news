@@ -10,6 +10,8 @@ summary: "From groundbreaking progress in protecting migratory species to signif
 image: "images/articles/2026-04-05-this-week-s-wins-wildlife-migration-thrives-africa-advances.jpg"
 image_credit: "Sweder Breet"
 image_credit_url: "https://unsplash.com/@sweder_etc"
+kids: true
+kids_summary: "Animals that travel thousands of miles every year are getting better protection, so they can safely make their amazing journeys across the world. Meanwhile, solar panels are getting better at catching the sun's power, which helps keep our planet healthy!"
 ---
 
 From groundbreaking progress in protecting migratory species to significant safety improvements across African roads, this week brought meaningful progress on multiple fronts. Solar energy technology also achieved a remarkable milestone, demonstrating that innovation and environmental stewardship are moving forward together.

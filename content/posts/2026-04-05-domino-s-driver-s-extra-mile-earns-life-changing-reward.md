@@ -10,6 +10,8 @@ summary: "An Idaho resident was moved to generosity after a Ring video captured 
 image: "images/articles/2026-04-05-domino-s-driver-s-extra-mile-earns-life-changing-reward.jpg"
 image_credit: "Miroslav Denkov"
 image_credit_url: "https://unsplash.com/@mdenkov"
+kids: true
+kids_summary: "A pizza delivery driver worked so hard to get someone's order just right—even going to the grocery store to make sure everything was perfect! The happy customer gave him such a big tip that it changed his life and showed how much people appreciate kindness and hard work."
 ---
 
 An Idaho resident was moved to generosity after a Ring video captured a nearly 70-year-old delivery driver going above and beyond—even stopping at a grocery store to fulfill an order perfectly. The customer's appreciation transformed into a substantial tip that recognized the driver's dedication and conscientiousness.

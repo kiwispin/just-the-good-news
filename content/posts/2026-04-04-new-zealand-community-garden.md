@@ -10,6 +10,8 @@ summary: "What was once a graffiti-covered vacant lot in Māngere, Auckland, has
 image: "images/articles/2026-04-04-new-zealand-community-garden.jpg"
 image_credit: "Steve Adams"
 image_credit_url: "https://unsplash.com/@sradams57"
+kids: true
+kids_summary: "A empty lot covered in graffiti turned into an amazing garden where families grow fresh vegetables and learn to cook together! Now the garden feeds 200 families and even gave jobs to people in the neighborhood."
 ---
 
 What was once a graffiti-covered vacant lot in Māngere, Auckland, has become a vibrant community garden producing over 800 kilograms of fresh vegetables each month. Launched by a group of Pacific Island families with support from local council, the garden now serves 200 households and runs free weekly cooking workshops. The project has also created eight part-time paid roles for local residents and sparked three similar initiatives in neighbouring suburbs.

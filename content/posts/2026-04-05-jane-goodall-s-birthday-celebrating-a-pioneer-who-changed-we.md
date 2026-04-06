@@ -10,6 +10,8 @@ summary: "Today marks the 92nd birthday of Dame Jane Goodall, the renowned Briti
 image: "images/articles/2026-04-05-jane-goodall-s-birthday-celebrating-a-pioneer-who-changed-we.jpg"
 image_credit: "Umanoide"
 image_credit_url: "https://unsplash.com/@umanoide"
+kids: true
+kids_summary: "Jane Goodall is a scientist who discovered that chimpanzees are super smart and can use tools just like humans do—and today she's turning 92! Her amazing discoveries helped us understand animals better and inspired people all around the world to protect wildlife and nature."
 ---
 
 Today marks the 92nd birthday of Dame Jane Goodall, the renowned British primatologist whose groundbreaking 1960 observations of chimpanzees using tools revolutionized our understanding of animal intelligence. Her discovery that animals could modify objects for specific purposes challenged scientific thinking and opened new avenues for studying wildlife behavior and conservation.

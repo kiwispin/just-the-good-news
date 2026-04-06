@@ -10,6 +10,8 @@ summary: "Five lifelong friends from Santa Barbara have maintained an extraordin
 image: "images/articles/2026-04-05-four-decades-of-friendship-california-friends-complete-42-of.jpg"
 image_credit: "Randy Laybourne"
 image_credit_url: "https://unsplash.com/@randylaybourne"
+kids: true
+kids_summary: "Five best friends have taken the exact same photo together every single year for 42 years—that's like taking a picture every year since before you were even born! Now they're in their 60s and still do it, showing that real friendships can last your whole life long."
 ---
 
 Five lifelong friends from Santa Barbara have maintained an extraordinary bond by taking an identical photo every year since 1982, creating a visual timeline of their friendship spanning over four decades. Now in their 60s, John Wardlaw, Mark Rumer-Cleary, Dallas Burney, John Molony, and JD Dickson continue their cherished tradition at the same cabin retreat where it all began, proving that genuine friendship endures through life's changes.

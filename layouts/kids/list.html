@@ -1,0 +1,29 @@
+{{ define "main" }}
+{{ $kids := where .Site.RegularPages "Params.kids" true }}
+
+<div class="kids-hero">
+  <div class="kids-hero-inner">
+    <p class="kids-hero-eyebrow">⭐</p>
+    <h1 class="kids-hero-title">Good News for Kids</h1>
+    <p class="kids-hero-subtitle">
+      Stories that will make you smile — picked especially for curious minds aged 8 to 14.
+    </p>
+  </div>
+</div>
+
+<section class="kids-section">
+  <div class="kids-section-inner">
+    {{ if $kids }}
+      <div class="kids-grid">
+        {{ range $kids }}
+          {{ partial "kids-card.html" . }}
+        {{ end }}
+      </div>
+    {{ else }}
+      <div class="kids-empty">
+        <p>⭐ Kid-friendly stories are on their way — check back soon!</p>
+      </div>
+    {{ end }}
+  </div>
+</section>
+{{ end }}

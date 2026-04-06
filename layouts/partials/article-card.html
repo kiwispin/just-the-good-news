@@ -3,13 +3,10 @@
 {{ $source := .Params.source }}
 {{ $sourceUrl := .Params.source_url }}
 {{ $summary := .Params.summary | default .Summary }}
-{{ $kidsSummary := .Params.kids_summary }}
-{{ $isKids := .Params.kids | default false }}
 
 <article class="article-card"
   data-categories="{{ range $categories }}{{ . }} {{ end }}"
-  data-region="{{ $region }}"
-  data-kids="{{ if $isKids }}true{{ else }}false{{ end }}">
+  data-region="{{ $region }}">
   <div class="card-image">
     {{ $cat := index $categories 0 | default "community" }}
     {{ if .Params.image }}
@@ -30,15 +27,11 @@
         <span class="category-pill category-{{ . }}">{{ . | humanize }}</span>
       {{ end }}
       <span class="region-tag">{{ $region | upper }}</span>
-      {{ if $isKids }}<span class="kids-badge">⭐ Kids</span>{{ end }}
     </div>
     <h2 class="card-title">
       <a href="{{ .Permalink }}" class="card-title-link">{{ .Title }}</a>
     </h2>
-    <p class="card-summary js-summary">{{ $summary }}</p>
-    {{ if and $isKids $kidsSummary }}
-    <p class="card-summary js-kids-summary" hidden>{{ $kidsSummary }}</p>
-    {{ end }}
+    <p class="card-summary">{{ $summary }}</p>
     <div class="card-footer">
       <div class="card-source">
         <span class="source-name">{{ $source }}</span>

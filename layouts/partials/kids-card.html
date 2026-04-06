@@ -1,0 +1,33 @@
+{{ $categories := .Params.categories }}
+{{ $source    := .Params.source }}
+{{ $sourceUrl := .Params.source_url }}
+{{ $summary   := .Params.kids_summary | default .Params.summary | default .Summary }}
+{{ $cat       := index $categories 0 | default "community" }}
+
+<article class="kids-card">
+  <div class="kids-card-image">
+    {{ if .Params.image }}
+      <img src="{{ .Params.image | relURL }}"
+           alt="{{ .Title }}"
+           loading="lazy">
+    {{ else }}
+      <img src="{{ (printf "images/placeholders/%s.svg" $cat) | relURL }}"
+           alt="{{ .Title }}"
+           loading="lazy">
+    {{ end }}
+  </div>
+  <div class="kids-card-body">
+    <h2 class="kids-card-title">
+      <a href="{{ .Permalink }}">{{ .Title }}</a>
+    </h2>
+    <p class="kids-card-summary">{{ $summary }}</p>
+    <div class="kids-card-footer">
+      <span class="kids-card-source">{{ $source }}</span>
+      {{ with $sourceUrl }}
+        <a href="{{ . }}" class="read-original" target="_blank" rel="noopener noreferrer">
+          Read the full story →
+        </a>
+      {{ end }}
+    </div>
+  </div>
+</article>

@@ -7,7 +7,7 @@
     <nav class="footer-nav" aria-label="Footer navigation">
       <a href="{{ "about/" | relURL }}">About</a>
       <a href="{{ "index.xml" | relURL }}">RSS Feed</a>
-      <a href="mailto:hello@justthegoodnews.org">Contact</a>
+      <a href="mailto:{{ .Site.Params.email }}">Contact</a>
     </nav>
     <p class="footer-mission">We aggregate verified good news from around the world. Content is AI-curated and AI-summarised. We are not a primary news source.</p>
     <p class="footer-legal">All articles link to their original sources. &copy; {{ now.Year }} Just The Good News. Built with ❤ and Hugo.</p>

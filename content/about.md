@@ -34,4 +34,4 @@ We pull from dedicated positive news outlets including Positive.News, Good News 
 
 ## Contact
 
-Found a great story we missed? Spotted an error? Get in touch: [hello@justthegoodnews.org](mailto:hello@justthegoodnews.org)
+Found a great story we missed? Spotted an error? Get in touch: [hello@justthegood.news](mailto:hello@justthegood.news)

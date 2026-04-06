@@ -67,7 +67,7 @@
 
     <!-- Report link -->
     <div class="single-report">
-      <a href="mailto:hello@justthegoodnews.org?subject=Report: {{ .Title | urlquery }}" class="report-link">
+      <a href="mailto:{{ .Site.Params.email }}?subject=Report: {{ .Title | urlquery }}" class="report-link">
         Report an issue with this story
       </a>
     </div>

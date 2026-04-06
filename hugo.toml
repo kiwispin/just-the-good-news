@@ -6,6 +6,7 @@ title = "Just The Good News"
   description = "Your daily dose of what's going right in the world"
   tagline = "Your daily dose of what's going right"
   author = "Just The Good News"
+  email = "hello@justthegood.news"
 
 [taxonomies]
   category = "categories"

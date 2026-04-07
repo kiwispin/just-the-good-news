@@ -34,6 +34,7 @@ UNSPLASH_API = "https://api.unsplash.com"
 
 MIN_KIDS_SCORE = 7
 MAX_ARTICLES_PER_RUN = 8
+MAX_CANDIDATES_PER_RUN = 40
 MAX_AGE_DAYS = 7
 
 VALID_CATEGORIES = [
@@ -115,6 +116,7 @@ def fetch_unsplash_image(
             return None
 
         photo = results[0]
+        photo_id = photo["id"]
         download_location = photo["links"]["download_location"]
         img_url = photo["urls"]["regular"]
         photographer = photo["user"]["name"]
@@ -146,6 +148,7 @@ def fetch_unsplash_image(
             "path": f"images/kids/{slug}.jpg",
             "photographer": photographer,
             "photographer_url": photographer_url,
+            "unsplash_id": photo_id,
         }
 
     except Exception as e:
@@ -373,6 +376,7 @@ def run_pipeline(dry_run: bool = False, verbose: bool = False) -> None:
     print("\n[1/4] Fetching RSS feeds...")
     existing_urls = load_published_urls()
     candidates = fetch_candidates(existing_urls, verbose=verbose)
+    candidates = candidates[:MAX_CANDIDATES_PER_RUN]
 
     if not candidates:
         print("  No new candidates found. Pipeline complete.")

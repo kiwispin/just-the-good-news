@@ -1,29 +1,85 @@
 {{ define "main" }}
-{{ $kids := where .Site.RegularPages "Params.kids" true }}
+{{ $pages := .Pages.ByDate.Reverse }}
 
-<div class="kids-hero">
-  <div class="kids-hero-inner">
-    <p class="kids-hero-eyebrow">⭐</p>
-    <h1 class="kids-hero-title">Good News for Kids</h1>
-    <p class="kids-hero-subtitle">
-      Stories that will make you smile — picked especially for curious minds aged 8 to 14.
-    </p>
+{{/* Category emoji map */}}
+{{ $emoji := dict
+  "Animals"   "🦁"
+  "Space"     "🚀"
+  "Dinosaurs" "🦕"
+  "Records"   "🏆"
+  "Inventors" "💡"
+  "Sport"     "🏅"
+  "Nature"    "🌿"
+  "Science"   "🔬"
+  "Funny"     "😄"
+}}
+
+<div class="kids-page">
+
+  {{/* ── Banner ── */}}
+  <div class="kids-banner">
+    <div class="kids-banner-inner">
+      <div class="kids-banner-pill">✨ Good News for Kids</div>
+      <h1 class="kids-banner-title">Today's Amazing Stories</h1>
+      <p class="kids-banner-sub">Fresh every morning — brilliant things happening in our world</p>
+    </div>
   </div>
-</div>
 
-<section class="kids-section">
-  <div class="kids-section-inner">
-    {{ if $kids }}
-      <div class="kids-grid">
-        {{ range $kids }}
-          {{ partial "kids-card.html" . }}
-        {{ end }}
-      </div>
+  <div class="kids-content">
+
+    {{ if $pages }}
+
+      {{/* ── Hero card ── */}}
+      {{ with index $pages 0 }}
+        {{ $cat := .Params.category | default "Science" }}
+        {{ $em  := index $emoji $cat | default "🔬" }}
+        <div class="kids-hero-card">
+          <div class="kids-hero-image">
+            {{ if .Params.image }}
+              <img src="{{ .Params.image | relURL }}" alt="{{ .Title }}" loading="eager">
+            {{ else }}
+              <div class="kids-hero-image-placeholder">{{ $em }}</div>
+            {{ end }}
+            <div class="kids-cat-badge kids-cat-badge--{{ $cat | lower }}">
+              <span>{{ $em }}</span>
+              <span>{{ $cat | upper }}</span>
+            </div>
+            <div class="kids-top-badge">⭐ Top Story</div>
+          </div>
+          <div class="kids-hero-body">
+            <h2 class="kids-hero-title">
+              <a href="{{ .Permalink }}">{{ .Title }}</a>
+            </h2>
+            <p class="kids-hero-summary">{{ .Params.summary }}</p>
+            <a href="{{ .Permalink }}" class="kids-hero-btn">Read this story →</a>
+          </div>
+        </div>
+      {{ end }}
+
+      {{/* ── Grid of remaining stories ── */}}
+      {{ if gt (len $pages) 1 }}
+        <div class="kids-grid">
+          {{ range after 1 $pages }}
+            {{ $cat := .Params.category | default "Science" }}
+            {{ $em  := index $emoji $cat | default "🔬" }}
+            {{ partial "kids-card.html" (dict "Page" . "Cat" $cat "Emoji" $em) }}
+          {{ end }}
+        </div>
+      {{ end }}
+
     {{ else }}
+      {{/* ── Empty state ── */}}
       <div class="kids-empty">
-        <p>⭐ Kid-friendly stories are on their way — check back soon!</p>
+        <div class="kids-empty-icon">🌟</div>
+        <p class="kids-empty-text">Amazing stories are on their way — check back tomorrow morning!</p>
       </div>
     {{ end }}
+
+    <p class="kids-footer-note">
+      New stories every morning ✨ &nbsp;—&nbsp;
+      <a href="{{ "" | relURL }}">back to main site</a>
+    </p>
+
   </div>
-</section>
+</div>
 {{ end }}

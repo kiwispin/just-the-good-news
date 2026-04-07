@@ -1,0 +1,76 @@
+{{ define "main" }}
+{{ $cat   := .Params.category | default "Science" }}
+{{ $src   := .Params.source_name | default .Params.source }}
+{{ $srcUrl := .Params.source_url }}
+
+{{ $emoji := dict
+  "Animals"   "🦁"
+  "Space"     "🚀"
+  "Dinosaurs" "🦕"
+  "Records"   "🏆"
+  "Inventors" "💡"
+  "Sport"     "🏅"
+  "Nature"    "🌿"
+  "Science"   "🔬"
+  "Funny"     "😄"
+}}
+{{ $em := index $emoji $cat | default "🔬" }}
+
+<div class="kids-page kids-single-page">
+  <div class="kids-single-wrap">
+
+    <a href="{{ "kids/" | relURL }}" class="kids-back-link">← Back to Kids</a>
+
+    {{/* Category badge */}}
+    <div class="kids-cat-badge kids-cat-badge--{{ $cat | lower }}">
+      <span>{{ $em }}</span>
+      <span>{{ $cat | upper }}</span>
+    </div>
+
+    {{/* Headline */}}
+    <h1 class="kids-single-title">{{ .Title }}</h1>
+
+    {{/* Meta */}}
+    <div class="kids-single-meta">
+      <span>{{ .Date.Format "Monday 2 January 2006" }}</span>
+      {{ with $src }}<span class="kids-single-meta-sep">•</span><span>{{ . }}</span>{{ end }}
+    </div>
+
+    {{/* Hero image */}}
+    {{ if .Params.image }}
+      <div class="kids-single-image">
+        <img src="{{ .Params.image | relURL }}" alt="{{ .Title }}" loading="eager">
+        {{ if .Params.image_credit }}
+          <p class="kids-single-image-credit">
+            Photo: <a href="{{ .Params.image_credit_url }}" target="_blank" rel="noopener">{{ .Params.image_credit }}</a> / Unsplash
+          </p>
+        {{ end }}
+      </div>
+    {{ end }}
+
+    {{/* Article body */}}
+    <div class="kids-single-body">
+      {{ .Params.summary }}
+    </div>
+
+    {{/* Source attribution */}}
+    {{ with $srcUrl }}
+      <div class="kids-single-source">
+        <div class="kids-single-source-label">Original source</div>
+        <div class="kids-single-source-row">
+          <span class="kids-single-source-name">{{ $src }}</span>
+          <a href="{{ . }}" target="_blank" rel="noopener noreferrer" class="kids-single-source-link">
+            Read original →
+          </a>
+        </div>
+      </div>
+    {{ end }}
+
+    {{/* CTA back */}}
+    <div class="kids-single-cta">
+      <a href="{{ "kids/" | relURL }}" class="kids-hero-btn">← More great stories</a>
+    </div>
+
+  </div>
+</div>
+{{ end }}

@@ -3,7 +3,7 @@
 
 {{/* Featured: highest featured_score among posts from the last 48 hours.
      Fall back to the most recent post if none have the field yet. */}}
-{{ $cutoff := now.Add (mul -48 (mul 60 (mul 60 1000000000))) }}
+{{ $cutoff := now.Add (duration "h" -48) }}
 {{ $recent := where $posts "Date" "ge" $cutoff }}
 {{ $featured := index $posts 0 }}
 {{ if $recent }}

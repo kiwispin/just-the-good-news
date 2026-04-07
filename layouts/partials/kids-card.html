@@ -1,33 +1,28 @@
-{{ $categories := .Params.categories }}
-{{ $source    := .Params.source }}
-{{ $sourceUrl := .Params.source_url }}
-{{ $summary   := .Params.kids_summary | default .Params.summary | default .Summary }}
-{{ $cat       := index $categories 0 | default "community" }}
+{{ $page  := .Page }}
+{{ $cat   := .Cat }}
+{{ $em    := .Emoji }}
 
 <article class="kids-card">
-  <div class="kids-card-image">
-    {{ if .Params.image }}
-      <img src="{{ .Params.image | relURL }}"
-           alt="{{ .Title }}"
-           loading="lazy">
-    {{ else }}
-      <img src="{{ (printf "images/placeholders/%s.svg" $cat) | relURL }}"
-           alt="{{ .Title }}"
-           loading="lazy">
-    {{ end }}
-  </div>
-  <div class="kids-card-body">
-    <h2 class="kids-card-title">
-      <a href="{{ .Permalink }}">{{ .Title }}</a>
-    </h2>
-    <p class="kids-card-summary">{{ $summary }}</p>
-    <div class="kids-card-footer">
-      <span class="kids-card-source">{{ $source }}</span>
-      {{ with $sourceUrl }}
-        <a href="{{ . }}" class="read-original" target="_blank" rel="noopener noreferrer">
-          Read the full story →
-        </a>
+  <a href="{{ $page.Permalink }}" class="kids-card-image-link">
+    <div class="kids-card-image">
+      {{ if $page.Params.image }}
+        <img src="{{ $page.Params.image | relURL }}"
+             alt="{{ $page.Title }}"
+             loading="lazy">
+      {{ else }}
+        <div class="kids-card-image-placeholder">{{ $em }}</div>
       {{ end }}
+      <div class="kids-cat-badge kids-cat-badge--{{ $cat | lower }} kids-cat-badge--sm">
+        <span>{{ $em }}</span>
+        <span>{{ $cat | upper }}</span>
+      </div>
     </div>
+  </a>
+  <div class="kids-card-body">
+    <h3 class="kids-card-title">
+      <a href="{{ $page.Permalink }}">{{ $page.Title }}</a>
+    </h3>
+    <p class="kids-card-summary">{{ $page.Params.summary }}</p>
+    <a href="{{ $page.Permalink }}" class="kids-card-link">Read this story →</a>
   </div>
 </article>

@@ -40,7 +40,7 @@
     {{ if .Params.image }}
       <div class="kids-single-image">
         <img src="{{ .Params.image | relURL }}" alt="{{ .Title }}" loading="eager">
-        {{ if .Params.image_credit }}
+        {{ if and .Params.image_credit .Params.image_credit_url }}
           <p class="kids-single-image-credit">
             Photo: <a href="{{ .Params.image_credit_url }}" target="_blank" rel="noopener">{{ .Params.image_credit }}</a> / Unsplash
           </p>
@@ -50,7 +50,7 @@
 
     {{/* Article body */}}
     <div class="kids-single-body">
-      {{ .Params.summary }}
+      {{ .Params.summary | safeHTML }}
     </div>
 
     {{/* Source attribution */}}

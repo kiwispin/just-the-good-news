@@ -277,62 +277,6 @@ def score_article(article: Dict, client) -> Dict:
 
 
 # ---------------------------------------------------------------------------
-# Step 2b: Evaluate kid-friendliness for articles that pass scoring
-# ---------------------------------------------------------------------------
-
-KIDS_THRESHOLD = 7
-
-KIDS_PROMPT = """\
-A positive news article has already been approved for publication. Evaluate
-whether it is appropriate and genuinely interesting for children aged 8–14.
-
-Headline: {headline}
-Summary: {summary}
-
-Score 1–10 for kid-friendliness. Exclude articles involving:
-- Crime or violence (even if the outcome is positive)
-- Illness, injury, or death (even if someone recovered)
-- Financial hardship, bankruptcy, or poverty
-- Complex political or geopolitical topics
-- Natural disasters (even if aid was provided)
-- Adult relationship issues
-
-High-scoring articles (7+) feature things like:
-- Animals, nature, space, sports, inventions, art, acts of kindness, records broken
-- Stories a child could retell excitedly to a friend
-- Concepts an 8-year-old can understand without adult context
-
-If the score is 7 or higher, also write a 2-sentence summary for ages 8–14:
-- Simple, vivid, enthusiastic language — short sentences
-- Focus on the "wow" or heartwarming element
-- No jargon, no political framing, no nuance required
-
-Respond ONLY with valid JSON (no markdown):
-{{"kids_score": <integer 1-10>, "kids_summary": "<2-sentence summary, or empty string if score < 7>"}}"""
-
-
-def evaluate_kids(processed: Dict, client) -> Dict:
-    """Ask Claude if an article is suitable for kids. Returns {kids, kids_summary}."""
-    prompt = KIDS_PROMPT.format(
-        headline=processed["headline"],
-        summary=processed["summary"],
-    )
-    response = client.messages.create(
-        model="claude-haiku-4-5-20251001",
-        max_tokens=300,
-        messages=[{"role": "user", "content": prompt}],
-    )
-    raw = response.content[0].text.strip()
-    raw = re.sub(r"^```(?:json)?\s*|\s*```$", "", raw, flags=re.MULTILINE).strip()
-    result = json.loads(raw)
-    score = int(result.get("kids_score", 0))
-    kids_summary = result.get("kids_summary", "").strip() if score >= KIDS_THRESHOLD else ""
-    return {
-        "kids": score >= KIDS_THRESHOLD,
-        "kids_summary": kids_summary,
-    }
-
-
 # ---------------------------------------------------------------------------
 # Step 3: Summarise and categorise passing articles
 # ---------------------------------------------------------------------------
@@ -423,14 +367,6 @@ def create_hugo_post(
     # Positivity score (saved so the homepage can feature the best story)
     score = article.get("_score", 0)
 
-    # Kids fields
-    kids_yaml = ""
-    if processed.get("kids"):
-        kids_yaml = (
-            f'\nkids: true'
-            f'\nkids_summary: "{_escape_yaml(processed.get("kids_summary", ""))}"'
-        )
-
     # Build optional image front matter lines
     image_yaml = ""
     if image:
@@ -449,7 +385,7 @@ region: "{processed['region']}"
 source: "{_escape_yaml(article['source'])}"
 source_url: "{article['link']}"
 summary: "{_escape_yaml(processed['summary'])}"
-featured_score: {score}{kids_yaml}{image_yaml}
+featured_score: {score}{image_yaml}
 ---
 
 {processed['summary']}
@@ -617,17 +553,6 @@ def run_pipeline(dry_run: bool = False, verbose: bool = False) -> None:
         try:
             processed = process_article(article, client)
 
-            # Kids suitability evaluation
-            try:
-                kids_data = evaluate_kids(processed, client)
-                processed["kids"]         = kids_data["kids"]
-                processed["kids_summary"] = kids_data.get("kids_summary", "")
-            except Exception as e:
-                processed["kids"]         = False
-                processed["kids_summary"] = ""
-                if verbose:
-                    print(f"    Kids eval error: {e}")
-
             # Fetch Unsplash image — try progressively simpler queries
             slug = slugify(processed["headline"], max_length=60, word_boundary=True)
             date_prefix = datetime.now(timezone.utc).strftime("%Y-%m-%d")
@@ -679,7 +604,6 @@ def run_pipeline(dry_run: bool = False, verbose: bool = False) -> None:
                 print(f"  {'(dry run) ' if dry_run else ''}→ {filepath.name}")
                 print(f"    Headline:   {processed['headline']}")
                 print(f"    Categories: {processed['categories']}  Region: {processed['region']}")
-                print(f"    Kids:       {'✓ kid-friendly' if processed.get('kids') else '✗'}")
                 print(f"    Image:      {'✓ ' + image['photographer'] if image else '✗ none'}")
             else:
                 print(f"  {'(dry run) ' if dry_run else ''}→ {filepath.name}")

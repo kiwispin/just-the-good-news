@@ -106,24 +106,7 @@ def fetch_unsplash_image(
                 print(f"    Unsplash: no results for: {query[:50]}")
             return None
 
-        # Relevance check: ensure the photo actually matches the query.
-        # Unsplash returns *something* even when the match is poor — a polar bear
-        # for "tarantula spider", chips for "computer chip". Reject if none of the
-        # meaningful query words appear in the photo's alt_description or description.
-        query_keywords = {w.lower() for w in query.split() if len(w) > 3}
-        photo = None
-        for candidate in results:
-            alt = (candidate.get("alt_description") or "").lower()
-            desc = (candidate.get("description") or "").lower()
-            photo_text = alt + " " + desc
-            if not query_keywords or any(kw in photo_text for kw in query_keywords):
-                photo = candidate
-                break
-        if photo is None:
-            if verbose:
-                best_alt = (results[0].get("alt_description") or "no description")[:60]
-                print(f"    Unsplash: relevance mismatch for {query!r} — best photo: {best_alt!r}")
-            return None
+        photo = results[0]
         photo_id = photo["id"]
         download_location = photo["links"]["download_location"]
         img_url = photo["urls"]["regular"]
@@ -290,21 +273,12 @@ Use active voice. Explain any technical terms in plain English inside brackets.
 End the summary with something that sparks curiosity or makes the reader smile.
 
 Also write:
-4. An image_query - 2-3 words for an Unsplash photo search that will find the RIGHT image.
-   RULES (follow exactly):
-   - Describe only what should PHYSICALLY APPEAR in the photo — concrete, visible, real things
-   - NO metaphors or figures of speech ("hotter than lava" is a metaphor — do NOT use "lava")
-   - NO ambiguous words that mean two different things: "chip" (food or circuit?), "bat" (animal or sport?),
-     "seal" (animal or action?), "crane" (bird or machine?), "bear" (animal or stock market?)
-   - For technology/science: describe what it LOOKS LIKE, not what it does:
-     "circuit board close-up" not "computer chip", "telescope observatory" not "space research"
-   - For animals: use the common English name, not Latin species names: "tarantula spider" not "Satyrex"
-   - For space: be specific: "saturn rings planet" not just "space"
-   - If the subject is microscopic, abstract, or so rare Unsplash won't have it — write "" (empty)
-   Good examples: "tarantula spider", "giant panda cub", "circuit board close-up", "coral reef fish",
-   "cheetah running savanna", "astronaut spacewalk", "T-rex skeleton museum", "emperor penguin colony"
+4. An image_search - describe what a photo illustrating this story would literally show.
+   Plain words, physical subject only. What would you actually see in the photo?
+   Examples: "galaxy in space", "tarantula spider", "smartphone", "tropical freshwater fish",
+   "polar bear in snow", "child playing chess", "dinosaur fossil bones", "coral reef"
 
-Reply with JSON: {{"headline": "...", "summary": "...", "category": "...", "image_query": "..."}}
+Reply with JSON: {{"headline": "...", "summary": "...", "category": "...", "image_search": "..."}}
 
 Article title: {title}
 Article text: {text}"""
@@ -332,7 +306,7 @@ def rewrite_article(article: Dict, client) -> Dict:
         "headline": result.get("headline", article["title"])[:80],
         "summary": result.get("summary", "")[:600],
         "category": category,
-        "image_query": result.get("image_query", "")[:80],
+        "image_search": result.get("image_search", "")[:120],
     }
 
 
@@ -448,18 +422,15 @@ def run_pipeline(dry_run: bool = False, verbose: bool = False) -> None:
         try:
             rewritten = rewrite_article(article, client)
 
-            # Single specific query — no generic fallbacks.
-            # A wrong image is worse than no image; the card shows an emoji placeholder
-            # when image is None, which is always better than a mismatched stock photo.
-            image_query = rewritten.get("image_query", "").strip()
+            image_search = rewritten.get("image_search", "").strip()
 
             slug = slugify(rewritten["headline"], max_length=60, word_boundary=True)
             date_prefix = datetime.now(timezone.utc).strftime("%Y-%m-%d")
             img_slug = f"{date_prefix}-{slug}"
 
             image = None
-            if unsplash_key and image_query:
-                image = fetch_unsplash_image(image_query, img_slug, unsplash_key, verbose=verbose)
+            if unsplash_key and image_search:
+                image = fetch_unsplash_image(image_search, img_slug, unsplash_key, verbose=verbose)
 
             filepath = create_kids_post(article, rewritten, image=image, dry_run=dry_run)
 
@@ -491,6 +462,124 @@ def run_pipeline(dry_run: bool = False, verbose: bool = False) -> None:
 
 
 # ---------------------------------------------------------------------------
+# Image reprocessing — update images on already-published articles
+# ---------------------------------------------------------------------------
+
+IMAGE_SEARCH_PROMPT = """\
+You are given a news story title and summary. Describe what a photo illustrating \
+this story would literally show — just the physical subject in plain words.
+
+Examples:
+- Story about galaxies: "galaxy in space"
+- Story about a phone algorithm: "smartphone"
+- Story about a new tarantula species: "tarantula spider"
+- Story about freshwater fish in Africa: "tropical freshwater fish"
+- Story about a kid winning chess: "child playing chess"
+- Story about a dinosaur fossil: "dinosaur fossil bones"
+
+Reply with only the description, nothing else.
+
+Title: {title}
+Summary: {summary}"""
+
+
+def _parse_front_matter(text: str):
+    """Return (front_matter_dict_as_lines, body) from a Hugo markdown file."""
+    if not text.startswith("---"):
+        return [], text
+    end = text.find("\n---", 3)
+    if end == -1:
+        return [], text
+    fm_block = text[3:end].strip()
+    body = text[end + 4:]
+    return fm_block, body
+
+
+def _update_image_fields(fm_block: str, image: Optional[Dict]) -> str:
+    """Remove existing image fields from front matter and optionally add new ones."""
+    lines = [l for l in fm_block.splitlines()
+             if not l.startswith("image:") and not l.startswith("image_credit")]
+    if image:
+        lines.append(f'image: "{image["path"]}"')
+        lines.append(f'image_credit: "{_escape_yaml(image["photographer"])}"')
+        lines.append(f'image_credit_url: "{image["photographer_url"]}"')
+    return "\n".join(lines)
+
+
+def reprocess_images(verbose: bool = False) -> None:
+    """Re-fetch images for all existing kids articles using AI-generated descriptions."""
+    print("Reprocessing images for all existing kids articles...")
+
+    try:
+        from anthropic import Anthropic
+        client = Anthropic()
+    except Exception as e:
+        print(f"ERROR: {e}")
+        sys.exit(1)
+
+    unsplash_key = os.environ.get("UNSPLASH_ACCESS_KEY", "")
+    if not unsplash_key:
+        print("ERROR: UNSPLASH_ACCESS_KEY not set")
+        sys.exit(1)
+
+    articles = sorted(CONTENT_DIR.glob("*.md"))
+    articles = [a for a in articles if a.name != "_index.md"]
+    print(f"Found {len(articles)} articles\n")
+
+    updated = 0
+    for filepath in articles:
+        text = filepath.read_text(encoding="utf-8")
+        fm_block, body = _parse_front_matter(text)
+        if not fm_block:
+            continue
+
+        # Extract title and summary from front matter
+        title = ""
+        summary = ""
+        for line in fm_block.splitlines():
+            if line.startswith("title:"):
+                title = line[6:].strip().strip('"')
+            elif line.startswith("summary:"):
+                summary = line[8:].strip().strip('"')
+
+        if not title:
+            continue
+
+        # Ask AI what a photo would literally show
+        try:
+            resp = client.messages.create(
+                model="claude-haiku-4-5-20251001",
+                max_tokens=60,
+                messages=[{"role": "user", "content": IMAGE_SEARCH_PROMPT.format(
+                    title=title, summary=summary
+                )}],
+            )
+            image_search = resp.content[0].text.strip().strip('"')
+        except Exception as e:
+            print(f"  SKIP {filepath.name}: AI error — {e}")
+            continue
+
+        if verbose:
+            print(f"  {filepath.name}")
+            print(f"    image_search: {image_search!r}")
+
+        # Fetch image from Unsplash
+        slug = filepath.stem  # use existing filename stem as img slug
+        image = fetch_unsplash_image(image_search, slug, unsplash_key, verbose=verbose)
+
+        # Patch front matter
+        new_fm = _update_image_fields(fm_block, image)
+        new_text = f"---\n{new_fm}\n---{body}"
+        filepath.write_text(new_text, encoding="utf-8")
+
+        status = f"image: {image['photographer']}" if image else "no image (emoji placeholder)"
+        print(f"  {filepath.name} — {status}")
+        updated += 1
+
+    print(f"\nDone. Updated {updated}/{len(articles)} articles.")
+
+
+# ---------------------------------------------------------------------------
 # CLI
 # ---------------------------------------------------------------------------
 
@@ -500,5 +589,11 @@ if __name__ == "__main__":
                         help="Fetch and score but do not write files or update state")
     parser.add_argument("--verbose", "-v", action="store_true",
                         help="Print detailed progress")
+    parser.add_argument("--reprocess-images", action="store_true",
+                        help="Re-fetch images for all existing kids articles")
     args = parser.parse_args()
-    run_pipeline(dry_run=args.dry_run, verbose=args.verbose)
+
+    if args.reprocess_images:
+        reprocess_images(verbose=args.verbose)
+    else:
+        run_pipeline(dry_run=args.dry_run, verbose=args.verbose)

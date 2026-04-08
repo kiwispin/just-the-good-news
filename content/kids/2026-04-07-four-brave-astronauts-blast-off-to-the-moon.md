@@ -7,4 +7,6 @@ category: "Space"
 source_url: "https://www.bbc.com/newsround/videos/c208rmprld0o?at_medium=RSS&at_campaign=rss"
 source_name: "Newsround (BBC)"
 image: "images/kids/2026-04-07-four-brave-astronauts-blast-off-to-the-moon.jpg"
+image_credit: "Kurt Cotoaga"
+image_credit_url: "https://unsplash.com/@kydroon"
 ---

@@ -7,4 +7,6 @@ category: "Inventors"
 source_url: "https://www.sciencedaily.com/releases/2026/04/260406192904.htm"
 source_name: "ScienceDaily"
 image: "images/kids/2026-04-08-a-super-hot-chip-that-works-hotter-than-lava.jpg"
+image_credit: "Harrison Broadbent"
+image_credit_url: "https://unsplash.com/@harrisonbroadbent"
 ---

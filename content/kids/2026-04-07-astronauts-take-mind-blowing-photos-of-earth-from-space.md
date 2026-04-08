@@ -7,4 +7,6 @@ category: "Space"
 source_url: "https://www.bbc.com/newsround/articles/c2evnwwmlgdo?at_medium=RSS&at_campaign=rss"
 source_name: "Newsround (BBC)"
 image: "images/kids/2026-04-07-astronauts-take-mind-blowing-photos-of-earth-from-space.jpg"
+image_credit: "Richard Gatley"
+image_credit_url: "https://unsplash.com/@uncle_rickie"
 ---

@@ -7,4 +7,6 @@ category: "Science"
 source_url: "https://www.sciencedaily.com/releases/2026/04/260406192917.htm"
 source_name: "ScienceDaily"
 image: "images/kids/2026-04-08-earth-won-a-space-lottery-that-made-life-possible.jpg"
+image_credit: "Omar:. Lopez-Rincon"
+image_credit_url: "https://unsplash.com/@procopiopi"
 ---

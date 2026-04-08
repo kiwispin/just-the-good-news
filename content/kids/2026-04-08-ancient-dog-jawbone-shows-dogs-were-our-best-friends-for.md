@@ -7,4 +7,6 @@ category: "Animals"
 source_url: "https://www.bbc.com/newsround/videos/c0q9p0e4wq4o?at_medium=RSS&at_campaign=rss"
 source_name: "Newsround (BBC)"
 image: "images/kids/2026-04-08-ancient-dog-jawbone-shows-dogs-were-our-best-friends-for.jpg"
+image_credit: "Matt Artz"
+image_credit_url: "https://unsplash.com/@mattartz"
 ---

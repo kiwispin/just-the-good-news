@@ -7,4 +7,6 @@ category: "Space"
 source_url: "https://www.bbc.com/newsround/articles/cq6jzgy2vq0o?at_medium=RSS&at_campaign=rss"
 source_name: "Newsround (BBC)"
 image: "images/kids/2026-04-07-astronauts-see-the-moon-s-hidden-side-for-the-first-time.jpg"
+image_credit: "Nichika Sakurai"
+image_credit_url: "https://unsplash.com/@nichiyoshi"
 ---

@@ -7,4 +7,6 @@ category: "Space"
 source_url: "https://www.bbc.co.uk/newsround/news/watch_newsround?at_medium=RSS&at_campaign=rss"
 source_name: "Newsround (BBC)"
 image: "images/kids/2026-04-08-amazing-photos-from-space-and-a-lion-cub-learning-to-roar.jpg"
+image_credit: "Aashish Chandra"
+image_credit_url: "https://unsplash.com/@aashish_chandra"
 ---

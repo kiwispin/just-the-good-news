@@ -7,4 +7,6 @@ category: "Animals"
 source_url: "https://www.bbc.com/newsround/articles/cx2e975dvweo?at_medium=RSS&at_campaign=rss"
 source_name: "Newsround (BBC)"
 image: "images/kids/2026-04-07-famous-orca-brothers-make-a-surprise-visit-to-uk-waters.jpg"
+image_credit: "David Trinks"
+image_credit_url: "https://unsplash.com/@dtrinksrph"
 ---

@@ -6,4 +6,7 @@ summary: "Quantum computers [super-powerful machines that work completely differ
 category: "Science"
 source_url: "https://www.sciencedaily.com/releases/2026/04/260407193857.htm"
 source_name: "ScienceDaily"
+image: "images/kids/2026-04-08-finally-scientists-stop-quantum-computer-data-from-vanishing.jpg"
+image_credit: "Markus Winkler"
+image_credit_url: "https://unsplash.com/@markuswinkler"
 ---

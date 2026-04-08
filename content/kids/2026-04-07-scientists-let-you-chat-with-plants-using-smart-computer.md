@@ -7,4 +7,6 @@ category: "Science"
 source_url: "https://www.bbc.com/newsround/videos/c89kj50zev8o?at_medium=RSS&at_campaign=rss"
 source_name: "Newsround (BBC)"
 image: "images/kids/2026-04-07-scientists-let-you-chat-with-plants-using-smart-computer.jpg"
+image_credit: "lian xiao"
+image_credit_url: "https://unsplash.com/@lyriccory"
 ---

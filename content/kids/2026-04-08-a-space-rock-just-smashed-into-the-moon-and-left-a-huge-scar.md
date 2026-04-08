@@ -7,4 +7,6 @@ category: "Space"
 source_url: "https://www.sciencedaily.com/releases/2026/04/260407193919.htm"
 source_name: "ScienceDaily"
 image: "images/kids/2026-04-08-a-space-rock-just-smashed-into-the-moon-and-left-a-huge-scar.jpg"
+image_credit: "The New York Public Library"
+image_credit_url: "https://unsplash.com/@nypl"
 ---

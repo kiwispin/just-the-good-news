@@ -6,4 +6,7 @@ summary: "As stars get older and bigger, they're actually eating the huge planet
 category: "Space"
 source_url: "https://www.sciencedaily.com/releases/2026/04/260403224454.htm"
 source_name: "ScienceDaily"
+image: "images/kids/2026-04-08-dying-stars-are-swallowing-giant-planets-whole.jpg"
+image_credit: "NASA Hubble Space Telescope"
+image_credit_url: "https://unsplash.com/@hubblespacetelescope"
 ---

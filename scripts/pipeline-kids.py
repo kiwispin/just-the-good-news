@@ -274,6 +274,13 @@ Write:
 2. A summary - exactly 2-3 sentences, simple language, sense of wonder, age 8-14 reading level
 3. A category - pick exactly one: Animals, Space, Dinosaurs, Records, Inventors, Sport, Nature, Science, Funny
 
+HEADLINE RULES:
+- NEVER start with "Scientists", "Researchers", "Experts", or "A new study"
+- Lead with the amazing thing itself — the animal, the place, the discovery, the record
+- Use vivid action verbs or exciting openers
+- Good examples: "A Baby Elephant Just...", "Hidden Deep in the Ocean...", "Meet the Robot That...",
+  "This Tiny Frog Can...", "For the First Time Ever...", "World Record Broken!", "Inside the Cave Where..."
+
 Use active voice. Explain any technical terms in plain English inside brackets.
 End the summary with something that sparks curiosity or makes the reader smile.
 

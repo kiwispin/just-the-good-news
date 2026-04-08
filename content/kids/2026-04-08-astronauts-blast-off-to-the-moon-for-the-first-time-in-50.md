@@ -6,7 +6,4 @@ summary: "Four brave astronauts are going on an incredible journey to the moonâ€
 category: "Space"
 source_url: "https://www.snexplores.org/article/artemis-mission-astronauts-moon-launch"
 source_name: "Science News for Students"
-image: "images/kids/2026-04-08-astronauts-blast-off-to-the-moon-for-the-first-time-in-50.jpg"
-image_credit: "Mario Verduzco"
-image_credit_url: "https://unsplash.com/@mario"
 ---

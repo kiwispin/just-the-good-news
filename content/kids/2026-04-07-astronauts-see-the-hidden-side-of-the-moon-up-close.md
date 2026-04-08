@@ -6,7 +6,4 @@ summary: "Four brave astronauts just flew all the way around the far side of the
 category: "Space"
 source_url: "https://www.bbc.com/newsround/videos/cz78p32ddgdo?at_medium=RSS&at_campaign=rss"
 source_name: "Newsround (BBC)"
-image: "images/kids/2026-04-07-astronauts-see-the-hidden-side-of-the-moon-up-close.jpg"
-image_credit: "Mario Verduzco"
-image_credit_url: "https://unsplash.com/@mario"
 ---

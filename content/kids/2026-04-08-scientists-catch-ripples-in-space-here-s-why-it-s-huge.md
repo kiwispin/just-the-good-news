@@ -6,7 +6,4 @@ summary: "Imagine space itself is like a giant trampoline that jiggles and rippl
 category: "Space"
 source_url: "https://www.sciencedaily.com/releases/2026/04/260405003940.htm"
 source_name: "ScienceDaily"
-image: "images/kids/2026-04-08-scientists-catch-ripples-in-space-here-s-why-it-s-huge.jpg"
-image_credit: "Grant Durr"
-image_credit_url: "https://unsplash.com/@grant_durr"
 ---

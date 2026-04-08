@@ -6,7 +6,4 @@ summary: "Scientists just figured out how to squeeze light into an incredibly ti
 category: "Science"
 source_url: "https://www.sciencedaily.com/releases/2026/04/260405003957.htm"
 source_name: "ScienceDaily"
-image: "images/kids/2026-04-08-scientists-trap-light-in-a-super-thin-layer-1000-times-than.jpg"
-image_credit: "Mathew Schwartz"
-image_credit_url: "https://unsplash.com/@cadop"
 ---

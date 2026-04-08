@@ -6,7 +6,4 @@ summary: "Scientists just realized that all the plastic phones, computers, and t
 category: "Science"
 source_url: "https://www.snexplores.org/article/scientists-say-technofossil-definition-pronunciation"
 source_name: "Science News for Students"
-image: "images/kids/2026-04-08-your-old-phone-could-become-a-fossil.jpg"
-image_credit: "Eugenia Pan'kiv"
-image_credit_url: "https://unsplash.com/@eugenivy_now"
 ---

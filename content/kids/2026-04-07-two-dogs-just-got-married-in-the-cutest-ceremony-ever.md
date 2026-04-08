@@ -6,7 +6,4 @@ summary: "Two adorable dogs named Max and Bella got married in a special ceremon
 category: "Funny"
 source_url: "https://www.bbc.com/newsround/articles/cjd8z8vk58zo?at_medium=RSS&at_campaign=rss"
 source_name: "Newsround (BBC)"
-image: "images/kids/2026-04-07-two-dogs-just-got-married-in-the-cutest-ceremony-ever.jpg"
-image_credit: "Desiray Green"
-image_credit_url: "https://unsplash.com/@desiraygreen"
 ---

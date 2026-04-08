@@ -6,7 +6,4 @@ summary: "Scientists discovered that yellow jackets are incredible smell-tracker
 category: "Animals"
 source_url: "https://www.snexplores.org/article/yellow-jackets-smell-in-wind"
 source_name: "Science News for Students"
-image: "images/kids/2026-04-08-yellow-jackets-have-superpowers-for-finding-your-picnic-food.jpg"
-image_credit: "Leyla M"
-image_credit_url: "https://unsplash.com/@leyla21m"
 ---

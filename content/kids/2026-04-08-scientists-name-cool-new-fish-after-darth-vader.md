@@ -6,7 +6,4 @@ summary: "Scientists exploring the ocean near Papua New Guinea discovered a bran
 category: "Animals"
 source_url: "https://kids.mongabay.com/new-fish-species-is-named-after-darth-vader/"
 source_name: "Mongabay Kids"
-image: "images/kids/2026-04-08-scientists-name-cool-new-fish-after-darth-vader.jpg"
-image_credit: "NOAA"
-image_credit_url: "https://unsplash.com/@noaa"
 ---

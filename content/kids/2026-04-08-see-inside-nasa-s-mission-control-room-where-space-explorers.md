@@ -6,7 +6,4 @@ summary: "A famous science reporter got to visit the secret control room where N
 category: "Space"
 source_url: "https://www.bbc.com/newsround/videos/czxrndzpp6ro?at_medium=RSS&at_campaign=rss"
 source_name: "Newsround (BBC)"
-image: "images/kids/2026-04-08-see-inside-nasa-s-mission-control-room-where-space-explorers.jpg"
-image_credit: "Igor Saikin"
-image_credit_url: "https://unsplash.com/@alteredpoint"
 ---

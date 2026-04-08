@@ -6,7 +6,4 @@ summary: "A special school in Florida that sits right next to a rocket launch pa
 category: "Space"
 source_url: "https://www.bbc.com/newsround/articles/cq59wjwggd5o?at_medium=RSS&at_campaign=rss"
 source_name: "Newsround (BBC)"
-image: "images/kids/2026-04-07-school-says-goodbye-after-60-years-of-watching-rockets-blast.jpg"
-image_credit: "Tim Mossholder"
-image_credit_url: "https://unsplash.com/@timmossholder"
 ---

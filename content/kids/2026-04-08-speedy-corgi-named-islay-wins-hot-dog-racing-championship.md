@@ -6,7 +6,4 @@ summary: "A super-fast corgi named Islay just won an amazing race against other 
 category: "Sport"
 source_url: "https://www.bbc.com/newsround/articles/ce9mrdj9p5no?at_medium=RSS&at_campaign=rss"
 source_name: "Newsround (BBC)"
-image: "images/kids/2026-04-08-speedy-corgi-named-islay-wins-hot-dog-racing-championship.jpg"
-image_credit: "Eriksson Luo"
-image_credit_url: "https://unsplash.com/@newdawn"
 ---

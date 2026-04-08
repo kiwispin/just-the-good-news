@@ -6,7 +6,4 @@ summary: "The James Webb Space Telescope just discovered a giant planet called T
 category: "Space"
 source_url: "https://www.sciencedaily.com/releases/2026/04/260406192905.htm"
 source_name: "ScienceDaily"
-image: "images/kids/2026-04-08-a-mysterious-planet-breaks-all-the-rules-scientists-know.jpg"
-image_credit: "Bhautik Patel"
-image_credit_url: "https://unsplash.com/@bhautik_patel3"
 ---

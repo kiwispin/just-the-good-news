@@ -6,7 +6,4 @@ summary: "Scientists created a super thin patch that works like a Band-Aid and c
 category: "Inventors"
 source_url: "https://www.snexplores.org/article/touch-virtual-texture-haptic-device"
 source_name: "Science News for Students"
-image: "images/kids/2026-04-08-a-sticker-you-wear-could-let-you-feel-video-game-worlds.jpg"
-image_credit: "Marija Zaric"
-image_credit_url: "https://unsplash.com/@simplicity"
 ---

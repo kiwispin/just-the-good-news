@@ -6,7 +6,4 @@ summary: "Scientists just tested an amazing robot that can explore Mars way fast
 category: "Space"
 source_url: "https://www.sciencedaily.com/releases/2026/04/260407193902.htm"
 source_name: "ScienceDaily"
-image: "images/kids/2026-04-08-super-smart-robot-walks-around-mars-looking-for-life-all-by.jpg"
-image_credit: "Nicolas Lobos"
-image_credit_url: "https://unsplash.com/@lobosnico"
 ---

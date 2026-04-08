@@ -6,7 +6,4 @@ summary: "A fossil that scientists thought was the world's oldest octopus turned
 category: "Dinosaurs"
 source_url: "https://www.sciencedaily.com/releases/2026/04/260407193853.htm"
 source_name: "ScienceDaily"
-image: "images/kids/2026-04-08-scientists-discover-famous-oldest-octopus-was-never-an.jpg"
-image_credit: "Oleksandr Sushko"
-image_credit_url: "https://unsplash.com/@wolfalexs"
 ---

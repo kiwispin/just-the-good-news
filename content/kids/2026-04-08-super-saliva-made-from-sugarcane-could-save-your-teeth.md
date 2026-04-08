@@ -6,7 +6,4 @@ summary: "Scientists invented a fake saliva [a liquid your mouth makes naturally
 category: "Science"
 source_url: "https://www.sciencedaily.com/releases/2026/04/260403224458.htm"
 source_name: "ScienceDaily"
-image: "images/kids/2026-04-08-super-saliva-made-from-sugarcane-could-save-your-teeth.jpg"
-image_credit: "Aime Medard Niyokwizerwa"
-image_credit_url: "https://unsplash.com/@aimenilo"
 ---

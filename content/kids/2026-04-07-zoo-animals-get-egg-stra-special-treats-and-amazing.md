@@ -6,7 +6,4 @@ summary: "Some lucky zoo animals just received super cool egg-shaped treats and 
 category: "Animals"
 source_url: "https://www.bbc.com/newsround/videos/c0ddx03wmwmo?at_medium=RSS&at_campaign=rss"
 source_name: "Newsround (BBC)"
-image: "images/kids/2026-04-07-zoo-animals-get-egg-stra-special-treats-and-amazing.jpg"
-image_credit: "MacDonald Almeida"
-image_credit_url: "https://unsplash.com/@macalmeida"
 ---

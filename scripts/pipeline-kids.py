@@ -55,7 +55,7 @@ CATEGORY_PHOTO_FALLBACK = {
 }
 
 # ---------------------------------------------------------------------------
-# RSS Sources (verified working 2026-04-07)
+# RSS Sources (verified working 2026-04-08)
 # ---------------------------------------------------------------------------
 
 KIDS_SOURCES = [
@@ -63,6 +63,9 @@ KIDS_SOURCES = [
     {"name": "Science News for Students", "feed": "https://www.snexplores.org/feed"},
     {"name": "Mongabay Kids",             "feed": "https://kids.mongabay.com/feed/"},
     {"name": "ScienceDaily",              "feed": "https://www.sciencedaily.com/rss/top.xml"},
+    {"name": "NewsForKids.net",           "feed": "https://newsforkids.net/feed"},
+    {"name": "Good News Network Kids",    "feed": "https://www.goodnewsnetwork.org/category/news/kids/feed/"},
+    {"name": "Jane Goodall Institute",    "feed": "https://news.janegoodall.org/feed"},
 ]
 
 # ---------------------------------------------------------------------------

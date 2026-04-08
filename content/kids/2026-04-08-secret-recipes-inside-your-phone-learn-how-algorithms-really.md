@@ -6,4 +6,5 @@ summary: "Did you know that algorithms [step-by-step instructions that computers
 category: "Science"
 source_url: "https://www.snexplores.org/article/how-algorithms-work-online-social"
 source_name: "Science News for Students"
+image_search: "smartphone close up"
 ---

@@ -6,4 +6,5 @@ summary: "Scientists think that when giant space rocks crashed into early Earth,
 category: "Space"
 source_url: "https://www.sciencedaily.com/releases/2026/04/260403224449.htm"
 source_name: "ScienceDaily"
+image_search: "meteor fireball night sky"
 ---

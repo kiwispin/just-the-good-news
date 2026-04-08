@@ -6,4 +6,5 @@ summary: "Africa has the second-biggest collection of freshwater fish species in
 category: "Animals"
 source_url: "https://kids.mongabay.com/africa-is-a-hotspot-for-freshwater-fish-species/"
 source_name: "Mongabay Kids"
+image_search: "colourful freshwater fish underwater"
 ---

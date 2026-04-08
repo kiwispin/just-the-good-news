@@ -6,4 +6,5 @@ summary: "A group of university students discovered one of the oldest stars in t
 category: "Space"
 source_url: "https://www.sciencedaily.com/releases/2026/04/260403224450.htm"
 source_name: "ScienceDaily"
+image_search: "milky way galaxy stars"
 ---

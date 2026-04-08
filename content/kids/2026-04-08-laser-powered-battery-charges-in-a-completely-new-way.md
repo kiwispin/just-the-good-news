@@ -6,4 +6,5 @@ summary: "Scientists just made a special battery that uses weird quantum physics
 category: "Science"
 source_url: "https://www.sciencedaily.com/releases/2026/04/260403224452.htm"
 source_name: "ScienceDaily"
+image_search: "laser beam laboratory"
 ---

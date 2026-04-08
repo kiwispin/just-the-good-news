@@ -533,35 +533,49 @@ def reprocess_images(verbose: bool = False) -> None:
         if not fm_block:
             continue
 
-        # Extract title and summary from front matter
+        # Extract title, summary, and any pre-set image_search from front matter
         title = ""
         summary = ""
+        image_search = ""
+        has_image = False
         for line in fm_block.splitlines():
             if line.startswith("title:"):
                 title = line[6:].strip().strip('"')
             elif line.startswith("summary:"):
                 summary = line[8:].strip().strip('"')
+            elif line.startswith("image_search:"):
+                image_search = line[13:].strip().strip('"')
+            elif line.startswith("image:"):
+                has_image = True
 
         if not title:
             continue
 
-        # Ask AI what a photo would literally show
-        try:
-            resp = client.messages.create(
-                model="claude-haiku-4-5-20251001",
-                max_tokens=60,
-                messages=[{"role": "user", "content": IMAGE_SEARCH_PROMPT.format(
-                    title=title, summary=summary
-                )}],
-            )
-            image_search = resp.content[0].text.strip().strip('"')
-        except Exception as e:
-            print(f"  SKIP {filepath.name}: AI error — {e}")
+        # Skip articles that already have an image — reprocess only what's missing
+        if has_image:
+            if verbose:
+                print(f"  SKIP (has image): {filepath.name}")
             continue
 
+        # Use pre-set image_search from front matter if available, else ask Claude
+        if not image_search:
+            try:
+                resp = client.messages.create(
+                    model="claude-haiku-4-5-20251001",
+                    max_tokens=60,
+                    messages=[{"role": "user", "content": IMAGE_SEARCH_PROMPT.format(
+                        title=title, summary=summary
+                    )}],
+                )
+                image_search = resp.content[0].text.strip().strip('"')
+            except Exception as e:
+                print(f"  SKIP {filepath.name}: AI error — {e}")
+                continue
+
         if verbose:
+            source = "front matter" if line.startswith("image_search:") else "Claude"
             print(f"  {filepath.name}")
-            print(f"    image_search: {image_search!r}")
+            print(f"    image_search ({source}): {image_search!r}")
 
         # Fetch image from Unsplash
         slug = filepath.stem  # use existing filename stem as img slug

@@ -284,7 +284,13 @@ HEADLINE RULES:
 Use active voice. Explain any technical terms in plain English inside brackets.
 End the summary with something that sparks curiosity or makes the reader smile.
 
-Reply with JSON: {{"headline": "...", "summary": "...", "category": "..."}}
+Also write:
+4. An image_query - 2-3 plain English words describing the SPECIFIC subject for an Unsplash photo search.
+   Focus on the real-world thing (animal, object, place), not abstract concepts.
+   Examples: "tarantula spider", "giant panda cub", "mars rover desert", "coral reef fish",
+   "cheetah running", "astronaut spacewalk", "T-rex skeleton museum"
+
+Reply with JSON: {{"headline": "...", "summary": "...", "category": "...", "image_query": "..."}}
 
 Article title: {title}
 Article text: {text}"""
@@ -312,6 +318,7 @@ def rewrite_article(article: Dict, client) -> Dict:
         "headline": result.get("headline", article["title"])[:80],
         "summary": result.get("summary", "")[:600],
         "category": category,
+        "image_query": result.get("image_query", "")[:80],
     }
 
 
@@ -427,16 +434,8 @@ def run_pipeline(dry_run: bool = False, verbose: bool = False) -> None:
         try:
             rewritten = rewrite_article(article, client)
 
-            # 4-query Unsplash cascade
-            stop = {"the","a","an","of","in","on","at","to","for","and","or","but",
-                    "how","why","what","when","where","who","as","by","from","with",
-                    "its","this","that","these","those","is","are","was","were"}
-            headline_words = [
-                w for w in rewritten["headline"].replace(":", " ").replace("\u2014", " ").split()
-                if w.lower() not in stop and len(w) > 2
-            ]
-            short_query = " ".join(headline_words[:4])
-            cat_phrase = rewritten["category"].lower()
+            # 4-query Unsplash cascade: AI-suggested query first, then fallbacks
+            image_query = rewritten.get("image_query", "").strip()
             cat_photo = CATEGORY_PHOTO_FALLBACK.get(rewritten["category"], "nature discovery")
 
             slug = slugify(rewritten["headline"], max_length=60, word_boundary=True)
@@ -445,7 +444,7 @@ def run_pipeline(dry_run: bool = False, verbose: bool = False) -> None:
 
             image = None
             if unsplash_key:
-                for q in [rewritten["headline"], short_query, cat_phrase, cat_photo]:
+                for q in [image_query, rewritten["headline"], rewritten["category"].lower(), cat_photo]:
                     if not q.strip():
                         continue
                     image = fetch_unsplash_image(q, img_slug, unsplash_key, verbose=verbose)

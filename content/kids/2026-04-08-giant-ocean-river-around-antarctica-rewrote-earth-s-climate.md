@@ -6,4 +6,5 @@ summary: "Scientists discovered that a massive ocean current circling Antarctica
 category: "Nature"
 source_url: "https://www.sciencedaily.com/releases/2026/04/260406192902.htm"
 source_name: "ScienceDaily"
+image: "images/kids/2026-04-08-giant-ocean-river-around-antarctica-rewrote-earth-s-climate.jpg"
 ---

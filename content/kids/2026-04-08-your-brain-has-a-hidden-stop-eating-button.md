@@ -6,4 +6,5 @@ summary: "Scientists just discovered that special brain cells called astrocytes 
 category: "Science"
 source_url: "https://www.sciencedaily.com/releases/2026/04/260406192811.htm"
 source_name: "ScienceDaily"
+image: "images/kids/2026-04-08-your-brain-has-a-hidden-stop-eating-button.jpg"
 ---

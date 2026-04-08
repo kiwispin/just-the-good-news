@@ -6,4 +6,5 @@ summary: "In 2023, scientists discovered an amazing particle called a neutrino [
 category: "Space"
 source_url: "https://www.sciencedaily.com/releases/2026/04/260407193906.htm"
 source_name: "ScienceDaily"
+image: "images/kids/2026-04-08-scientists-find-strange-particle-that-might-prove-black-can.jpg"
 ---

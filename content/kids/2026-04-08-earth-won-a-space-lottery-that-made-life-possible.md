@@ -6,4 +6,5 @@ summary: "Scientists discovered that Earth got really lucky billions of years ag
 category: "Science"
 source_url: "https://www.sciencedaily.com/releases/2026/04/260406192917.htm"
 source_name: "ScienceDaily"
+image: "images/kids/2026-04-08-earth-won-a-space-lottery-that-made-life-possible.jpg"
 ---

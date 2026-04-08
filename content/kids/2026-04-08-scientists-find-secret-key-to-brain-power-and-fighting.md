@@ -6,4 +6,5 @@ summary: "For 30 years, scientists were puzzled about how a special nutrient cal
 category: "Science"
 source_url: "https://www.sciencedaily.com/releases/2026/04/260407004815.htm"
 source_name: "ScienceDaily"
+image: "images/kids/2026-04-08-scientists-find-secret-key-to-brain-power-and-fighting.jpg"
 ---

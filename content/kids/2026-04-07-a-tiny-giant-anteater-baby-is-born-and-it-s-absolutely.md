@@ -6,4 +6,5 @@ summary: "A brand new baby giant anteater arrived at a UK zoo, and this little f
 category: "Animals"
 source_url: "https://www.bbc.com/newsround/articles/c8ej6978kwzo?at_medium=RSS&at_campaign=rss"
 source_name: "Newsround (BBC)"
+image: "images/kids/2026-04-07-a-tiny-giant-anteater-baby-is-born-and-it-s-absolutely.jpg"
 ---

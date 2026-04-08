@@ -6,4 +6,5 @@ summary: "High up in the Amazon rainforest, scientists built special wooden home
 category: "Animals"
 source_url: "https://kids.mongabay.com/peek-inside-a-macaw-nest/"
 source_name: "Mongabay Kids"
+image: "images/kids/2026-04-08-scientists-put-hidden-cameras-inside-macaw-homes.jpg"
 ---

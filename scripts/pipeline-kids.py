@@ -567,13 +567,17 @@ def reprocess_images(verbose: bool = False) -> None:
         slug = filepath.stem  # use existing filename stem as img slug
         image = fetch_unsplash_image(image_search, slug, unsplash_key, verbose=verbose)
 
-        # Patch front matter
+        if image is None:
+            # Unsplash returned nothing — keep whatever is already there
+            print(f"  {filepath.name} — no Unsplash result, kept existing")
+            continue
+
+        # Patch front matter only when we have a new image
         new_fm = _update_image_fields(fm_block, image)
         new_text = f"---\n{new_fm}\n---{body}"
         filepath.write_text(new_text, encoding="utf-8")
 
-        status = f"image: {image['photographer']}" if image else "no image (emoji placeholder)"
-        print(f"  {filepath.name} — {status}")
+        print(f"  {filepath.name} — {image['photographer']}")
         updated += 1
 
     print(f"\nDone. Updated {updated}/{len(articles)} articles.")

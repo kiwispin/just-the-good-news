@@ -6,4 +6,5 @@ summary: "Scientists discovered incredible fossils in China that are over 540 mi
 category: "Dinosaurs"
 source_url: "https://www.sciencedaily.com/releases/2026/04/260406234153.htm"
 source_name: "ScienceDaily"
+image: "images/kids/2026-04-08-scientists-find-amazing-lost-world-with-animals-from-540-ago.jpg"
 ---

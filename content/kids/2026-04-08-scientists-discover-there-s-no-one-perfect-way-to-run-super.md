@@ -6,4 +6,5 @@ summary: "Scientists just figured out that the world's fastest sprinters don't a
 category: "Sport"
 source_url: "https://www.sciencedaily.com/releases/2026/04/260407193911.htm"
 source_name: "ScienceDaily"
+image: "images/kids/2026-04-08-scientists-discover-there-s-no-one-perfect-way-to-run-super.jpg"
 ---

@@ -6,4 +6,5 @@ summary: "A colorful parrot somehow escaped and went on a wild adventure, ending
 category: "Animals"
 source_url: "https://www.bbc.com/newsround/articles/cn8dxz5n9jvo?at_medium=RSS&at_campaign=rss"
 source_name: "Newsround (BBC)"
+image: "images/kids/2026-04-08-lost-parrot-s-amazing-airport-adventure-ends-in-happy.jpg"
 ---

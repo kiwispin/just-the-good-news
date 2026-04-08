@@ -6,4 +6,5 @@ summary: "Astronauts just flew around the moon and saw something incredible that
 category: "Space"
 source_url: "https://www.snexplores.org/article/artemis-orion-loop-farside-moon"
 source_name: "Science News for Students"
+image: "images/kids/2026-04-07-astronauts-see-earth-shadow-on-moon-in-historic-trip-around.jpg"
 ---

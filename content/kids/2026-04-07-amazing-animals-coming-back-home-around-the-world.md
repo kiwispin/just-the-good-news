@@ -6,4 +6,5 @@ summary: "Red pandas have arrived in the UK, gorillas are thriving in the Congo,
 category: "Animals"
 source_url: "https://www.bbc.com/newsround/videos/cn007drpeq5o?at_medium=RSS&at_campaign=rss"
 source_name: "Newsround (BBC)"
+image: "images/kids/2026-04-07-amazing-animals-coming-back-home-around-the-world.jpg"
 ---

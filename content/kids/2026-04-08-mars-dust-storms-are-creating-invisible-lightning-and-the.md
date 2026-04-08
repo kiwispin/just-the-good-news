@@ -6,4 +6,5 @@ summary: "Mars might look quiet and empty, but massive dust storms are actually 
 category: "Space"
 source_url: "https://www.sciencedaily.com/releases/2026/04/260405003753.htm"
 source_name: "ScienceDaily"
+image: "images/kids/2026-04-08-mars-dust-storms-are-creating-invisible-lightning-and-the.jpg"
 ---

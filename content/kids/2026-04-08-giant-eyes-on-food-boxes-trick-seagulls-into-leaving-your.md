@@ -6,4 +6,5 @@ summary: "Scientists discovered that drawing big, staring eyes on takeaway boxes
 category: "Science"
 source_url: "https://www.bbc.com/newsround/articles/crk1275v7myo?at_medium=RSS&at_campaign=rss"
 source_name: "Newsround (BBC)"
+image: "images/kids/2026-04-08-giant-eyes-on-food-boxes-trick-seagulls-into-leaving-your.jpg"
 ---

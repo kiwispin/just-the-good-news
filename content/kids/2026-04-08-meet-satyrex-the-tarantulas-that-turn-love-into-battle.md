@@ -6,4 +6,5 @@ summary: "Scientists just discovered a brand-new group of super weird tarantulas
 category: "Animals"
 source_url: "https://www.sciencedaily.com/releases/2026/04/260405003946.htm"
 source_name: "ScienceDaily"
+image: "images/kids/2026-04-08-meet-satyrex-the-tarantulas-that-turn-love-into-battle.jpg"
 ---

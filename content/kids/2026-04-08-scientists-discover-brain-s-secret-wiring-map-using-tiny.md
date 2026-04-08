@@ -6,4 +6,5 @@ summary: "Scientists found an amazing new way to see how all the tiny parts of o
 category: "Science"
 source_url: "https://www.sciencedaily.com/releases/2026/04/260407193848.htm"
 source_name: "ScienceDaily"
+image: "images/kids/2026-04-08-scientists-discover-brain-s-secret-wiring-map-using-tiny.jpg"
 ---

@@ -6,4 +6,5 @@ summary: "This week brought some of the wildest news ever—the sky turned red i
 category: "Funny"
 source_url: "https://www.bbc.com/newsround/videos/czdd1p9ejxno?at_medium=RSS&at_campaign=rss"
 source_name: "Newsround (BBC)"
+image: "images/kids/2026-04-07-red-skies-speedy-cheetahs-and-chocolate-eggs.jpg"
 ---

@@ -6,4 +6,5 @@ summary: "Scientists figured out that oyster reefs aren't just random piles—th
 category: "Nature"
 source_url: "https://www.sciencedaily.com/releases/2026/04/260405003954.htm"
 source_name: "ScienceDaily"
+image: "images/kids/2026-04-08-secret-oyster-patterns-could-save-ocean-reefs-everywhere.jpg"
 ---

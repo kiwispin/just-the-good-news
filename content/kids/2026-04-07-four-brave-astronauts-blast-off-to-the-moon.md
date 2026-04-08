@@ -6,4 +6,5 @@ summary: "A giant rocket called Artemis II just launched into space with four as
 category: "Space"
 source_url: "https://www.bbc.com/newsround/videos/c208rmprld0o?at_medium=RSS&at_campaign=rss"
 source_name: "Newsround (BBC)"
+image: "images/kids/2026-04-07-four-brave-astronauts-blast-off-to-the-moon.jpg"
 ---

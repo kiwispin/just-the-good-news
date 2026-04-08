@@ -6,4 +6,5 @@ summary: "Scientists discovered something amazing about how the tiniest electric
 category: "Science"
 source_url: "https://www.sciencedaily.com/releases/2026/04/260407193915.htm"
 source_name: "ScienceDaily"
+image: "images/kids/2026-04-08-nature-s-secret-superpower-how-tiny-particles-race-through.jpg"
 ---

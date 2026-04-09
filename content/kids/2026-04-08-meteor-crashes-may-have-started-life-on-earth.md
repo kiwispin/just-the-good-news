@@ -7,4 +7,7 @@ category: "Space"
 source_url: "https://www.sciencedaily.com/releases/2026/04/260403224449.htm"
 source_name: "ScienceDaily"
 image_search: "meteor fireball night sky"
+image: "images/kids/2026-04-08-meteor-crashes-may-have-started-life-on-earth.jpg"
+image_credit: "Ahmed Alani"
+image_credit_url: "https://unsplash.com/@ahmedalani"
 ---

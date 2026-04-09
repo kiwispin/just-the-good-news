@@ -7,4 +7,7 @@ category: "Space"
 source_url: "https://www.sciencedaily.com/releases/2026/04/260403224450.htm"
 source_name: "ScienceDaily"
 image_search: "milky way galaxy stars"
+image: "images/kids/2026-04-08-students-find-ancient-star-drifting-into-our-galaxy.jpg"
+image_credit: "Katelyn G"
+image_credit_url: "https://unsplash.com/@katelyn_g"
 ---

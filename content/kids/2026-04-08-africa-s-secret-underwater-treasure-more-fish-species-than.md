@@ -7,4 +7,7 @@ category: "Animals"
 source_url: "https://kids.mongabay.com/africa-is-a-hotspot-for-freshwater-fish-species/"
 source_name: "Mongabay Kids"
 image_search: "colourful freshwater fish underwater"
+image: "images/kids/2026-04-08-africa-s-secret-underwater-treasure-more-fish-species-than.jpg"
+image_credit: "Vanburn Gonsalves"
+image_credit_url: "https://unsplash.com/@vanburn"
 ---

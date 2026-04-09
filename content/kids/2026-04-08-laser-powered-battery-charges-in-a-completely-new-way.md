@@ -7,4 +7,7 @@ category: "Science"
 source_url: "https://www.sciencedaily.com/releases/2026/04/260403224452.htm"
 source_name: "ScienceDaily"
 image_search: "laser beam laboratory"
+image: "images/kids/2026-04-08-laser-powered-battery-charges-in-a-completely-new-way.jpg"
+image_credit: "beuwy.com Alexander Pütter"
+image_credit_url: "https://unsplash.com/@beuwy_com"
 ---

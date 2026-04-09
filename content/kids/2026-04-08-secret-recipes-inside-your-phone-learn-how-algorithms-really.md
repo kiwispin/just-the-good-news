@@ -7,4 +7,7 @@ category: "Science"
 source_url: "https://www.snexplores.org/article/how-algorithms-work-online-social"
 source_name: "Science News for Students"
 image_search: "smartphone close up"
+image: "images/kids/2026-04-08-secret-recipes-inside-your-phone-learn-how-algorithms-really.jpg"
+image_credit: "Collin"
+image_credit_url: "https://unsplash.com/@collinde"
 ---

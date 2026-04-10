@@ -1,5 +1,4 @@
 ---
-
 title: "Meet the Hopping Frog That Bounces Like a Kangaroo!"
 date: 2026-04-09T20:53:55.442572+00:00
 draft: false
@@ -8,4 +7,7 @@ category: "Animals"
 source_url: "https://www.bbc.com/newsround/articles/czre138pzjlo?at_medium=RSS&at_campaign=rss"
 source_name: "Newsround (BBC)"
 image_search: "green frog"
+image: "images/kids/2026-04-09-meet-the-hopping-frog-that-bounces-like-a-kangaroo.jpg"
+image_credit: "David Clode"
+image_credit_url: "https://unsplash.com/@davidclode"
 ---

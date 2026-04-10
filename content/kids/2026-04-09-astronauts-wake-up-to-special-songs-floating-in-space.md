@@ -1,5 +1,4 @@
 ---
-
 title: "Astronauts Wake Up to Special Songs Floating in Space!"
 date: 2026-04-09T20:53:45.884648+00:00
 draft: false
@@ -8,4 +7,7 @@ category: "Space"
 source_url: "https://www.bbc.com/newsround/articles/cy51q24qp36o?at_medium=RSS&at_campaign=rss"
 source_name: "Newsround (BBC)"
 image_search: "astronaut international space station"
+image: "images/kids/2026-04-09-astronauts-wake-up-to-special-songs-floating-in-space.jpg"
+image_credit: "Norbert Kowalczyk"
+image_credit_url: "https://unsplash.com/@norbertkowalczyk"
 ---

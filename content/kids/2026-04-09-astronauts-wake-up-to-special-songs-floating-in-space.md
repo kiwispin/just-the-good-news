@@ -1,4 +1,5 @@
 ---
+
 title: "Astronauts Wake Up to Special Songs Floating in Space!"
 date: 2026-04-09T20:53:45.884648+00:00
 draft: false
@@ -6,4 +7,5 @@ summary: "The astronauts on the Artemis II mission get a brand new song played t
 category: "Space"
 source_url: "https://www.bbc.com/newsround/articles/cy51q24qp36o?at_medium=RSS&at_campaign=rss"
 source_name: "Newsround (BBC)"
+image_search: "astronaut international space station"
 ---

@@ -149,6 +149,45 @@ def fetch_unsplash_image(
 
 
 # ---------------------------------------------------------------------------
+# Progressive image search — never give up
+# ---------------------------------------------------------------------------
+
+def find_image(image_search: str, category: str, slug: str, access_key: str, verbose: bool = False) -> Optional[Dict]:
+    """
+    Try progressively simpler queries until Unsplash returns a photo.
+    'green frog hopping' → 'green frog' → 'frog' → 'animals' → never empty.
+    """
+    if not access_key:
+        return None
+
+    words = image_search.split()
+
+    # Build cascade: full query, then shed one word from the end each time,
+    # then fall back to the category name which always has millions of photos.
+    queries = [" ".join(words[:i]) for i in range(len(words), 0, -1)]
+    queries.append(category.lower())  # guaranteed broad fallback
+
+    # Deduplicate while preserving order
+    seen: Set[str] = set()
+    unique: List[str] = []
+    for q in queries:
+        if q and q not in seen:
+            seen.add(q)
+            unique.append(q)
+
+    for q in unique:
+        if verbose:
+            print(f"    Unsplash trying: {q!r}")
+        image = fetch_unsplash_image(q, slug, access_key, verbose=False)
+        if image:
+            if verbose:
+                print(f"    Unsplash hit: {q!r} — {image['photographer']}")
+            return image
+
+    return None
+
+
+# ---------------------------------------------------------------------------
 # Step 1: Fetch candidates
 # ---------------------------------------------------------------------------
 
@@ -430,7 +469,7 @@ def run_pipeline(dry_run: bool = False, verbose: bool = False) -> None:
 
             image = None
             if unsplash_key and image_search:
-                image = fetch_unsplash_image(image_search, img_slug, unsplash_key, verbose=verbose)
+                image = find_image(image_search, rewritten["category"], img_slug, unsplash_key, verbose=verbose)
 
             filepath = create_kids_post(article, rewritten, image=image, dry_run=dry_run)
 
@@ -577,9 +616,14 @@ def reprocess_images(verbose: bool = False) -> None:
             print(f"  {filepath.name}")
             print(f"    image_search ({source}): {image_search!r}")
 
-        # Fetch image from Unsplash
-        slug = filepath.stem  # use existing filename stem as img slug
-        image = fetch_unsplash_image(image_search, slug, unsplash_key, verbose=verbose)
+        # Fetch image — progressive fallback ensures something is always found
+        category = ""
+        for line in fm_block.splitlines():
+            if line.startswith("category:"):
+                category = line[9:].strip().strip('"')
+                break
+        slug = filepath.stem
+        image = find_image(image_search, category, slug, unsplash_key, verbose=verbose)
 
         if image is None:
             # Unsplash returned nothing — keep whatever is already there

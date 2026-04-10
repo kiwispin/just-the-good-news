@@ -1,4 +1,5 @@
 ---
+
 title: "A Secret British Base Just Helped NASA Track Astronauts in Space!"
 date: 2026-04-09T20:53:40.167803+00:00
 draft: false
@@ -6,4 +7,5 @@ summary: "A special listening station called Goonhilly in Cornwall, England, has
 category: "Space"
 source_url: "https://www.bbc.com/newsround/articles/cr51z6l281qo?at_medium=RSS&at_campaign=rss"
 source_name: "Newsround (BBC)"
+image_search: "satellite dish antenna"
 ---

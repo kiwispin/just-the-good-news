@@ -1,5 +1,7 @@
 {{ define "main" }}
-{{ $pages := .Pages.ByDate.Reverse }}
+{{/* Show only the 8 most recent — one daily batch. Older articles
+     remain accessible by direct URL but stay off the landing page. */}}
+{{ $pages := first 8 .Pages.ByDate.Reverse }}
 
 {{/* Category emoji map */}}
 {{ $emoji := dict

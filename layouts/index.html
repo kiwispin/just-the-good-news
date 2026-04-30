@@ -81,8 +81,10 @@
 <section class="articles-section">
   <div class="articles-inner">
     {{ if gt (len $posts) 1 }}
+      {{/* Show only the 24 most recent (1 featured hero + up to 23 in grid).
+           Older articles remain accessible by direct URL and search. */}}
       <div class="article-grid" id="article-grid">
-        {{ range after 1 $posts }}
+        {{ range first 23 (after 1 $posts) }}
           {{ partial "article-card.html" . }}
         {{ end }}
       </div>

@@ -1,7 +1,8 @@
 {{ define "main" }}
-{{/* Show only the 8 most recent — one daily batch. Older articles
-     remain accessible by direct URL but stay off the landing page. */}}
-{{ $pages := first 8 .Pages.ByDate.Reverse }}
+{{/* Show the 24 most recent — about 3–5 days of stories. Doubles as
+     a browseable repository for story ideas. Older articles remain
+     accessible by direct URL and Google search. */}}
+{{ $pages := first 24 .Pages.ByDate.Reverse }}
 
 {{/* Category emoji map */}}
 {{ $emoji := dict

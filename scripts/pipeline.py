@@ -302,7 +302,7 @@ def score_articles_batch(articles: List[Dict], client) -> List[Dict]:
         articles_text += f"Article #{idx}:\nTitle: {art['title']}\nDescription: {art['description'][:600]}\n\n"
 
     prompt = BATCH_SCORING_PROMPT.format(articles_text=articles_text)
-    raw = client.complete(prompt, max_tokens=2000, response_mime_type="application/json")
+    raw = client.complete(prompt, max_tokens=2000)
     raw = re.sub(r"^```(?:json)?\s*|\s*```$", "", raw, flags=re.MULTILINE).strip()
     
     try:
@@ -378,7 +378,7 @@ def process_article(article: Dict, client) -> Dict:
         description=article["description"][:800],
         source=article["source"],
     )
-    raw = client.complete(prompt, max_tokens=500, response_mime_type="application/json")
+    raw = client.complete(prompt, max_tokens=500)
     raw = re.sub(r"^```(?:json)?\s*|\s*```$", "", raw, flags=re.MULTILINE).strip()
     result = json.loads(raw)
 

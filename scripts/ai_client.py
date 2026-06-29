@@ -43,9 +43,25 @@ class AIClient:
                     or "rate limit" in err_msg
                     or "resource_exhausted" in err_msg
                 )
-                if is_rate_limit and attempt < max_retries - 1:
+                # Transient server-side errors (overloaded / temporarily unavailable).
+                # Gemini returns HTTP 503 UNAVAILABLE ("high demand") under load;
+                # these are retriable and should not fail the whole pipeline run.
+                is_transient_server = (
+                    "503" in err_msg
+                    or "500" in err_msg
+                    or "502" in err_msg
+                    or "504" in err_msg
+                    or "unavailable" in err_msg
+                    or "overloaded" in err_msg
+                    or "high demand" in err_msg
+                    or "internal error" in err_msg
+                    or "timed out" in err_msg
+                    or "timeout" in err_msg
+                )
+                if (is_rate_limit or is_transient_server) and attempt < max_retries - 1:
                     sleep_time = (backoff_factor ** attempt) * 5
-                    print(f"  [AI Client] Rate limit hit (429/quota). Retrying in {sleep_time}s... (Attempt {attempt+1}/{max_retries})")
+                    reason = "Rate limit (429/quota)" if is_rate_limit else "Transient server error (5xx)"
+                    print(f"  [AI Client] {reason}. Retrying in {sleep_time}s... (Attempt {attempt+1}/{max_retries})")
                     time.sleep(sleep_time)
                 else:
                     raise e

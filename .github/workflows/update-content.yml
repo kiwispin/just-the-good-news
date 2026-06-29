@@ -48,8 +48,8 @@ jobs:
       - name: Push to main
         if: github.event_name != 'push'
         run: |
-          git pull --rebase origin main || true
-          git push origin main || true
+          git pull --rebase origin main
+          git push origin main
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3

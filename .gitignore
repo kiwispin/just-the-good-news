@@ -1,1 +1,6 @@
 .superpowers/
+.venv/
+public/
+.hugo_build.lock
+__pycache__/
+*.pyc

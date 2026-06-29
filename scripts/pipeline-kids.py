@@ -42,6 +42,22 @@ VALID_CATEGORIES = [
     "Inventors", "Sport", "Nature", "Science", "Funny",
 ]
 
+FATAL_AI_ERROR_MARKERS = (
+    "credit balance is too low",
+    "authentication_error",
+    "invalid api key",
+    "invalid x-api-key",
+    "permission_error",
+)
+
+
+def abort_on_fatal_ai_error(exc: Exception, context: str) -> None:
+    """Fail CI when the AI provider rejects requests instead of publishing stale content."""
+    message = str(exc).lower()
+    if any(marker in message for marker in FATAL_AI_ERROR_MARKERS):
+        print(f"ERROR: {context} failed because the AI provider rejected the request: {exc}")
+        sys.exit(1)
+
 # ---------------------------------------------------------------------------
 # RSS Sources (verified working 2026-04-08)
 # ---------------------------------------------------------------------------
@@ -429,7 +445,10 @@ def run_pipeline(dry_run: bool = False, verbose: bool = False) -> None:
     # Step 2: Score
     print(f"\n[2/4] Scoring {len(candidates)} candidates...")
     passing = []
+    score_attempts = 0
+    score_failures = 0
     for i, article in enumerate(candidates, 1):
+        score_attempts += 1
         try:
             result = score_article(article, client)
             score = result["score"]
@@ -440,11 +459,18 @@ def run_pipeline(dry_run: bool = False, verbose: bool = False) -> None:
                 article["_score"] = score
                 passing.append(article)
         except json.JSONDecodeError as e:
+            score_failures += 1
             if verbose:
                 print(f"  [{i:2}] Score parse error: {e}")
         except Exception as e:
+            score_failures += 1
+            abort_on_fatal_ai_error(e, "Scoring")
             if verbose:
                 print(f"  [{i:2}] Score error: {e}")
+
+    if score_attempts and score_failures == score_attempts and not passing:
+        print("ERROR: Every scoring attempt failed; refusing to continue with stale content.")
+        sys.exit(1)
 
     passing.sort(key=lambda a: a.get("_score", 0), reverse=True)
     passing = passing[:MAX_ARTICLES_PER_RUN]
@@ -457,7 +483,10 @@ def run_pipeline(dry_run: bool = False, verbose: bool = False) -> None:
     # Step 3: Rewrite and publish
     print(f"\n[3/4] Rewriting {len(passing)} articles...")
     published_links = []
+    process_attempts = 0
+    process_failures = 0
     for article in passing:
+        process_attempts += 1
         try:
             rewritten = rewrite_article(article, client)
 
@@ -484,9 +513,16 @@ def run_pipeline(dry_run: bool = False, verbose: bool = False) -> None:
             published_links.append(article["link"])
 
         except json.JSONDecodeError as e:
+            process_failures += 1
             print(f"  Parse error for '{article['title'][:40]}': {e}")
         except Exception as e:
+            process_failures += 1
+            abort_on_fatal_ai_error(e, "Rewriting")
             print(f"  Error for '{article['title'][:40]}': {e}")
+
+    if process_attempts and process_failures == process_attempts and not published_links:
+        print("ERROR: Every rewriting attempt failed; refusing to continue with stale content.")
+        sys.exit(1)
 
     # Step 4: Save dedup state
     if not dry_run and published_links:

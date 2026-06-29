@@ -10,7 +10,7 @@ A nonprofit, AI-powered positive news aggregation website. Publishes 5-10 genuin
 
 1. GitHub Actions triggers the Python content pipeline twice daily (8am and 8pm NZST)
 2. The pipeline fetches RSS feeds from positive news sources
-3. Claude AI scores each article for genuine positivity (7+/10 threshold)
+3. The configured AI provider scores each article for genuine positivity (7+/10 threshold)
 4. Qualifying articles are summarised, categorised, and saved as Hugo markdown files
 5. Hugo builds the static site, which is deployed to GitHub Pages
 6. New articles are live within minutes — no human intervention needed
@@ -48,18 +48,37 @@ sudo apt install hugo
 pip install -r scripts/requirements.txt
 ```
 
-### 4. Set up your Anthropic API key
+### 4. Set up an AI provider
 
-Get a key at [console.anthropic.com](https://console.anthropic.com).
+The pipeline supports OpenAI, Gemini, or Anthropic. OpenAI is the default.
 
 **For local runs:**
 ```bash
-export ANTHROPIC_API_KEY="sk-ant-..."
+export AI_PROVIDER="openai"
+export AI_MODEL="gpt-4o-mini"
+export OPENAI_API_KEY="sk-..."
 ```
 
 **For GitHub Actions:**
 1. Go to your repo → Settings → Secrets and variables → Actions
-2. Add a secret named `ANTHROPIC_API_KEY` with your key
+2. Add a secret named `OPENAI_API_KEY` with your OpenAI key
+3. Optional: add repository variables `AI_PROVIDER` and `AI_MODEL`
+
+Provider examples:
+
+```bash
+# OpenAI (default)
+AI_PROVIDER=openai
+AI_MODEL=gpt-4o-mini
+
+# Gemini
+AI_PROVIDER=gemini
+AI_MODEL=gemini-2.5-flash
+
+# Anthropic
+AI_PROVIDER=anthropic
+AI_MODEL=claude-haiku-4-5-20251001
+```
 
 ### 5. Enable GitHub Pages
 
@@ -154,15 +173,15 @@ The pipeline pulls from these sources (edit `SOURCES` in `scripts/pipeline.py` t
 | ScienceDaily | ✅ Active |
 | Treehugger | ⚠️ Feed XML issues (check periodically) |
 
-### AI model used
+### AI provider used
 
-- **Scoring:** `claude-haiku-4-5` (fast, cheap — ~$0.001 per article scored)
-- **Summarisation:** `claude-haiku-4-5` (fast, cheap — ~$0.005 per article processed)
-- **Estimated cost:** ~$0.50–1.00/month at current usage
+- **Default provider:** OpenAI
+- **Default model:** `gpt-4o-mini`
+- **Fallback providers:** Gemini and Anthropic, selected with `AI_PROVIDER`
 
 ### Positivity scoring
 
-Articles scoring **7 or higher** out of 10 are published. The scoring prompt instructs Claude to:
+Articles scoring **7 or higher** out of 10 are published. The scoring prompt instructs the AI provider to:
 - Exclude negative news with positive spin
 - Exclude political/partisan content
 - Exclude promotional or sponsored content
@@ -221,4 +240,4 @@ This is a nonprofit project. If you spot a broken RSS feed, a bug, or have a gre
 
 ---
 
-*Built with Hugo + GitHub Pages + Claude AI. Spreading good news since 2026.*
+*Built with Hugo + GitHub Pages + AI-assisted curation. Spreading good news since 2026.*

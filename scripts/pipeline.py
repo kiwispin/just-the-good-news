@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Just The Good News — Content Pipeline
-Fetches RSS feeds, scores articles with Claude AI, summarises qualifying ones,
+Fetches RSS feeds, scores articles with the configured AI provider, summarises qualifying ones,
 and writes Hugo-compatible markdown files.
 
 Run manually:   python scripts/pipeline.py
@@ -21,6 +21,8 @@ from typing import Optional, Set, List, Dict
 import feedparser
 import requests
 from slugify import slugify
+
+from ai_client import AIProviderError, create_ai_client
 
 # ---------------------------------------------------------------------------
 # Configuration
@@ -52,15 +54,25 @@ VALID_REGIONS = ["nz", "au", "uk", "us", "ca", "global"]
 
 FATAL_AI_ERROR_MARKERS = (
     "credit balance is too low",
+    "insufficient_quota",
+    "quota",
+    "billing",
     "authentication_error",
     "invalid api key",
+    "invalid_api_key",
     "invalid x-api-key",
+    "permission denied",
+    "permission_denied",
     "permission_error",
 )
 
 
 def abort_on_fatal_ai_error(exc: Exception, context: str) -> None:
     """Fail CI when the AI provider rejects requests instead of publishing stale content."""
+    if isinstance(exc, AIProviderError):
+        print(f"ERROR: {context} failed because the AI provider rejected the request: {exc}")
+        sys.exit(1)
+
     message = str(exc).lower()
     if any(marker in message for marker in FATAL_AI_ERROR_MARKERS):
         print(f"ERROR: {context} failed because the AI provider rejected the request: {exc}")
@@ -275,17 +287,12 @@ Respond ONLY with a JSON object (no markdown, no explanation):
 
 
 def score_article(article: Dict, client) -> Dict:
-    """Ask Claude to rate article positivity. Returns {score, reason}."""
+    """Ask the configured AI provider to rate article positivity."""
     prompt = SCORING_PROMPT.format(
         title=article["title"],
         description=article["description"][:600],
     )
-    response = client.messages.create(
-        model="claude-haiku-4-5-20251001",  # Fast + cheap for scoring
-        max_tokens=150,
-        messages=[{"role": "user", "content": prompt}],
-    )
-    raw = response.content[0].text.strip()
+    raw = client.complete(prompt, max_tokens=150)
     # Strip markdown code fences if present
     raw = re.sub(r"^```(?:json)?\s*|\s*```$", "", raw, flags=re.MULTILINE).strip()
     result = json.loads(raw)
@@ -323,18 +330,13 @@ Respond ONLY with a JSON object (no markdown, no explanation):
 
 
 def process_article(article: Dict, client) -> Dict:
-    """Ask Claude to generate headline, summary, categories, region."""
+    """Ask the configured AI provider to generate headline and metadata."""
     prompt = SUMMARISE_PROMPT.format(
         title=article["title"],
         description=article["description"][:800],
         source=article["source"],
     )
-    response = client.messages.create(
-        model="claude-haiku-4-5-20251001",
-        max_tokens=500,
-        messages=[{"role": "user", "content": prompt}],
-    )
-    raw = response.content[0].text.strip()
+    raw = client.complete(prompt, max_tokens=500)
     raw = re.sub(r"^```(?:json)?\s*|\s*```$", "", raw, flags=re.MULTILINE).strip()
     result = json.loads(raw)
 
@@ -472,14 +474,9 @@ def fetch_today_observance(client, dry_run: bool = False, verbose: bool = False)
         if verbose:
             print(f"  Checkiday: {len(names)} total → {len(candidates)} after filter: {candidates}")
 
-        # Ask Claude to pick the most delightful one
+        # Ask the AI provider to pick the most delightful one
         prompt = TODAY_PICK_PROMPT.format(observances="\n".join(f"- {c}" for c in candidates))
-        ai_resp = client.messages.create(
-            model="claude-haiku-4-5-20251001",
-            max_tokens=60,
-            messages=[{"role": "user", "content": prompt}],
-        )
-        chosen = ai_resp.content[0].text.strip().strip('"').strip("'")
+        chosen = client.complete(prompt, max_tokens=60).strip().strip('"').strip("'")
 
         if chosen == "NONE" or chosen not in candidates:
             # Fall back to first candidate if AI response is unexpected
@@ -506,16 +503,14 @@ def run_pipeline(dry_run: bool = False, verbose: bool = False) -> None:
     """Main entry point. Fetches, scores, processes, and publishes articles."""
     print(f"{'[DRY RUN] ' if dry_run else ''}Just The Good News pipeline starting — {datetime.now().strftime('%Y-%m-%d %H:%M UTC')}")
 
-    # Lazy import Anthropic (not needed for feed-only dry runs without AI)
     try:
-        from anthropic import Anthropic
-        client = Anthropic()  # reads ANTHROPIC_API_KEY from environment
-    except ImportError:
-        print("ERROR: anthropic package not installed. Run: pip install anthropic")
-        sys.exit(1)
+        client = create_ai_client()
     except Exception as e:
-        print(f"ERROR initialising Anthropic client: {e}")
+        print(f"ERROR initialising AI client: {e}")
         sys.exit(1)
+
+    if verbose:
+        print(f"  AI provider: {client.provider} ({client.model})")
 
     unsplash_key = os.environ.get("UNSPLASH_ACCESS_KEY", "")
     if not unsplash_key and verbose:

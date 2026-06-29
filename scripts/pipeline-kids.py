@@ -22,6 +22,8 @@ import feedparser
 import requests
 from slugify import slugify
 
+from ai_client import AIProviderError, create_ai_client
+
 # ---------------------------------------------------------------------------
 # Configuration
 # ---------------------------------------------------------------------------
@@ -44,15 +46,25 @@ VALID_CATEGORIES = [
 
 FATAL_AI_ERROR_MARKERS = (
     "credit balance is too low",
+    "insufficient_quota",
+    "quota",
+    "billing",
     "authentication_error",
     "invalid api key",
+    "invalid_api_key",
     "invalid x-api-key",
+    "permission denied",
+    "permission_denied",
     "permission_error",
 )
 
 
 def abort_on_fatal_ai_error(exc: Exception, context: str) -> None:
     """Fail CI when the AI provider rejects requests instead of publishing stale content."""
+    if isinstance(exc, AIProviderError):
+        print(f"ERROR: {context} failed because the AI provider rejected the request: {exc}")
+        sys.exit(1)
+
     message = str(exc).lower()
     if any(marker in message for marker in FATAL_AI_ERROR_MARKERS):
         print(f"ERROR: {context} failed because the AI provider rejected the request: {exc}")
@@ -293,12 +305,7 @@ def score_article(article: Dict, client) -> Dict:
         title=article["title"],
         description=article["description"][:600],
     )
-    response = client.messages.create(
-        model="claude-haiku-4-5-20251001",
-        max_tokens=150,
-        messages=[{"role": "user", "content": prompt}],
-    )
-    raw = response.content[0].text.strip()
+    raw = client.complete(prompt, max_tokens=150)
     raw = re.sub(r"^```(?:json)?\s*|\s*```$", "", raw, flags=re.MULTILINE).strip()
     result = json.loads(raw)
     return {"score": int(result["score"]), "reason": result.get("reason", "")}
@@ -344,12 +351,7 @@ def rewrite_article(article: Dict, client) -> Dict:
         title=article["title"],
         text=article["description"][:800],
     )
-    response = client.messages.create(
-        model="claude-haiku-4-5-20251001",
-        max_tokens=400,
-        messages=[{"role": "user", "content": prompt}],
-    )
-    raw = response.content[0].text.strip()
+    raw = client.complete(prompt, max_tokens=400)
     raw = re.sub(r"^```(?:json)?\s*|\s*```$", "", raw, flags=re.MULTILINE).strip()
     result = json.loads(raw)
 
@@ -419,14 +421,13 @@ def run_pipeline(dry_run: bool = False, verbose: bool = False) -> None:
     print(f"{'[DRY RUN] ' if dry_run else ''}Kids pipeline — {datetime.now().strftime('%Y-%m-%d %H:%M UTC')}")
 
     try:
-        from anthropic import Anthropic
-        client = Anthropic()
-    except ImportError:
-        print("ERROR: anthropic package not installed. Run: pip install anthropic")
-        sys.exit(1)
+        client = create_ai_client()
     except Exception as e:
-        print(f"ERROR initialising Anthropic client: {e}")
+        print(f"ERROR initialising AI client: {e}")
         sys.exit(1)
+
+    if verbose:
+        print(f"  AI provider: {client.provider} ({client.model})")
 
     unsplash_key = os.environ.get("UNSPLASH_ACCESS_KEY", "")
     if not unsplash_key and verbose:
@@ -586,11 +587,13 @@ def reprocess_images(verbose: bool = False) -> None:
     print("Reprocessing images for all existing kids articles...")
 
     try:
-        from anthropic import Anthropic
-        client = Anthropic()
+        client = create_ai_client()
     except Exception as e:
         print(f"ERROR: {e}")
         sys.exit(1)
+
+    if verbose:
+        print(f"  AI provider: {client.provider} ({client.model})")
 
     unsplash_key = os.environ.get("UNSPLASH_ACCESS_KEY", "")
     if not unsplash_key:
@@ -632,23 +635,20 @@ def reprocess_images(verbose: bool = False) -> None:
                 print(f"  SKIP (has image): {filepath.name}")
             continue
 
-        # Use pre-set image_search from front matter if available, else ask Claude
+        # Use pre-set image_search from front matter if available, else ask the AI provider
         if not image_search:
             try:
-                resp = client.messages.create(
-                    model="claude-haiku-4-5-20251001",
+                image_search = client.complete(
+                    IMAGE_SEARCH_PROMPT.format(title=title, summary=summary),
                     max_tokens=60,
-                    messages=[{"role": "user", "content": IMAGE_SEARCH_PROMPT.format(
-                        title=title, summary=summary
-                    )}],
                 )
-                image_search = resp.content[0].text.strip().strip('"')
+                image_search = image_search.strip().strip('"')
             except Exception as e:
                 print(f"  SKIP {filepath.name}: AI error — {e}")
                 continue
 
         if verbose:
-            source = "front matter" if line.startswith("image_search:") else "Claude"
+            source = "front matter" if line.startswith("image_search:") else client.provider
             print(f"  {filepath.name}")
             print(f"    image_search ({source}): {image_search!r}")
 

@@ -33,6 +33,10 @@ jobs:
       - name: Run content pipeline
         if: github.event_name != 'push'   # Skip AI pipeline on code pushes (saves cost)
         env:
+          AI_PROVIDER: ${{ vars.AI_PROVIDER || 'openai' }}
+          AI_MODEL: ${{ vars.AI_MODEL || 'gpt-4o-mini' }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           UNSPLASH_ACCESS_KEY: ${{ secrets.UNSPLASH_ACCESS_KEY }}
         run: python scripts/pipeline.py --verbose

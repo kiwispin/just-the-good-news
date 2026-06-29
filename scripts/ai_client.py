@@ -21,21 +21,45 @@ class AIClient:
     timeout: int = 90
     _anthropic_client: Optional[Any] = None
 
-    def complete(self, prompt: str, max_tokens: int) -> str:
-        if self.provider == "openai":
-            return self._complete_openai(prompt, max_tokens)
-        if self.provider == "gemini":
-            return self._complete_gemini(prompt, max_tokens)
-        if self.provider == "anthropic":
-            return self._complete_anthropic(prompt, max_tokens)
-        raise AIProviderError(f"Unsupported AI_PROVIDER: {self.provider}")
+    def complete(self, prompt: str, max_tokens: int, response_mime_type: Optional[str] = None) -> str:
+        import time
+        max_retries = 5
+        backoff_factor = 2
 
-    def _complete_openai(self, prompt: str, max_tokens: int) -> str:
+        for attempt in range(max_retries):
+            try:
+                if self.provider == "openai":
+                    return self._complete_openai(prompt, max_tokens, response_mime_type)
+                if self.provider == "gemini":
+                    return self._complete_gemini(prompt, max_tokens, response_mime_type)
+                if self.provider == "anthropic":
+                    return self._complete_anthropic(prompt, max_tokens, response_mime_type)
+                raise AIProviderError(f"Unsupported AI_PROVIDER: {self.provider}")
+            except Exception as e:
+                err_msg = str(e).lower()
+                is_rate_limit = (
+                    "429" in err_msg
+                    or "quota" in err_msg
+                    or "rate limit" in err_msg
+                    or "resource_exhausted" in err_msg
+                )
+                if is_rate_limit and attempt < max_retries - 1:
+                    sleep_time = (backoff_factor ** attempt) * 5
+                    print(f"  [AI Client] Rate limit hit (429/quota). Retrying in {sleep_time}s... (Attempt {attempt+1}/{max_retries})")
+                    time.sleep(sleep_time)
+                else:
+                    raise e
+
+    def _complete_openai(self, prompt: str, max_tokens: int, response_mime_type: Optional[str] = None) -> str:
         payload: Dict[str, Any] = {
             "model": self.model,
             "input": prompt,
             "max_output_tokens": max_tokens,
         }
+        # In OpenAI, if response_mime_type is JSON, set response_format
+        if response_mime_type == "application/json":
+            payload["response_format"] = {"type": "json_object"}
+
         response = requests.post(
             "https://api.openai.com/v1/responses",
             headers={
@@ -64,14 +88,18 @@ class AIClient:
             raise AIProviderError(f"OpenAI response did not contain text: {data}")
         return text
 
-    def _complete_gemini(self, prompt: str, max_tokens: int) -> str:
+    def _complete_gemini(self, prompt: str, max_tokens: int, response_mime_type: Optional[str] = None) -> str:
         url = (
             "https://generativelanguage.googleapis.com/v1beta/"
             f"models/{self.model}:generateContent"
         )
+        generation_config: Dict[str, Any] = {"maxOutputTokens": max_tokens}
+        if response_mime_type:
+            generation_config["responseMimeType"] = response_mime_type
+
         payload: Dict[str, Any] = {
             "contents": [{"parts": [{"text": prompt}]}],
-            "generationConfig": {"maxOutputTokens": max_tokens},
+            "generationConfig": generation_config,
         }
         response = requests.post(
             url,
@@ -95,7 +123,7 @@ class AIClient:
             raise AIProviderError(f"Gemini response did not contain text: {data}")
         return text
 
-    def _complete_anthropic(self, prompt: str, max_tokens: int) -> str:
+    def _complete_anthropic(self, prompt: str, max_tokens: int, response_mime_type: Optional[str] = None) -> str:
         if self._anthropic_client is None:
             try:
                 from anthropic import Anthropic

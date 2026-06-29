@@ -282,8 +282,8 @@ def fetch_candidates(existing_urls: Set[str], verbose: bool = False) -> List[Dic
 # Step 2: Score for kid-suitability
 # ---------------------------------------------------------------------------
 
-KIDS_SCORE_PROMPT = """\
-Rate this article 1-10 for how much an 8-14 year old would enjoy reading it.
+KIDS_BATCH_SCORING_PROMPT = """\
+Rate each of the following articles 1-10 for how much an 8-14 year old would enjoy reading it.
 
 Score HIGH (8-10) for: animals, wildlife, space, dinosaurs/prehistoric life, world records,
 young achievers, cool inventions, sport victories, nature discoveries, funny or weird stories,
@@ -294,21 +294,57 @@ workplace news, natural disasters, anything distressing.
 
 Score MEDIUM (4-6) for: general human interest, community stories, technology (non-invention).
 
-Title: {title}
-Description: {description}
+Articles to evaluate:
+{articles_text}
 
-Reply with only a JSON object: {{"score": N, "reason": "one sentence"}}"""
+Respond ONLY with a JSON array of objects (no markdown, no explanation) matching this schema:
+[
+  {{"index": <integer corresponding to the article index>, "score": <integer 1-10>, "reason": "<one sentence>"}}
+]"""
 
 
-def score_article(article: Dict, client) -> Dict:
-    prompt = KIDS_SCORE_PROMPT.format(
-        title=article["title"],
-        description=article["description"][:600],
-    )
-    raw = client.complete(prompt, max_tokens=150)
+def score_articles_batch(articles: List[Dict], client) -> List[Dict]:
+    """Score a batch of articles in a single API call for kid-suitability."""
+    if not articles:
+        return []
+
+    articles_text = ""
+    for idx, art in enumerate(articles, 1):
+        articles_text += f"Article #{idx}:\nTitle: {art['title']}\nDescription: {art['description'][:600]}\n\n"
+
+    prompt = KIDS_BATCH_SCORING_PROMPT.format(articles_text=articles_text)
+    raw = client.complete(prompt, max_tokens=2000, response_mime_type="application/json")
     raw = re.sub(r"^```(?:json)?\s*|\s*```$", "", raw, flags=re.MULTILINE).strip()
-    result = json.loads(raw)
-    return {"score": int(result["score"]), "reason": result.get("reason", "")}
+    
+    results_list = json.loads(raw)
+    if not isinstance(results_list, list):
+        raise ValueError("AI response is not a JSON array")
+
+    scores_by_index = {}
+    for item in results_list:
+        try:
+            item_idx = int(item.get("index"))
+            score = int(item.get("score"))
+            reason = item.get("reason", "")
+            scores_by_index[item_idx] = {"score": score, "reason": reason}
+        except (ValueError, TypeError, KeyError):
+            continue
+
+    scored_articles = []
+    for idx, art in enumerate(articles, 1):
+        if idx in scores_by_index:
+            scored_articles.append({
+                **art,
+                "_score": scores_by_index[idx]["score"],
+                "_reason": scores_by_index[idx]["reason"]
+            })
+        else:
+            scored_articles.append({
+                **art,
+                "_score": 0,
+                "_reason": "Skipped (failed to return score in batch)"
+            })
+    return scored_articles
 
 
 # ---------------------------------------------------------------------------
@@ -351,7 +387,7 @@ def rewrite_article(article: Dict, client) -> Dict:
         title=article["title"],
         text=article["description"][:800],
     )
-    raw = client.complete(prompt, max_tokens=400)
+    raw = client.complete(prompt, max_tokens=400, response_mime_type="application/json")
     raw = re.sub(r"^```(?:json)?\s*|\s*```$", "", raw, flags=re.MULTILINE).strip()
     result = json.loads(raw)
 
@@ -448,26 +484,32 @@ def run_pipeline(dry_run: bool = False, verbose: bool = False) -> None:
     passing = []
     score_attempts = 0
     score_failures = 0
-    for i, article in enumerate(candidates, 1):
+
+    batch_size = 15
+    batches = [candidates[i:i + batch_size] for i in range(0, len(candidates), batch_size)]
+
+    for b_idx, batch in enumerate(batches):
         score_attempts += 1
         try:
-            result = score_article(article, client)
-            score = result["score"]
-            if verbose:
-                status = "PASS" if score >= MIN_KIDS_SCORE else "skip"
-                print(f"  [{i:2}/{len(candidates)}] {score}/10 {status} — {article['title'][:55]}")
-            if score >= MIN_KIDS_SCORE:
-                article["_score"] = score
-                passing.append(article)
+            scored_batch = score_articles_batch(batch, client)
+            for item_idx, article in enumerate(scored_batch, 1):
+                global_idx = b_idx * batch_size + item_idx
+                score = article.get("_score", 0)
+                reason = article.get("_reason", "")
+                if verbose:
+                    status = "PASS" if score >= MIN_KIDS_SCORE else "skip"
+                    print(f"  [{global_idx:2}/{len(candidates)}] {score}/10 {status} — {article['title'][:55]}")
+                if score >= MIN_KIDS_SCORE:
+                    passing.append(article)
+            import time
+            time.sleep(2)
         except json.JSONDecodeError as e:
             score_failures += 1
-            if verbose:
-                print(f"  [{i:2}] Score parse error: {e}")
+            print(f"  [Batch {b_idx+1}] Score parse error: {e}")
         except Exception as e:
             score_failures += 1
             abort_on_fatal_ai_error(e, "Scoring")
-            if verbose:
-                print(f"  [{i:2}] Score error: {e}")
+            print(f"  [Batch {b_idx+1}] Score error: {e}")
 
     if score_attempts and score_failures == score_attempts and not passing:
         print("ERROR: Every scoring attempt failed; refusing to continue with stale content.")
@@ -512,6 +554,8 @@ def run_pipeline(dry_run: bool = False, verbose: bool = False) -> None:
                 print(f"  {'(dry) ' if dry_run else ''}-> {filepath.name}")
 
             published_links.append(article["link"])
+            import time
+            time.sleep(2)
 
         except json.JSONDecodeError as e:
             process_failures += 1

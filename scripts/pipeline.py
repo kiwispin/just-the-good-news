@@ -285,7 +285,11 @@ Articles to evaluate:
 Respond ONLY with a JSON array of objects (no markdown, no explanation) matching this schema:
 [
   {{"index": <integer corresponding to the article index>, "score": <integer 0-10>, "reason": "<one sentence>"}}
-]"""
+]
+
+JSON Formatting Rules:
+- The "reason" string MUST NOT contain any double quotes ("). If you need to quote or refer to anything, use single quotes (').
+- Keep the "reason" short and concise (under 15 words)."""
 
 
 def score_articles_batch(articles: List[Dict], client) -> List[Dict]:
@@ -301,7 +305,12 @@ def score_articles_batch(articles: List[Dict], client) -> List[Dict]:
     raw = client.complete(prompt, max_tokens=2000, response_mime_type="application/json")
     raw = re.sub(r"^```(?:json)?\s*|\s*```$", "", raw, flags=re.MULTILINE).strip()
     
-    results_list = json.loads(raw)
+    try:
+        results_list = json.loads(raw)
+    except json.JSONDecodeError as e:
+        print(f"ERROR: Failed to parse JSON from AI response.\nRaw Response Content:\n{raw}\n---")
+        raise e
+        
     if not isinstance(results_list, list):
         raise ValueError("AI response is not a JSON array")
 

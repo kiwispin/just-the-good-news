@@ -50,30 +50,30 @@ pip install -r scripts/requirements.txt
 
 ### 4. Set up an AI provider
 
-The pipeline supports OpenAI, Gemini, or Anthropic. OpenAI is the default.
+The pipeline supports Gemini, OpenAI, or Anthropic. Gemini is the default.
 
 **For local runs:**
 ```bash
-export AI_PROVIDER="openai"
-export AI_MODEL="gpt-4o-mini"
-export OPENAI_API_KEY="sk-..."
+export AI_PROVIDER="gemini"
+export AI_MODEL="gemini-3.5-flash"
+export GEMINI_API_KEY="..."
 ```
 
 **For GitHub Actions:**
 1. Go to your repo → Settings → Secrets and variables → Actions
-2. Add a secret named `OPENAI_API_KEY` with your OpenAI key
+2. Add a secret named `GEMINI_API_KEY` with your Gemini API key
 3. Optional: add repository variables `AI_PROVIDER` and `AI_MODEL`
 
 Provider examples:
 
 ```bash
-# OpenAI (default)
+# Gemini (default)
+AI_PROVIDER=gemini
+AI_MODEL=gemini-3.5-flash
+
+# OpenAI
 AI_PROVIDER=openai
 AI_MODEL=gpt-4o-mini
-
-# Gemini
-AI_PROVIDER=gemini
-AI_MODEL=gemini-2.5-flash
 
 # Anthropic
 AI_PROVIDER=anthropic
@@ -175,9 +175,9 @@ The pipeline pulls from these sources (edit `SOURCES` in `scripts/pipeline.py` t
 
 ### AI provider used
 
-- **Default provider:** OpenAI
-- **Default model:** `gpt-4o-mini`
-- **Fallback providers:** Gemini and Anthropic, selected with `AI_PROVIDER`
+- **Default provider:** Gemini
+- **Default model:** `gemini-3.5-flash`
+- **Fallback providers:** OpenAI and Anthropic, selected with `AI_PROVIDER`
 
 ### Positivity scoring
 

@@ -123,14 +123,14 @@ def create_ai_client() -> AIClient:
         elif os.environ.get("ANTHROPIC_API_KEY"):
             provider = "anthropic"
         else:
-            provider = "openai"
+            provider = "gemini"
 
     if provider == "openai":
         api_key = os.environ.get("OPENAI_API_KEY", "")
         model = os.environ.get("AI_MODEL") or os.environ.get("OPENAI_MODEL") or "gpt-4o-mini"
     elif provider == "gemini":
         api_key = os.environ.get("GEMINI_API_KEY", "")
-        model = os.environ.get("AI_MODEL") or os.environ.get("GEMINI_MODEL") or "gemini-2.5-flash"
+        model = os.environ.get("AI_MODEL") or os.environ.get("GEMINI_MODEL") or "gemini-3.5-flash"
     elif provider == "anthropic":
         api_key = os.environ.get("ANTHROPIC_API_KEY", "")
         model = (

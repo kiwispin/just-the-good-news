@@ -6,4 +6,7 @@ summary: "Deep in the tropical rainforest, a giant tree called the strangler fig
 category: "Animals"
 source_url: "https://www.snexplores.org/article/poop-tree-toilet-forest-mammals"
 source_name: "Science News for Students"
+image: "images/kids/2026-06-30-this-super-size-jungle-tree-is-the-ultimate-animal-toilet.jpg"
+image_credit: "Ken Shono"
+image_credit_url: "https://unsplash.com/@kenshono"
 ---

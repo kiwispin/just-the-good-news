@@ -6,4 +6,7 @@ summary: "Astronomers have just discovered two giant worlds that are the same si
 category: "Space"
 source_url: "https://www.sciencedaily.com/releases/2026/06/260626124659.htm"
 source_name: "ScienceDaily"
+image: "images/kids/2026-06-30-two-giant-outer-space-planets-are-lighter-than-cotton-candy.jpg"
+image_credit: "BoliviaInteligente"
+image_credit_url: "https://unsplash.com/@boliviainteligente"
 ---

@@ -119,6 +119,12 @@ def save_published_urls(existing: Set[str], new_urls: List[str]) -> None:
 # Unsplash image fetch
 # ---------------------------------------------------------------------------
 
+class UnsplashRateLimited(Exception):
+    """Raised when Unsplash returns a 403/429 rate-limit response (demo tier =
+    50 req/hour). Lets callers stop the query cascade instead of silently
+    treating the block as 'no results' and leaving articles imageless."""
+
+
 def fetch_unsplash_image(
     query: str,
     slug: str,
@@ -136,6 +142,10 @@ def fetch_unsplash_image(
             headers={"Authorization": f"Client-ID {access_key}"},
             timeout=15,
         )
+        if resp.status_code in (403, 429):
+            if verbose:
+                print(f"    Unsplash RATE LIMITED (HTTP {resp.status_code}) — hourly quota exhausted")
+            raise UnsplashRateLimited()
         if resp.status_code != 200:
             if verbose:
                 print(f"    Unsplash search HTTP {resp.status_code} for: {query[:50]}")
@@ -187,6 +197,8 @@ def fetch_unsplash_image(
             "unsplash_id": photo_id,
         }
 
+    except UnsplashRateLimited:
+        raise  # let the caller stop the cascade instead of swallowing it
     except Exception as e:
         if verbose:
             print(f"    Unsplash: error — {e}")
@@ -657,12 +669,16 @@ def run_pipeline(dry_run: bool = False, verbose: bool = False) -> None:
                 for q in [processed["headline"], short_query, cat_phrase, cat_photo]:
                     if not q.strip():
                         continue
-                    image = fetch_unsplash_image(
-                        query=q,
-                        slug=img_slug,
-                        access_key=unsplash_key,
-                        verbose=verbose,
-                    )
+                    try:
+                        image = fetch_unsplash_image(
+                            query=q,
+                            slug=img_slug,
+                            access_key=unsplash_key,
+                            verbose=verbose,
+                        )
+                    except UnsplashRateLimited:
+                        print("    Unsplash rate limit reached — publishing without image (backfill will fill it)")
+                        break
                     if image:
                         if verbose:
                             print(f"    Image query: '{q}'")
@@ -737,12 +753,21 @@ def run_pipeline(dry_run: bool = False, verbose: bool = False) -> None:
                 img_slug  = post_path.stem
 
                 img_meta = None
+                rate_limited = False
                 for q in [title, short, cat_phrase, cat_photo]:
                     if not q.strip():
                         continue
-                    img_meta = fetch_unsplash_image(q, img_slug, unsplash_key, verbose=verbose)
+                    try:
+                        img_meta = fetch_unsplash_image(q, img_slug, unsplash_key, verbose=verbose)
+                    except UnsplashRateLimited:
+                        rate_limited = True
+                        break
                     if img_meta:
                         break
+
+                if rate_limited:
+                    print("  Unsplash rate limit reached — stopping backfill (more images remain to fill on a later run)")
+                    break
 
                 if not img_meta:
                     print(f"  ✗ No image found for: {post_path.name}")

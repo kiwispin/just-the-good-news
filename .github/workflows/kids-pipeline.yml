@@ -2,7 +2,10 @@ name: Kids Content Pipeline
 
 on:
   schedule:
-    - cron: '0 20 * * *'  # 20:00 UTC = 8am NZST daily
+    # 22:00 UTC = 10am NZST. Deliberately offset from the main pipeline's
+    # 20:00 UTC run so the two don't share the same Unsplash hourly quota
+    # window (demo tier = 50 req/hour; ~18 images across both would exceed it).
+    - cron: '0 22 * * *'
   workflow_dispatch:
     inputs:
       reprocess_images:

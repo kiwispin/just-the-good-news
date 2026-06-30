@@ -107,6 +107,16 @@ def save_published_urls(existing: Set[str], new_urls: List[str]) -> None:
 # Unsplash image fetch — same 4-query cascade as main pipeline
 # ---------------------------------------------------------------------------
 
+class UnsplashRateLimited(Exception):
+    """Raised when Unsplash returns a 403/429 rate-limit response.
+
+    The demo tier allows only 50 requests/hour. Once exhausted, every search
+    returns 403 — which previously looked like 'no results' and silently left
+    articles imageless. Surfacing it lets the caller stop the query cascade
+    (conserving the remaining budget) and rely on the reprocess backfill.
+    """
+
+
 def fetch_unsplash_image(
     query: str,
     slug: str,
@@ -123,6 +133,10 @@ def fetch_unsplash_image(
             headers={"Authorization": f"Client-ID {access_key}"},
             timeout=15,
         )
+        if resp.status_code in (403, 429):
+            if verbose:
+                print(f"    Unsplash RATE LIMITED (HTTP {resp.status_code}) — hourly quota exhausted")
+            raise UnsplashRateLimited()
         if resp.status_code != 200:
             if verbose:
                 print(f"    Unsplash HTTP {resp.status_code} for: {query[:50]}")
@@ -170,6 +184,8 @@ def fetch_unsplash_image(
             "unsplash_id": photo_id,
         }
 
+    except UnsplashRateLimited:
+        raise  # let find_image stop the cascade
     except Exception as e:
         if verbose:
             print(f"    Unsplash error: {e}")
@@ -206,7 +222,13 @@ def find_image(image_search: str, category: str, slug: str, access_key: str, ver
     for q in unique:
         if verbose:
             print(f"    Unsplash trying: {q!r}")
-        image = fetch_unsplash_image(q, slug, access_key, verbose=False)
+        try:
+            image = fetch_unsplash_image(q, slug, access_key, verbose=False)
+        except UnsplashRateLimited:
+            # Out of hourly quota — stop hammering the API; the reprocess
+            # backfill will pick this article up on a later run.
+            print(f"    Unsplash rate limit reached — skipping image for now (will backfill later)")
+            return None
         if image:
             if verbose:
                 print(f"    Unsplash hit: {q!r} — {image['photographer']}")

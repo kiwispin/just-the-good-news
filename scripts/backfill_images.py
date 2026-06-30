@@ -15,7 +15,7 @@ from pathlib import Path
 
 # Reuse helpers from the pipeline
 sys.path.insert(0, str(Path(__file__).parent))
-from pipeline import fetch_unsplash_image, _escape_yaml
+from pipeline import fetch_unsplash_image, _escape_yaml, UnsplashRateLimited
 
 REPO_ROOT = Path(__file__).parent.parent
 CONTENT_DIR = REPO_ROOT / "content" / "posts"
@@ -92,12 +92,16 @@ def run_backfill(dry_run: bool = False, verbose: bool = False) -> None:
             print(f"  Fetching image for: {post.name}")
             print(f"    Query: {title[:60]}")
 
-        image = fetch_unsplash_image(
-            query=title,
-            slug=slug,
-            access_key=access_key,
-            verbose=verbose,
-        )
+        try:
+            image = fetch_unsplash_image(
+                query=title,
+                slug=slug,
+                access_key=access_key,
+                verbose=verbose,
+            )
+        except UnsplashRateLimited:
+            print(f"  Unsplash rate limit reached — stopping. Re-run later to fill the rest.")
+            break
 
         if not image:
             print(f"  FAILED (no image): {post.name}")

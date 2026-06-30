@@ -52,7 +52,10 @@ class AIClient:
     api_key: str
     timeout: int = 90
     fallbacks: List[ProviderConfig] = field(default_factory=list)
-    max_retries: int = 4
+    # 6 attempts → waits of 5,10,20,40,80s (~155s) before giving up on a
+    # provider. Gemini's intermittent 503 "high demand" spikes usually clear
+    # well within this window even on the paid tier.
+    max_retries: int = 6
     backoff_base: int = 5
     _anthropic_clients: Dict[str, Any] = field(default_factory=dict)
 

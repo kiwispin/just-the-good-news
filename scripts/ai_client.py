@@ -93,17 +93,19 @@ class AIClient:
             except Exception as e:  # noqa: BLE001
                 err_msg = str(e).lower()
 
-                # Permanent failures for this provider — don't burn retries, let
-                # the caller fall back to a different provider immediately.
-                if any(marker in err_msg for marker in _FATAL_MARKERS):
-                    raise
-
                 is_rate_limit = (
                     "429" in err_msg
                     or "quota" in err_msg
                     or "rate limit" in err_msg
                     or "resource_exhausted" in err_msg
                 )
+                # Permanent auth/credit failures for this provider — don't burn
+                # retries, let the caller fall back to a different provider.
+                # Checked AFTER rate-limit so Gemini's quota-429 boilerplate
+                # (which mentions "billing details") still gets retried, since a
+                # per-minute rate spike is recoverable.
+                if not is_rate_limit and any(marker in err_msg for marker in _FATAL_MARKERS):
+                    raise
                 # Transient server-side errors (overloaded / temporarily unavailable).
                 # Gemini returns HTTP 503 UNAVAILABLE ("high demand") under load.
                 is_transient_server = (

@@ -518,7 +518,7 @@ def fetch_today_observance(client, dry_run: bool = False, verbose: bool = False)
 
         # Ask the AI provider to pick the most delightful one
         prompt = TODAY_PICK_PROMPT.format(observances="\n".join(f"- {c}" for c in candidates))
-        chosen = client.complete(prompt, max_tokens=60).strip().strip('"').strip("'")
+        chosen = client.complete(prompt, max_tokens=200).strip().strip('"').strip("'")
 
         if chosen == "NONE" or chosen not in candidates:
             # Fall back to first candidate if AI response is unexpected

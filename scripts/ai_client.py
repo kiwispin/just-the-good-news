@@ -180,6 +180,11 @@ class AIClient:
             f"models/{cfg.model}:generateContent"
         )
         generation_config: Dict[str, Any] = {"maxOutputTokens": max_tokens}
+        # Gemini 2.5/3.x are "thinking" models: internal reasoning tokens are
+        # billed against maxOutputTokens and can consume the ENTIRE budget,
+        # leaving empty text (finishReason=MAX_TOKENS) or truncated JSON.
+        # Disable thinking so the whole budget goes to the actual answer.
+        generation_config["thinkingConfig"] = {"thinkingBudget": 0}
         if response_mime_type:
             generation_config["responseMimeType"] = response_mime_type
 

@@ -693,7 +693,7 @@ def reprocess_images(verbose: bool = False) -> None:
             try:
                 image_search = client.complete(
                     IMAGE_SEARCH_PROMPT.format(title=title, summary=summary),
-                    max_tokens=60,
+                    max_tokens=200,
                 )
                 image_search = image_search.strip().strip('"')
             except Exception as e:

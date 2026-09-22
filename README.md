@@ -2,7 +2,9 @@
 
 A nonprofit, AI-powered positive news aggregation website. Publishes 5-10 genuine good news stories daily, automatically.
 
-**Live site:** https://justthegoodnews.github.io/ (or your custom domain)
+**Live site:** https://justthegood.news/
+
+Built by [Carl Rayner](https://www.carlrayner.com/). Read the [project case study](https://www.carlrayner.com/work/just-the-good-news/) for the publishing workflow, my contribution and the design decisions behind it.
 
 ---
 

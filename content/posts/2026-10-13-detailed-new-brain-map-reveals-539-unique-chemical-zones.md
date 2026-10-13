@@ -8,6 +8,9 @@ source: "ScienceDaily"
 source_url: "https://www.sciencedaily.com/releases/2026/10/261012185011.htm"
 summary: "Researchers have created the first high-resolution 3D map of brain lipids, uncovering hundreds of distinct chemical regions previously invisible to traditional mapping techniques. This breakthrough offers unprecedented insights into brain structure, opening new avenues for understanding neurological health and function."
 featured_score: 8
+image: "images/articles/2026-10-13-detailed-new-brain-map-reveals-539-unique-chemical-zones.jpg"
+image_credit: "Bhautik Patel"
+image_credit_url: "https://unsplash.com/@bhautik_patel3"
 ---
 
 Researchers have created the first high-resolution 3D map of brain lipids, uncovering hundreds of distinct chemical regions previously invisible to traditional mapping techniques. This breakthrough offers unprecedented insights into brain structure, opening new avenues for understanding neurological health and function.

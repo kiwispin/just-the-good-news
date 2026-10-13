@@ -8,6 +8,9 @@ source: "ScienceDaily"
 source_url: "https://www.sciencedaily.com/releases/2026/10/261012185021.htm"
 summary: "NASA's James Webb Space Telescope has captured a fascinating view of an ancient galaxy cluster, revealing new details about dark matter and starlight in the early universe. This remarkable observation provides astronomers with a powerful new way to study the origin and growth of the cosmos."
 featured_score: 8
+image: "images/articles/2026-10-13-james-webb-telescope-uncovers-cosmic-insights-that-could.jpg"
+image_credit: "NASA Hubble Space Telescope"
+image_credit_url: "https://unsplash.com/@hubblespacetelescope"
 ---
 
 NASA's James Webb Space Telescope has captured a fascinating view of an ancient galaxy cluster, revealing new details about dark matter and starlight in the early universe. This remarkable observation provides astronomers with a powerful new way to study the origin and growth of the cosmos.

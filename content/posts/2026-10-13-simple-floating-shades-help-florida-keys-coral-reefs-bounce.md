@@ -8,6 +8,9 @@ source: "The Optimist Daily"
 source_url: "https://www.optimistdaily.com/2026/10/how-a-floating-shade-can-help-coral-survive-a-marine-heatwave/"
 summary: "Marine conservationists in the Florida Keys successfully used floating shade structures to protect vulnerable brain coral during peak summer heat waves. While unshaded corals lost their pigment, the shaded colonies maintained their resilience and began actively recovering their color. This straightforward intervention offers a promising, practical tool for safeguarding delicate marine ecosystems during extreme temperatures."
 featured_score: 7
+image: "images/articles/2026-10-13-simple-floating-shades-help-florida-keys-coral-reefs-bounce.jpg"
+image_credit: "Zoshua Colah"
+image_credit_url: "https://unsplash.com/@zoshuacolah"
 ---
 
 Marine conservationists in the Florida Keys successfully used floating shade structures to protect vulnerable brain coral during peak summer heat waves. While unshaded corals lost their pigment, the shaded colonies maintained their resilience and began actively recovering their color. This straightforward intervention offers a promising, practical tool for safeguarding delicate marine ecosystems during extreme temperatures.

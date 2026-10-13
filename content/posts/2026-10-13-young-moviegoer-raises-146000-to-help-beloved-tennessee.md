@@ -8,6 +8,9 @@ source: "Good News Network"
 source_url: "https://www.goodnewsnetwork.org/elderly-theater-worker-surprised-with-146000-for-retirement-crowdfunded-by-young-moviegoer/"
 summary: "A moviegoer in Maryville, Tennessee, launched a crowdfunding campaign after meeting an elderly theater employee working past retirement age. Community generosity quickly poured in, raising $146,000 to ensure she can finally enjoy a well-deserved rest."
 featured_score: 8
+image: "images/articles/2026-10-13-young-moviegoer-raises-146000-to-help-beloved-tennessee.jpg"
+image_credit: "Isaac Owens"
+image_credit_url: "https://unsplash.com/@isaacowens"
 ---
 
 A moviegoer in Maryville, Tennessee, launched a crowdfunding campaign after meeting an elderly theater employee working past retirement age. Community generosity quickly poured in, raising $146,000 to ensure she can finally enjoy a well-deserved rest.

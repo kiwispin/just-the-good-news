@@ -8,6 +8,9 @@ source: "Good News Network"
 source_url: "https://www.goodnewsnetwork.org/events061007/"
 summary: "Master cellist Yo-Yo Ma celebrates his 71st birthday, marking a brilliant career that began as a child prodigy at age five. Over decades of performance, the Chinese-American musician has released more than 90 albums, bridging global cultures through innovative musical collaboration."
 featured_score: 7
+image: "images/articles/2026-10-13-celebrating-the-legacy-and-life-of-world-renowned-cellist-yo.jpg"
+image_credit: "Omotayo Kofoworola"
+image_credit_url: "https://unsplash.com/@kofoshotit"
 ---
 
 Master cellist Yo-Yo Ma celebrates his 71st birthday, marking a brilliant career that began as a child prodigy at age five. Over decades of performance, the Chinese-American musician has released more than 90 albums, bridging global cultures through innovative musical collaboration.

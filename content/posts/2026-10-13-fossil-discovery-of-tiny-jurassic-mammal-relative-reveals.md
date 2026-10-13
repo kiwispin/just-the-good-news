@@ -8,6 +8,9 @@ source: "ScienceDaily"
 source_url: "https://www.sciencedaily.com/releases/2026/10/261012185005.htm"
 summary: "Paleontologists have uncovered the fossil of Megacauda sungei, a 165-million-year-old aquatic predator that offers new insight into mammalian history. The creature's specialized swallowing anatomy marks a crucial early evolutionary step toward nursing, which ultimately helped pave the way for the development of complex mammalian brains."
 featured_score: 7
+image: "images/articles/2026-10-13-fossil-discovery-of-tiny-jurassic-mammal-relative-reveals.jpg"
+image_credit: "Leo_Visions"
+image_credit_url: "https://unsplash.com/@leo_visions_"
 ---
 
 Paleontologists have uncovered the fossil of Megacauda sungei, a 165-million-year-old aquatic predator that offers new insight into mammalian history. The creature's specialized swallowing anatomy marks a crucial early evolutionary step toward nursing, which ultimately helped pave the way for the development of complex mammalian brains.
